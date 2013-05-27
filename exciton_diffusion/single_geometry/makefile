@@ -1,7 +1,7 @@
 CC=g++
 
 TRIANGLE_DIR = /home/xiaoxian/programs_cpp/triangle/
-MESHLIB_OBJ = /home/xiaoxian/programs_cpp/triangle/mesh_lib.o
+MESHLIB_OBJ = ../../triangle/mesh_lib.o
 
 TRASH_DIR = /home/xiaoxian/.local/share/Trash/files/
 
