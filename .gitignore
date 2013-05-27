@@ -6,6 +6,6 @@
 *.png
 *.gnuplot
 *.dat
-output.txt
+*.txt
 *.1.*
 *.2.*
