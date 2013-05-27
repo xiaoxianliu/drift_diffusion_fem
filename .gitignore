@@ -2,3 +2,10 @@
 *.o
 *.exe
 *.pyc
+
+*.png
+*.gnuplot
+*.dat
+output.txt
+*.1.*
+*.2.*
