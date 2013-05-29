@@ -57,10 +57,14 @@ vector<int> merge_vectors(const vector<int>&, const vector<int>&);
 
 int ComputeTopology(MeshData &mesh);
 
+/* Compute geometric properties */
 void ComputeElementAreas(MeshData &mesh);
 void ComputeEdgeLengths(MeshData &mesh);
+
+/* Write .gnuplot file to plot mesh */
 void WriteGNUplot(MeshData &mesh, const string& polyname);
 
+/* Read in mesh information and write to a .poly file as input for "triangle" */
 int WritePolyfile(string polyname,
 		int num_nodes, double x[], double y[], int num_node_marker, int node_marker[],		// vertices
 		int num_seg, int segments[], int num_seg_attr, int seg_attr[],				// segments
