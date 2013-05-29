@@ -1,6 +1,7 @@
 *~
 *.o
 *.exe
+*.out
 *.pyc
 
 *.png
