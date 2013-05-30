@@ -12,27 +12,21 @@ int ReadElements(MeshData &mesh, string ele_file_name){
 	if (!input_file.is_open())
 		{cout << "Fail to open .ele file " << ele_file_name << endl;	exit(1);	}
 
-	/* Read first line of basic information of elements */
+	/* 1. Read first line of basic information of elements */
 	string line;
 	getline(input_file, line);
 	stringstream linestream(line);
-	int num_elements, num_nodes_per_ele, num_attributes;
-	linestream >> num_elements >> num_nodes_per_ele >> num_attributes;
-	if ( (num_attributes!=0) and (num_attributes!=1) )
-		{cout << "# of element attributes has to be either 0 or 1 (used as marker) " << endl;	exit(1);}
+	int num_elements, num_nodes_per_ele, num_attributes_per_ele;
+	linestream >> num_elements >> num_nodes_per_ele >> num_attributes_per_ele;
+	if ( (num_attributes_per_ele!=0) and (num_attributes_per_ele!=1) )
+		{cout << "# of element attributes has to be either 0 or 1 (assumbed to be used as marker) " << endl;	exit(1);}
 
-	/* Allocate memory for relevant elements of "mesh" */
 	mesh.num_elements = num_elements;
 	mesh.num_nodes_per_ele = num_nodes_per_ele;
-	mesh.num_ele_attributes = num_attributes;
+	mesh.num_attributes_per_ele = num_attributes_per_ele;
 
 
-/*	cout << "number of elements is " << mesh.num_elements << endl;
-	cout << "number of nodes per element is " << mesh.num_nodes_per_ele << endl;
-	cout << "number of element attributes is " << mesh.num_ele_attributes << endl;
-*/
-
-	/* Read in element information */
+	/* 2. Read in element information */
 	while (input_file.good())
 	{	getline(input_file, line);
 
@@ -51,7 +45,7 @@ int ReadElements(MeshData &mesh, string ele_file_name){
 		linestream >> index;							// read index
 		for (int i=0; i<num_nodes_per_ele; i++)					// read nodal index
 			{ linestream >> ele[i];	}
-		if (num_attributes == 1)						// read element marker
+		if (num_attributes_per_ele == 1)					// read element marker
 			{linestream >> marker;	}
 
 
@@ -65,10 +59,16 @@ int ReadElements(MeshData &mesh, string ele_file_name){
 			{ cout << mesh.elements[index][i] << ", ";	}
 		cout << mesh.element_markers[index] << endl;
 */
-
-
 	}
 
 	input_file.close();
+
+	/* Final check on total number of elements */
+	if (mesh.num_elements != mesh.elements.size())
+		{  cout << "\"mesh.num_elements\" is " << mesh.num_elements << "\n";
+		   cout << "\"mesh.elements\" is a cpp vector of size " << mesh.elements.size() << "\n";
+		   cout << "They have to be equal! Exit... \n";
+		   exit(1);
+		}
 	return 0;
 }

@@ -21,16 +21,15 @@ int ReadEdges(MeshData &mesh, string edge_file_name){
 	string line;
 	getline(input_file, line);
 	stringstream linestream(line);
-	int num_edges, num_markers;
-	linestream >> num_edges >> num_markers;
-	if (num_markers!=0 and num_markers!=1)
-		{cout << "Number of edge markers is " << num_markers << ".\n";
+	int num_edges, num_marker_per_edge;
+	linestream >> num_edges >> num_marker_per_edge;
+	if (num_marker_per_edge!=0 and num_marker_per_edge!=1)
+		{cout << "Number of edge markers is " << num_marker_per_edge << ".\n";
 		 cout << "It has to be either 0 or 1. \n";
 		 exit(1);}
 
-
-	/* allocate memory for relavent element of "mesh" */
 	mesh.num_edges = num_edges;
+	mesh.num_marker_per_edge = num_marker_per_edge;
 
 
 	/* Read in edge information: nodes belong to each edge; edge marker */
@@ -51,7 +50,7 @@ int ReadEdges(MeshData &mesh, string edge_file_name){
 		int marker=0;
 
 		linestream >> index >> edge[0] >> edge[1];
-		if (num_markers==1)
+		if (num_marker_per_edge==1)
 			linestream >> marker;
 
 		/* Finally, set cooresponding values of "mesh" to the temporary variables above*/
@@ -60,5 +59,14 @@ int ReadEdges(MeshData &mesh, string edge_file_name){
 
 	}
 	input_file.close();
+
+	/* Final check on the total number of edges */
+	if (mesh.num_edges != mesh.edges.size())
+		{ cout << "\"mesh.num_edges\" is " << mesh.num_edges << "\n";
+		  cout << "\"mesh.edges\" is a cpp vector of size " << mesh.edges.size() << "\n";
+		  cout << "They have to be equal! Exit... \n";
+		  exit(1);
+		}
+
 	return 0;
 }

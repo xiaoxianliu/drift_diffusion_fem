@@ -10,20 +10,21 @@ using namespace std;
 struct MeshData
 {
 	/* Nodes */
-	size_t num_nodes;
+	size_t num_nodes, num_attributes_per_node, num_marker_per_node;
 	vector< vector<double> > nodes;			// coordinates of nodes (num_nodes * 2)
 	vector< vector<double> > node_attributes;	// attributes of each node; each node could have multiple attributes.
 	vector<int> node_markers;
 
 	/* Edges */
 	size_t num_edges;
+	size_t num_marker_per_edge;
 	vector< vector<int> > edges;			// indices of end nodes of edges (num_edges * 2)
 	vector<int> edge_markers;
 
 	/* Elements */
 	size_t num_elements;
 	size_t num_nodes_per_ele;
-	size_t num_ele_attributes;
+	size_t num_attributes_per_ele;
 	vector< vector<int> > elements;			// indices of all nodes of element (num_elements * num_nodes_per_ele)
 	vector<int> element_markers;			// Assume this is the only attribute each element has!!!
 
@@ -42,7 +43,7 @@ struct MeshData
 
 	/* Mesh properties */
 	vector<double> edge_lengths;
-	vecotr<double> ele_areas;
+	vector<double> ele_areas;
 	
 };
 
