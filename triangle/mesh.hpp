@@ -11,39 +11,43 @@ struct MeshData
 {
 	/* Nodes */
 	size_t num_nodes;
-	double* nodes;					// coordinates of nodes (num_nodes * 2)
-	int* node_markers;
+	vector< vector<double> > nodes;			// coordinates of nodes (num_nodes * 2)
+	vector< vector<double> > node_attributes;	// attributes of each node; each node could have multiple attributes.
+	vector<int> node_markers;
 
 	/* Edges */
 	size_t num_edges;
-	int* edges;					// indices of end nodes of edges (num_edges * 2)
-	int* edge_markers;
+	vector< vector<int> > edges;			// indices of end nodes of edges (num_edges * 2)
+	vector<int> edge_markers;
 
 	/* Elements */
 	size_t num_elements;
 	size_t num_nodes_per_ele;
 	size_t num_ele_attributes;
-	int* elements;					// indices of all nodes of element (num_elements * num_nodes_per_ele)
-	int* element_markers;				// Assume this is the only attribute each element has!!!
+	vector< vector<int> > elements;			// indices of all nodes of element (num_elements * num_nodes_per_ele)
+	vector<int> element_markers;			// Assume this is the only attribute each element has!!!
 
 	/* Mesh topology */
-	vector<int>* topology2to0;			// nodes of each element (3 for linear element, 6 for quadratic element)
-	vector<int>* topology2to1;			// edges of each element (always 3)
-	vector<int>* topology2to2;			// neighboring element (always 3)
+	vector< vector<int> > topology2to0;		// nodes of each element (3 for linear element, 6 for quadratic element)
+	vector< vector<int> > topology2to1;		// edges of each element (always 3)
+	vector< vector<int> > topology2to2;		// neighboring element (always 3)
 
-	vector<int>* topology1to0;			//nodes of edge (always 2)
-	vector<int>* topology1to1;			//edges sharing nodes 
-	vector<int>* topology1to2;			//elements containing edge (always 2)
+	vector< vector<int> > topology1to0;		//nodes of edge (always 2)
+	vector< vector<int> > topology1to1;		//edges sharing nodes 
+	vector< vector<int> > topology1to2;		//elements containing edge (always 2)
 
-	vector<int>* topology0to0;			//neighboring nodes
-	vector<int>* topology0to1;			//edges containing node
-	vector<int>* topology0to2;			//elements containing node
+	vector< vector<int> > topology0to0;		//neighboring nodes
+	vector< vector<int> > topology0to1;		//edges containing node
+	vector< vector<int> > topology0to2;		//elements containing node
 
 	/* Mesh properties */
-	double* edge_lengths;
-	double* ele_areas;
+	vector<double> edge_lengths;
+	vecotr<double> ele_areas;
 	
 };
+
+
+/********* Need to modify ****************/
 
 int ReadNodes(MeshData&, string);
 int ReadEdges(MeshData&, string);

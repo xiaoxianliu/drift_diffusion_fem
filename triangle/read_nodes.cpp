@@ -27,9 +27,9 @@ int ReadNodes(MeshData &mesh, string node_file_name){
 		{cout << "Dimension of mesh has to be 2" << endl; exit(1);}
 
 	/* Read in the nodal information of mesh: node index, node coordinates, node attributes (if any), node marker (if any) */
-	size_t index;
-	mesh.nodes = new double[mesh.num_nodes*2];
-	mesh.node_markers = new int[mesh.num_nodes];
+
+///	mesh.nodes = new double[mesh.num_nodes*2];
+///	mesh.node_markers = new int[mesh.num_nodes];
 
 	while (input_file.good())
 	{
@@ -42,18 +42,22 @@ int ReadNodes(MeshData &mesh, string node_file_name){
 
 		/* Read in nodal information to temporary variables */
 		stringstream linestream(line);
-		double x, y;
-		double attributes[num_attributes];
+
+		size_t index;
+		vector<double> node(2);
+		vector<double> attributes(num_attributes);
 		int marker=0;
-		linestream >> index >> x >> y;				// read index and coordinates of current node
+
+		linestream >> index >> node[0] >> node[1];		// read index and coordinates of current node
 		for (int i=0; i<num_attributes; i++)			// skip all the attributes, if any
 			{linestream >> attributes[i];	}
 		if (num_markers==1)					// read marker of node
 			{linestream >> marker;}
 
 		/* Finally, set the corresponding items in "mesh" to the temporary variables above*/
-		mesh.nodes[index*2] = x;	mesh.nodes[index*2 + 1] = y;
-		mesh.node_markers[index] = marker;
+		mesh.nodes.push_back(node);
+		mesh.node_attributes.push_back(attributes);
+		mesh.node_markers.push_back(marker);
 	}
 
 	input_file.close();	

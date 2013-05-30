@@ -25,9 +25,6 @@ int ReadElements(MeshData &mesh, string ele_file_name){
 	mesh.num_elements = num_elements;
 	mesh.num_nodes_per_ele = num_nodes_per_ele;
 	mesh.num_ele_attributes = num_attributes;
-	mesh.elements = new int[num_elements * num_nodes_per_ele];
-	mesh.element_markers = new int[num_elements];
-
 
 
 /*	cout << "number of elements is " << mesh.num_elements << endl;
@@ -39,7 +36,7 @@ int ReadElements(MeshData &mesh, string ele_file_name){
 	while (input_file.good())
 	{	getline(input_file, line);
 
-		/* Skip unrelevant lines */
+		/* Skip irrelevant lines */
 		if (line.length()==0)
 			{continue;}
 		if (line[0]=='#')
@@ -48,24 +45,24 @@ int ReadElements(MeshData &mesh, string ele_file_name){
 		/* Read information to temporary variables */
 		stringstream linestream(line);
 		int index;
-		int nodes[num_nodes_per_ele];
+		vector<int> ele(num_nodes_per_ele);
 		int marker=0;
+
 		linestream >> index;							// read index
 		for (int i=0; i<num_nodes_per_ele; i++)					// read nodal index
-			{ linestream >> nodes[i];	}
-		if (num_attributes>0)							// read element marker
+			{ linestream >> ele[i];	}
+		if (num_attributes == 1)						// read element marker
 			{linestream >> marker;	}
 
 
 		/* Finally, set relevant elements in "mesh" to the value of the temporary variables above */
-		for (int i=0; i<num_nodes_per_ele; i++)
-			{ mesh.elements[index * num_nodes_per_ele + i] = nodes[i];	}
-		mesh.element_markers[index] = marker;
+		mesh.elements.push_back(ele);
+		mesh.element_markers.push_back(marker);
 
 /* Debug
 		cout << "index " << index << ": ";
 		for (int i=0; i<num_nodes_per_ele; i++)
-			{ cout << mesh.elements[index*num_nodes_per_ele + i] << ", ";	}
+			{ cout << mesh.elements[index][i] << ", ";	}
 		cout << mesh.element_markers[index] << endl;
 */
 
