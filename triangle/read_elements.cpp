@@ -3,8 +3,11 @@
 #include <string>
 #include <sstream>
 #include <fstream>
+#include <vector>
 
 #include "mesh.hpp"
+
+using namespace std;
 
 int ReadElements(MeshData &mesh, string ele_file_name){
 	ifstream input_file;

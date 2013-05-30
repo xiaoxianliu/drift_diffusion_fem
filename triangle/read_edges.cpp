@@ -3,8 +3,11 @@
 #include <string>
 #include <sstream>
 #include <fstream>
+#include <vector>
 
 #include "mesh.hpp"
+
+using namespace std;
 
 /* Read in information of edges */
 /* Input: (1) MeshData &mesh;

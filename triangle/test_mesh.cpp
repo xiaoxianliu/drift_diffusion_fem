@@ -23,7 +23,7 @@ int main(){
 	*/
 	string polyfile_name = "example";
 
-	string cmd="/home/xiaoxian/bin/triangle/triangle -qzpeAa0.001 " + polyfile_name + ".poly";
+	string cmd="/home/xiaoxian/bin/triangle/triangle -qzpeAa0.005 " + polyfile_name + ".poly";
 	system(cmd.c_str());
 
 	/* Read in mesh information and compute mesh quantities */
@@ -46,19 +46,19 @@ int main(){
 	/****************************** OUTPUT ************************************/
 	/* Write output file */
 	ofstream output;
-	output.open("output.txt");
+	output.open("test_output.txt");
 
 	OUTPUT << "Nodal information:" << endl;
 	for (int i=0; i<mesh.num_nodes; i++)
 	{
-		OUTPUT << i << "\t" << mesh.nodes[i*2] << "\t" << mesh.nodes[i*2+1] << "\t" << mesh.node_markers[i] << endl;
+		OUTPUT << i << "\t" << mesh.nodes[i][0] << "\t" << mesh.nodes[i][1] << "\t" << mesh.node_markers[i] << endl;
 	}
 	OUTPUT << "\n";
 
 	OUTPUT << "Edge information:" << endl;
 	for (int i=0; i<mesh.num_edges; i++)
 	{
-		OUTPUT << i << "\t" << mesh.edges[i*2] << "\t" << mesh.edges[i*2+1] << "\t" << mesh.edge_markers[i] << endl;
+		OUTPUT << i << "\t" << mesh.edges[i][0] << "\t" << mesh.edges[i][1] << "\t" << mesh.edge_markers[i] << endl;
 	}
 	OUTPUT << "\n";
 
@@ -67,10 +67,10 @@ int main(){
 	{
 		OUTPUT << i << "\t";
 		for (int j=0; j<mesh.num_nodes_per_ele; j++)
-			{OUTPUT << mesh.elements[ i*mesh.num_nodes_per_ele + j ] << "\t";	}
+			{OUTPUT << mesh.elements[i][j] << "\t";	}
 		OUTPUT << mesh.element_markers[i] << endl << endl;
 	}
-	OUTPUT << endl;
+	OUTPUT << "\n";
 
 
 	/************* Topology Start */

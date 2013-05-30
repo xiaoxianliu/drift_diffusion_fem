@@ -6,7 +6,7 @@
 using namespace std;
 
 
-void WriteGNUplot(MeshData &mesh, string filename){
+void WriteGNUplot(MeshData &mesh, const string& filename){
 
 	/* Write data file */
 	ofstream output;
@@ -39,7 +39,7 @@ void WriteGNUplot(MeshData &mesh, string filename){
 	gnuplot_file << "set terminal png\n";							// output to "png" file
 	gnuplot_file << "set output \"" << filename << "_mesh.png\"\n";
 	gnuplot_file << "set size ratio 0.5\n";
-	gnuplot_file << "plot \"" << filename << "\" with lines\n";
+	gnuplot_file << "plot \"" << meshdat_filename << "\" with lines\n";
 	gnuplot_file.close();
 
 	/* Call gnuplot to make plot */

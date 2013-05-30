@@ -48,18 +48,19 @@ struct MeshData
 };
 
 
-/********* Need to modify ****************/
-
+/********* Function declarations ****************/
+/* Read mesh data from ".node", ".edge", ".ele" files */
 int ReadNodes(MeshData&, string);
 int ReadEdges(MeshData&, string);
 int ReadElements(MeshData&, string);
 
-/* Declare vector operations */
+/* vector operations */
 int add_one_entry(vector<int>&, const int&);
 int subtract_one_entry(vector<int>&, const int&);
 vector<int> intersect_vectors(const vector<int>&, const vector<int>&);
 vector<int> merge_vectors(const vector<int>&, const vector<int>&);
 
+/* Compute mesh topology (i.e. connectivity) */
 int ComputeTopology(MeshData &mesh);
 
 /* Compute geometric properties */
@@ -71,9 +72,8 @@ void WriteGNUplot(MeshData &mesh, const string& polyname);
 
 /* Read in mesh information and write to a .poly file as input for "triangle" */
 int WritePolyfile(string polyname,
-		int num_nodes, double x[], double y[], int num_node_marker, int node_marker[],		// vertices
-		int num_seg, int segments[], int num_seg_attr, int seg_attr[],				// segments
-		int num_region_attr, double region_x[], double region_y[], int region_attr[]);		// regional attributes
-
+		int num_nodes, vector<double> x, vector<double> y, int num_node_marker, vector<int> node_marker,	// vertices
+		int num_seg, vector< vector<int> > segments, int num_seg_attr, vector<int> seg_attr,			// segments
+		int num_region_attr, vector<double> region_x, vector<double> region_y, vector<int> region_attr);	// regional attributes
 
 #endif

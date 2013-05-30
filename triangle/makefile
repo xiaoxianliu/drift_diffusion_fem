@@ -30,17 +30,17 @@ read_edges.o: read_edges.cpp mesh.hpp
 read_elements.o: read_elements.cpp mesh.hpp
 	$(CC) -c read_elements.cpp -o read_elements.o
 
-compute_topology.o: compute_topology.cpp 
+compute_topology.o: compute_topology.cpp  mesh.hpp
 	$(CC) -c compute_topology.cpp -o compute_topology.o
 
-vector_operations.o: vector_operations.cpp
+vector_operations.o: vector_operations.cpp mesh.hpp
 	$(CC) -c vector_operations.cpp -o vector_operations.o
 
-geometric.o: geometric.cpp
+geometric.o: geometric.cpp mesh.hpp
 	$(CC) -c geometric.cpp -o geometric.o
-write_gnuplot.o: write_gnuplot.cpp
+write_gnuplot.o: write_gnuplot.cpp mesh.hpp
 	$(CC) -c write_gnuplot.cpp -o write_gnuplot.o
-write_polyfile.o: write_polyfile.cpp
+write_polyfile.o: write_polyfile.cpp mesh.hpp
 	$(CC) -c write_polyfile.cpp -o $@
 
 
