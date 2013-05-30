@@ -24,15 +24,6 @@ void ComputeTopology0to2(MeshData &mesh);
 
 
 int ComputeTopology (MeshData &mesh){
-	mesh.topology2to0 = 0;
-	mesh.topology2to1 = 0;
-	mesh.topology2to2 = 0;
-	mesh.topology1to0 = 0;
-	mesh.topology1to1 = 0;
-	mesh.topology1to2 = 0;
-	mesh.topology0to0 = 0;
-	mesh.topology0to1 = 0;
-	mesh.topology0to2 = 0;
 
 	ComputeTopology2to0(mesh);
 	ComputeTopology1to0(mesh);
@@ -59,60 +50,58 @@ int ComputeTopology (MeshData &mesh){
 
 /* This may include midpoint of edges if elements are not linear */
 void ComputeTopology2to0 (MeshData &mesh){
-	// allocate memory for "mesh.topology2to0" array
-	mesh.topology2to0 = new vector<int>[mesh.num_elements];
+	mesh.topology2to0.clear();		// clear potential existing data
 
-	// Set values to "mesh.topology2to0" array (a copy of "mesh.elements")
-	int N = mesh.num_nodes_per_ele;
-	for (int i=0; i<mesh.num_elements; i++)
-	{	for (int j=0; j<N; j++)
-		{	mesh.topology2to0[i].push_back(mesh.elements[i*N+j]);
-		}
-	}
+	// A copy of "mesh.elements"
+	mesh.topology2to0.assign(mesh.elements.begin(), mesh.elements.end());
 }
 
 void ComputeTopology1to0 (MeshData &mesh){
-	// allocate memory for "mesh.topology1to0" array
-	mesh.topology1to0 = new vector<int>[mesh.num_edges];
+	mesh.topology1to0.clear();		// clear potential existing data
+
 	// Set values to "mesh.topology1to0" array (a copy of "mesh.edges")
-	for (int i=0; i<mesh.num_edges; i++)
+	mesh.topology1to0.assign(mesh.edges.begin(), mesh.edges.end());
+/*	for (int i=0; i<mesh.num_edges; i++)
 	{	for (int j=0; j<2; j++)
 		{	mesh.topology1to0[i].push_back(mesh.edges[2*i+j]);		// Only 2 endpoints for each "edge"(i)
 		}
 	}
+*/
 }
 
 /* This may include midpoint of edges if elements are not linear */
 void ComputeTopology0to2(MeshData &mesh){
-	// allocate memory
-	mesh.topology0to2 = new vector<int>[mesh.num_nodes];
-	// set values
 
-	int N = mesh.num_nodes_per_ele;
-	for (int i=0; i<mesh.num_elements; i++)
+	mesh.topology0to2.clear();
+	mesh.topology0to2.resize(mesh.num_nodes);
+
+	for (int i=0; i<mesh.elements.size(); i++)
 	{
-		for (int j=0; j<N; j++)
-		{	int v = mesh.elements[i*N+j];
+		for (int j=0; j<mesh.elements[i].size(); j++)
+		{	int v = mesh.elements[i][j];
 			mesh.topology0to2[v].push_back(i);
 		}
 	}
 }
 
 void ComputeTopology0to1(MeshData &mesh){
-	mesh.topology0to1 = new vector<int>[mesh.num_nodes];				//allocate memory
+	mesh.topology0to1.clear();							//clear and resize "topology0to1"
+	mesh.topology0to1.resize(mesh.num_nodes);
 	for (int i=0; i<mesh.num_edges; i++)						//set values
 	{	for (int j=0; j<2; j++)
-		{	int v = mesh.edges[2*i+j];
+		{	int v = mesh.edges[i][j];
 			mesh.topology0to1[v].push_back(i);
 		}
 	}
 }
 
 void ComputeTopology0to0(MeshData &mesh){
-	mesh.topology0to0 = new vector<int>[mesh.num_nodes];
+	mesh.topology0to0.clear();							//clear and resize "topology0to0"
+	mesh.topology0to0.resize(mesh.num_nodes);
+
 	for (int i=0; i<mesh.num_edges; i++)
-	{	int v0 = mesh.edges[2*i];						// identify nodes v0 and v1 of edge "i"
-		int v1 = mesh.edges[2*i+1];
+	{	int v0 = mesh.edges[i][0];						// identify nodes v0 and v1 of edge "i"
+		int v1 = mesh.edges[i][1];
 
 		mesh.topology0to0[v0].push_back(v1);
 		mesh.topology0to0[v1].push_back(v0);
@@ -121,12 +110,15 @@ void ComputeTopology0to0(MeshData &mesh){
 
 
 void ComputeTopology1to2(MeshData &mesh){
-	if (mesh.topology0to2==0)
+	if (mesh.topology0to2.size()==0)
 		{cout << "Need to compute mesh.topology0to2 before mesh.topology1to2\n";	exit(1);}
-	mesh.topology1to2 = new vector<int>[mesh.num_edges];
+
+	mesh.topology1to2.clear();							//clear and resize "topology1to2"
+	mesh.topology1to2.resize(mesh.num_edges);
+
 	for (int i=0; i<mesh.num_edges; i++)
-	{	int v0 = mesh.edges[2*i];
-		int v1 = mesh.edges[2*i+1];
+	{	int v0 = mesh.edges[i][0];
+		int v1 = mesh.edges[i][1];
 
 		vector<int> T0 = mesh.topology0to2[v0];
 		vector<int> T1 = mesh.topology0to2[v1];
@@ -161,17 +153,20 @@ void ComputeTopology1to2(MeshData &mesh){
 }
 
 void ComputeTopology2to1(MeshData &mesh){
-	if (mesh.topology0to2==0)
+	if (mesh.topology0to2.size()==0)
 		{cout << "Need to compute mesh.topology0to2 before mesh.topology2to1\n";	exit(1);}
-	mesh.topology2to1 = new vector<int>[mesh.num_elements];
+
+	mesh.topology2to1.clear();							// clear and resize "topology2to1"
+	mesh.topology2to1.resize(mesh.num_elements);
+
 	for (int i=0; i<mesh.num_edges; i++)
-	{	int v0 = mesh.edges[2*i];
-		int v1 = mesh.edges[2*i+1];
+	{	int v0 = mesh.edges[i][0];
+		int v1 = mesh.edges[i][1];
 
 		vector<int> T0 = mesh.topology0to2[v0];
 		vector<int> T1 = mesh.topology0to2[v1];
 
-		vector<int> T = intersect_vectors(T0, T1);
+		vector<int> T = intersect_vectors(T0, T1);				// elements shared by v0 and v1
 
 		if (T.size()!=2 && T.size()!=1)
 			{	cout<<"Computing \"topology2to1\"... " << endl;
@@ -205,17 +200,20 @@ void ComputeTopology2to1(MeshData &mesh){
 
 
 void ComputeTopology2to2(MeshData &mesh){
-	if (mesh.topology0to2==0)
+	if (mesh.topology0to2.size()==0)
 		{cout << "Need to compute mesh.topology0to2 before mesh.topology2to2\n";	exit(1);}
-	mesh.topology2to2 = new vector<int>[mesh.num_elements];
+
+	mesh.topology2to2.clear();							// clear and reszie "topology2to2"
+	mesh.topology2to2.resize(mesh.num_elements);
+
 	for (int i=0; i<mesh.num_edges; i++)
-	{	int v0 = mesh.edges[2*i];
-		int v1 = mesh.edges[2*i+1];
+	{	int v0 = mesh.edges[i][0];
+		int v1 = mesh.edges[i][1];
 
 		vector<int> T0 = mesh.topology0to2[v0];
 		vector<int> T1 = mesh.topology0to2[v1];
 
-		vector<int> T = intersect_vectors(T0, T1);
+		vector<int> T = intersect_vectors(T0, T1);				// elements shared by "v0" and "v1"
 
 		if (T.size()!=2 && T.size()!=1)
 			{	cout<<"Computing \"topology2to2\".." << endl;
@@ -250,13 +248,18 @@ void ComputeTopology2to2(MeshData &mesh){
 	}
 }
 
+
+
 void ComputeTopology1to1(MeshData &mesh){
-	if (mesh.topology0to1==0)
+	if (mesh.topology0to1.size()==0)
 		{cout<< "Need to compute \"topology0to1\" before \"topology1to1\"\n"; exit(1);}
-	mesh.topology1to1 = new vector<int> [mesh.num_edges];
+
+	mesh.topology1to1.clear();							// clear and resize "topology1to1"
+	mesh.topology1to1.resize(mesh.num_edges);
+
 	for (int i=0; i<mesh.num_edges; i++)
-	{	int v0 = mesh.edges[2*i];
-		int v1 = mesh.edges[2*i+1];
+	{	int v0 = mesh.edges[i][0];
+		int v1 = mesh.edges[i][1];
 
 		vector<int> E0 = mesh.topology0to1[v0];
 		vector<int> E1 = mesh.topology0to1[v1];
