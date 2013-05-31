@@ -2,6 +2,7 @@
 #include <string>
 #include <fstream>
 #include <cstdlib>
+#include <vector>
 #include "mesh.hpp"
 using namespace std;
 
@@ -13,23 +14,61 @@ using namespace std;
 #define OUTPUT output
 
 int main(){
-	MeshData mesh;
-	/* Generate mesh by running a script calling "triangle" */
+
+	/* 1. Form new mesh input */
+	vector<vector<double> > interface_nodes;
+	vector<int> node_markers;
+	vector<vector<int> > segments;
+	vector<int> segment_markers;
+	vector<vector<double> > regions;
+	vector<int> region_markers;
+
+	/* 1.1 Add interface node to the vector of interface nodes */
+	vector<double> new_node(2);
+	new_node[0] = -0.5;	new_node[1]=1.0;
+	interface_nodes.push_back(new_node);
+	new_node[0] = 0.2;	new_node[1]=0.5;
+	interface_nodes.push_back(new_node);
+	new_node[0] = -0.3;	new_node[1] = 0.0;
+	interface_nodes.push_back(new_node);
+
+
+	newMesh_rectangle_interface(	interface_nodes, node_markers,		// 4 corner vertices are added to "interface_nodes"
+					segments, segment_markers,
+					regions, region_markers);
+
+	vector<vector<double> > nodes = interface_nodes;
+
+	/* 2. Write new mesh info to a .poly file */
+	string filename = "rectangle";
+
+
+	writePolyfile(	filename,
+			nodes, node_markers,			// vertices
+			segments, segment_markers,		// segments
+			regions, region_markers);		// regional attributes
+
+
+
+
+	/* 3. Generate mesh by running a script calling "triangle" */
 	/*	# q: quality mesh
 	/*	# p: read input from a .poly file
 	/*	# e: generate edge file
 	/*	# A: apply regional attributes
 	/*	# a: area constraint
 	*/
-	string polyfile_name = "example";
-
-	string cmd="/home/xiaoxian/bin/triangle/triangle -qzpeAa0.005 " + polyfile_name + ".poly";
+	string cmd = "/home/xiaoxian/bin/triangle/triangle -qzpeAa.002 " + filename + ".poly";
 	system(cmd.c_str());
 
-	/* Read in mesh information and compute mesh quantities */
-	string node_file_name= polyfile_name + ".1.node";
-	string edge_file_name= polyfile_name + ".1.edge";
-	string ele_file_name = polyfile_name + ".1.ele";
+
+
+	/* 4. Read in mesh information and compute mesh quantities */
+	MeshData mesh;
+
+	string node_file_name= filename + ".1.node";
+	string edge_file_name= filename + ".1.edge";
+	string ele_file_name = filename + ".1.ele";
 
 	ReadNodes(mesh, node_file_name);
 	ReadEdges(mesh, edge_file_name);
@@ -40,7 +79,14 @@ int main(){
 	ComputeEdgeLengths(mesh);
 	ComputeElementAreas(mesh);
 
-	WriteGNUplot(mesh, polyfile_name);
+	/* 4.1 Get info of interface */
+	vector<int> interface_nodes_extracted;
+	vector<int> interface_edges_extracted;
+	extractInterface(mesh, interface_edges_extracted, interface_nodes_extracted);
+
+	/* 5. Plot mesh */
+	gnuplot_mesh(mesh, filename);
+
 
 
 	/****************************** OUTPUT ************************************/
@@ -154,7 +200,7 @@ int main(){
 			OUTPUT << mesh.topology2to2[i][j] << "\t";
 		OUTPUT << endl;
 	}
-	OUTPUT << "\n\n";
+	OUTPUT << "\n\n\n";
 
 	/************ Topology ends */
 
@@ -162,16 +208,30 @@ int main(){
 	OUTPUT << "Lengths of edges" << endl;
 	for (int i=0; i<mesh.num_edges; i++)
 		OUTPUT << "Edge "<<i<<":\t" << mesh.edge_lengths[i] << "\n";
-	cout << "\n";
+	OUTPUT << "\n\n";
 
-	OUTPUT << "Areas of elements" << endl;
+	OUTPUT << "Areas of elements" << "\n";
 	for (int i=0; i<mesh.num_elements; i++)
 		OUTPUT << "Element " << i << ":\t" << mesh.ele_areas[i] << "\n";
-	cout << "\n\n";
+	OUTPUT << "\n\n";
 
 
+	/*********** Submesh begins *******************/
+	/* Interface */
+	OUTPUT << "Interface nodes are:\n";
+	for (int i=0; i<interface_nodes_extracted.size(); i++)
+	{	int node_index = interface_nodes_extracted[i];
+		OUTPUT << node_index << "\t" << mesh.nodes[node_index][0] << "\t" << mesh.nodes[node_index][1] << "\n";
+	}
+	OUTPUT << "\n\n";
 
-	
+	OUTPUT << "Interface edges are:\n";
+	for (int i=0; i<interface_edges_extracted.size(); i++)
+	{	int edge_index = interface_edges_extracted[i];
+		OUTPUT << edge_index << "\t" << mesh.edges[edge_index][0] << "\t" << mesh.edges[edge_index][1] << "\n";
+	}
+
+	/************ Submesh ends *******************/
 
 	output.close();
 	return 0;

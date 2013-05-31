@@ -4,7 +4,7 @@
 #include "mesh.hpp"
 using namespace std;
 
-#define EOF 1.0e-15
+#define EOF 5.0e-16
 
 int extractInterface(	const MeshData& mesh, \
 			vector<int>& interface_edges, \
@@ -16,7 +16,7 @@ int extractInterface(	const MeshData& mesh, \
 	/* Find first node on "top" segment: the node = (x,y) with y==1*/
 	int first_node=-1;
 	for (int i=0; i<mesh.num_edges; i++)
-	{	if (mesh.edge_markers[i]==5)
+	{	if (mesh.edge_markers[i]==5)				// By assumption, interface segments are marked with "5"
 		{	int v0 = mesh.edges[i][0];
 			int v1 = mesh.edges[i][1];
 			double y0 = mesh.nodes[v0][1];
@@ -39,7 +39,7 @@ int extractInterface(	const MeshData& mesh, \
 	/* Next, recover the whole "chain" of edges and nodes following first_node */
 	int last_node = first_node;					// index of the last node of interface chain
 	int new_node;
-	double last_node_y = mesh.nodes[first_node][1];			// y-coordinate of the last node of interface chain
+	double last_node_y = mesh.nodes[last_node][1];			// y-coordinate of the last node of interface chain
 	int last_edge = -1;						// index of the last edge of inteface chain
 	int new_edge = -1;
 	bool new_edge_found = true;

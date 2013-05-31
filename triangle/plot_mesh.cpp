@@ -6,7 +6,7 @@
 using namespace std;
 
 
-void WriteGNUplot(MeshData &mesh, const string& filename){
+void gnuplot_mesh(MeshData &mesh, const string& filename){
 
 	/* Write data file */
 	ofstream output;

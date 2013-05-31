@@ -14,59 +14,92 @@ using namespace std;
 /*(3) no maximum area constraint; it would be stored in a ".area" file if needed
 /***********************************************************************************/
 
-int WritePolyfile(string polyname,
-		int num_nodes, vector<double> x, vector<double> y, int num_node_marker, vector<int> node_marker,	// vertices
-		int num_seg, vector< vector<int> > segments, int num_seg_attr, vector<int> seg_attr,			// segments
-		int num_region_attr, vector<double> region_x, vector<double> region_y, vector<int> region_attr)	// regional attributes
+int writePolyfile(string filename,
+		vector< vector<double> > nodes, vector<int> node_markers,		// vertices
+		vector< vector<int> > segments, vector<int> segment_markers,		// segments
+		vector< vector<double> > regions, vector<int> region_markers)		// regional attributes
 {
-	if (num_nodes==0 || num_seg==0)
+	if (nodes.size()==0 || segments.size()==0)
 		{cout << "Invalid input: vertex/segmenet number have to be non-zero!\n";	return 1; }
-	if (num_node_marker!=0 && num_node_marker!=1)
-		{cout << "num_of_node_marker is " << num_node_marker << "; it has to be either 0 or 1\n";	exit(1);}
-	if (num_seg_attr !=0 && num_seg_attr !=1)
-		{cout << "number of segment attributes is " << num_seg_attr << "; it has to be either 0 or 1\n";	exit(1);}
 
 	/* Open .poly file */
-	polyname += ".poly";								// by default, polyname has no extension
+	string polyname = filename + ".poly";						// by default, filename has no extension
 	ofstream polyfile;
 	polyfile.open(polyname.c_str());
 	if (!polyfile.is_open())
-		{cout << "Failed to open " << polyname << "\n"; return 1;}
+		{cout << "Failed to open " << polyname << "\n"; exit(1);}
 
 	/* 1. Write vertices */
-	polyfile << "#num of vertices is " << num_nodes << "; dimension is 2; " \
-		  << "num of attributes is 0; " << "num of markers is " << num_node_marker << "\n";	// no "attributes" for node
+	int num_marker_per_node = 0;
+	if (node_markers.size()>0)
+	{	if(node_markers.size() != nodes.size())	
+		{cout << "Size of node marker is " << node_markers.size() << "\n";
+		 cout << "Size of nodes is "<< nodes.size() << "\n";
+		 cout << "They have to be equal!\n";	exit(1);
+		}
+		else num_marker_per_node=1;
+	}
+		
 
-	polyfile << num_nodes << "\t" << 2 << "\t" << 0 << "\t" << num_node_marker << "\n";
-	for (int i=0; i< num_nodes; i++)
-	{	polyfile << i << "\t" << x[i] << "\t" << y[i];
-		if (num_node_marker==1)
-			polyfile << "\t" << node_marker[i];
+	polyfile << "#num of vertices is " << nodes.size() << "; dimension is 2; " \
+		  << "num of attributes is 0; " << "num of markers is " << num_marker_per_node << "\n";	// no "attributes" for node
+
+	polyfile << nodes.size() << "\t" << 2 << "\t" << 0 << "\t" << num_marker_per_node << "\n";
+	for (int i=0; i< nodes.size(); i++)
+	{	polyfile << i << "\t" << nodes[i][0] << "\t" << nodes[i][1];
+		if (num_marker_per_node==1)
+			polyfile << "\t" << node_markers[i];
 		polyfile << "\n";
 	}
 	polyfile << "\n\n";
 
 	/* 2. Write segments */
-	polyfile << "# " << num_seg << " segments; " << num_seg_attr << " segment attribute\n";
-	polyfile << num_seg << "\t" << num_seg_attr << "\n";
-	for (int i=0; i<num_seg; i++)
+	int num_marker_per_segment = 0;
+	if ( segment_markers.size()>0 )
+		if (segments.size() != segment_markers.size())
+		{ cout << "Size of segment markers is " << segment_markers.size() << "\n";
+		  cout << "Size of segments is " << segments.size() << "\n";
+		  cout << "They have to be equal!\n";	exit(1);
+		}
+		else num_marker_per_segment = 1;
+
+	polyfile << "# " << segments.size() << " segments; " << num_marker_per_segment << " segment attribute\n";
+	polyfile << segments.size() << "\t" << num_marker_per_segment << "\n";
+	for (int i=0; i<segments.size(); i++)
 	{	polyfile << i << "\t" << segments[i][0] << "\t" << segments[i][1];
-		if (num_seg_attr == 1)
-			polyfile << "\t" << seg_attr[i];
+		if (num_marker_per_segment == 1)
+			polyfile << "\t" << segment_markers[i];
 		polyfile << "\n";
 	}
 	polyfile << "\n\n";
+
+
+
 
 	// Write holes							   // Assume no holes are present
 	polyfile << "# 0 hole\n";
 	polyfile << 0 << "\n\n\n";
 
 
+
+
 	// Write regional attributes
-	polyfile << "# " << num_region_attr << " regional attributes\n"; 
-	for (int i=0; i<num_region_attr; i++)
-	{	polyfile << i << "\t" << region_x[i] << "\t" << region_y[i] << "\t"
-			 << region_attr[i] << "\t" << -1 << "\n";			// no maximum area constrait (set to "-1")
+	int num_marker_per_region = 0;
+	if (region_markers.size()>0)
+		if (regions.size()!= region_markers.size())
+		{ cout << "Size of region markers is "<<region_markers.size() << "\n";
+		  cout << "Number of regions is " << regions.size() << "\n";
+		  cout << "They have to be equal!\n";	exit(1);
+		}
+		else	num_marker_per_region = 1;
+
+	polyfile << "# " << regions.size() << " regions\n"; 
+	polyfile << regions.size() << "\n";
+	for (int i=0; i<regions.size(); i++)
+	{	polyfile << i << "\t" << regions[i][0] << "\t" << regions[i][1];
+		if ( num_marker_per_region > 0 )
+			polyfile << "\t" << region_markers[i] << "\t" << -1 ;	// no maximum area constrait (set to "-1")
+		polyfile << "\n";
 	}
 
 	polyfile.close();

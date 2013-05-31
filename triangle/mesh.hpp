@@ -48,7 +48,22 @@ struct MeshData
 };
 
 
+
+
 /********* Function declarations ****************/
+/* New mesh input */
+int newMesh_rectangle_interface(vector< vector<double> >& nodes, vector<int>& node_markers,\
+				vector<vector<int> >& segments,	vector<int>& segment_markers,\
+				vector<vector<double> >& regions, vector<int>& region_markers);
+
+
+/* Read in mesh information and write to a .poly file as input for "triangle" */
+int writePolyfile(string filename,
+		vector< vector<double> > nodes, vector<int> node_markers,		// vertices
+		vector< vector<int> > segments, vector<int> segment_markers,		// segments
+		vector< vector<double> > regions, vector<int> region_markers);		// regional attributes
+
+
 /* Read mesh data from ".node", ".edge", ".ele" files */
 int ReadNodes(MeshData&, string);
 int ReadEdges(MeshData&, string);
@@ -68,12 +83,9 @@ void ComputeElementAreas(MeshData &mesh);
 void ComputeEdgeLengths(MeshData &mesh);
 
 /* Write .gnuplot file to plot mesh */
-void WriteGNUplot(MeshData &mesh, const string& polyname);
+void gnuplot_mesh(MeshData &mesh, const string& filename);
 
-/* Read in mesh information and write to a .poly file as input for "triangle" */
-int WritePolyfile(string polyname,
-		int num_nodes, vector<double> x, vector<double> y, int num_node_marker, vector<int> node_marker,	// vertices
-		int num_seg, vector< vector<int> > segments, int num_seg_attr, vector<int> seg_attr,			// segments
-		int num_region_attr, vector<double> region_x, vector<double> region_y, vector<int> region_attr);	// regional attributes
+/* Find sub-mesh or interface */
+int extractInterface(	const MeshData& mesh, vector<int>& interface_edges, vector<int>& interface_nodes);
 
 #endif

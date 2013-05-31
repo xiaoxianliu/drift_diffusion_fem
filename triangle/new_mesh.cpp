@@ -56,23 +56,29 @@ int newMesh_rectangle_interface(vector< vector<double> >& nodes,\
 
 	/* 2.2 Form the segments on outer boundaries */
 	vector<int> boundary_node_indices(7);
+	vector<int> boundary_segment_markers(6);
+
+						/* Boundary markers: left 1, bottom 2, right 3, top 4. */
 	boundary_node_indices[0] = 0;
-	boundary_node_indices[1] = 1;
-	boundary_node_indices[2] = top_end;
-	boundary_node_indices[3] = 2;
-	boundary_node_indices[4] = 3;
-	boundary_node_indices[5] = bottom_end;
-	boundary_node_indices[6] = 0;
+	boundary_node_indices[1] = 1;		boundary_segment_markers[0] = 3;
+	boundary_node_indices[2] = top_end;	boundary_segment_markers[1] = 4;
+	boundary_node_indices[3] = 2;		boundary_segment_markers[2] = 4;
+	boundary_node_indices[4] = 3;		boundary_segment_markers[3] = 1;
+	boundary_node_indices[5] = bottom_end;	boundary_segment_markers[4] = 2;
+	boundary_node_indices[6] = 0;		boundary_segment_markers[5] = 2;
+
 	for (int i=0; i<6; i++)
 	{
 		new_seg[0] = boundary_node_indices[i];	new_seg[1] = boundary_node_indices[i+1];
 		segments.push_back(new_seg);
+		segment_markers.push_back (boundary_segment_markers[i]);
 	}
 
 	/* 2.3 Form the segments on interface */
 	for (int i=4; i<nodes.size()-1; i++)
 	{	new_seg[0] = i;	new_seg[1] = i+1;
 		segments.push_back(new_seg);
+		segment_markers.push_back(5);						// interface segments are marked by "5"
 	}
 
 
