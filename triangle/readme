@@ -1,0 +1,32 @@
+# This document describes what the source files in "triangle" do.
+
+1. Initialization
+
+(1) Form Meshdata0(input) for a 2x1 rectangle(vertices, interfaces, segments, attributes, etc)
+Note: by default, the 4 boundary segments {left, bottom, right, top} are marked {1,2,3,4}, respectively. Interface segments are marked with 5. Interior edges are "0"s.
+
+(2) Write Meshdata0 to a ".poly" file
+File: write_polyfile.cpp
+
+2. Generate new mesh
+ Run "triangle" mesh generator from command line, which generate ".1.node", ".1.ele", ".1.edge", ".1.poly" files
+
+3. Form new mesh
+(1) Readin Meshdata1(output) from ".1.node", ".1.ele", ".1.edge"
+Files: read_nodes.cpp, read_edges.cpp, read_elements.cpp
+
+(2) Compute mesh topology (i.e. connectivity among mesh identities)
+File: compute_topology.cpp
+
+(3) Compute geometric quantities: 
+	element areas
+	edge lengths
+File: geometric
+
+
+4. Operations over new mesh
+(1) Extract information of newly formed interface
+File: interface.cpp
+
+(2) plot mesh by Gnuplot
+File: write_gnuplot.cpp
