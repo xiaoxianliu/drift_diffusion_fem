@@ -4,9 +4,10 @@
 #include <cstdlib>
 #include "mesh.hpp"
 using namespace std;
+using namespace MeshNamespace;
 
 
-void gnuplot_mesh(MeshData &mesh, const string& filename){
+void MeshNamespace::gnuplot_mesh(MeshData &mesh, const string& filename){
 
 	/* Write data file */
 	ofstream output;

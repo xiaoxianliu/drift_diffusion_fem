@@ -3,12 +3,13 @@
 #include <vector>
 #include "mesh.hpp"
 using namespace std;
+using namespace MeshNamespace;
 
 #define EOF 5.0e-16
 
-int extractInterface(	const MeshData& mesh, \
-			vector<int>& interface_edges, \
-			vector<int>& interface_nodes)
+int MeshNamespace::extractInterface(	const MeshData& mesh, \
+					vector<int>& interface_edges, \
+					vector<int>& interface_nodes)
 {
 	interface_edges.clear();
 	interface_nodes.clear();
@@ -85,4 +86,4 @@ int extractInterface(	const MeshData& mesh, \
 
 
 
-// Don't forget to add function declaration to "mesh.hpp"
+

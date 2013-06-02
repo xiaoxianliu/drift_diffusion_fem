@@ -3,77 +3,43 @@
 #include <vector>
 #include <string>
 
-using namespace std;
 
-#ifndef MESH_DATA
-#define MESH_DATA
-struct MeshData
+
+#ifndef MESH
+#define MESH
+
+#define MeshNamespace my_mesh				// "my_mesh" is replaced with "MeshNamespace" throughout this folder
+
+namespace MeshNamespace
 {
-	/* Nodes */
-	size_t num_nodes, num_attributes_per_node, num_marker_per_node;
-	vector< vector<double> > nodes;			// coordinates of nodes (num_nodes * 2)
-	vector< vector<double> > node_attributes;	// attributes of each node; each node could have multiple attributes.
-	vector<int> node_markers;
 
-	/* Edges */
-	size_t num_edges;
-	size_t num_marker_per_edge;
-	vector< vector<int> > edges;			// indices of end nodes of edges (num_edges * 2)
-	vector<int> edge_markers;
-
-	/* Elements */
-	size_t num_elements;
-	size_t num_nodes_per_ele;
-	size_t num_attributes_per_ele;
-	vector< vector<int> > elements;			// indices of all nodes of element (num_elements * num_nodes_per_ele)
-	vector<int> element_markers;			// Assume this is the only attribute each element has!!!
-
-	/* Mesh topology */
-	vector< vector<int> > topology2to0;		// nodes of each element (3 for linear element, 6 for quadratic element)
-	vector< vector<int> > topology2to1;		// edges of each element (always 3)
-	vector< vector<int> > topology2to2;		// neighboring element (always 3)
-
-	vector< vector<int> > topology1to0;		//nodes of edge (always 2)
-	vector< vector<int> > topology1to1;		//edges sharing nodes 
-	vector< vector<int> > topology1to2;		//elements containing edge (always 2)
-
-	vector< vector<int> > topology0to0;		//neighboring nodes
-	vector< vector<int> > topology0to1;		//edges containing node
-	vector< vector<int> > topology0to2;		//elements containing node
-
-	/* Mesh properties */
-	vector<double> edge_lengths;
-	vector<double> ele_areas;
-	
-};
-
-
-
+/* Structure for storing mesh information (e.g. topology, triangle areas, etc.)*/
+struct MeshData;
 
 /********* Function declarations ****************/
 /* New mesh input */
-int newMesh_rectangle_interface(vector< vector<double> >& nodes, vector<int>& node_markers,\
-				vector<vector<int> >& segments,	vector<int>& segment_markers,\
-				vector<vector<double> >& regions, vector<int>& region_markers);
+int newMesh_rectangle_interface(std::vector< std::vector<double> >& nodes, std::vector<int>& node_markers,\
+				std::vector<std::vector<int> >& segments,	std::vector<int>& segment_markers,\
+				std::vector<std::vector<double> >& regions, std::vector<int>& region_markers);
 
 
 /* Read in mesh information and write to a .poly file as input for "triangle" */
-int writePolyfile(string filename,
-		vector< vector<double> > nodes, vector<int> node_markers,		// vertices
-		vector< vector<int> > segments, vector<int> segment_markers,		// segments
-		vector< vector<double> > regions, vector<int> region_markers);		// regional attributes
+int writePolyfile(std::string filename,
+		std::vector< std::vector<double> > nodes, std::vector<int> node_markers,		// vertices
+		std::vector< std::vector<int> > segments, std::vector<int> segment_markers,		// segments
+		std::vector< std::vector<double> > regions, std::vector<int> region_markers);		// regional attributes
 
 
 /* Read mesh data from ".node", ".edge", ".ele" files */
-int ReadNodes(MeshData&, string);
-int ReadEdges(MeshData&, string);
-int ReadElements(MeshData&, string);
+int ReadNodes(MeshData&, std::string);
+int ReadEdges(MeshData&, std::string);
+int ReadElements(MeshData&, std::string);
 
 /* vector operations */
-int add_one_entry(vector<int>&, const int&);
-int subtract_one_entry(vector<int>&, const int&);
-vector<int> intersect_vectors(const vector<int>&, const vector<int>&);
-vector<int> merge_vectors(const vector<int>&, const vector<int>&);
+int add_one_entry(std::vector<int>&, const int&);
+int subtract_one_entry(std::vector<int>&, const int&);
+std::vector<int> intersect_vectors(const std::vector<int>&, const std::vector<int>&);
+std::vector<int> merge_vectors(const std::vector<int>&, const std::vector<int>&);
 
 /* Compute mesh topology (i.e. connectivity) */
 int ComputeTopology(MeshData &mesh);
@@ -83,9 +49,62 @@ void ComputeElementAreas(MeshData &mesh);
 void ComputeEdgeLengths(MeshData &mesh);
 
 /* Write .gnuplot file to plot mesh */
-void gnuplot_mesh(MeshData &mesh, const string& filename);
+void gnuplot_mesh(MeshData &mesh, const std::string& filename);
 
 /* Find sub-mesh or interface */
-int extractInterface(	const MeshData& mesh, vector<int>& interface_edges, vector<int>& interface_nodes);
+int extractInterface(	const MeshData& mesh, std::vector<int>& interface_edges, std::vector<int>& interface_nodes);
+
+}
+
+
+
+
+
+// Define struct "MeshData"
+struct MeshNamespace::MeshData
+{
+	/* Nodes */
+	size_t num_nodes, num_attributes_per_node, num_marker_per_node;
+	std::vector< std::vector<double> > nodes;			// coordinates of nodes (num_nodes * 2)
+	std::vector< std::vector<double> > node_attributes;	// attributes of each node; each node could have multiple attributes.
+	std::vector<int> node_markers;
+
+	/* Edges */
+	size_t num_edges;
+	size_t num_marker_per_edge;
+	std::vector< std::vector<int> > edges;			// indices of end nodes of edges (num_edges * 2)
+	std::vector<int> edge_markers;
+
+	/* Elements */
+	size_t num_elements;
+	size_t num_nodes_per_ele;
+	size_t num_attributes_per_ele;
+	std::vector< std::vector<int> > elements;		// indices of all nodes of element (num_elements * num_nodes_per_ele)
+	std::vector<int> element_markers;			// Assume this is the only attribute each element has!!!
+
+	/* Mesh topology */
+	std::vector< std::vector<int> > topology2to0;	// nodes of each element (3 for linear element, 6 for quadratic element)
+	std::vector< std::vector<int> > topology2to1;		// edges of each element (always 3)
+	std::vector< std::vector<int> > topology2to2;		// neighboring element (always 3)
+
+	std::vector< std::vector<int> > topology1to0;		//nodes of edge (always 2)
+	std::vector< std::vector<int> > topology1to1;		//edges sharing nodes 
+	std::vector< std::vector<int> > topology1to2;		//elements containing edge (always 2)
+
+	std::vector< std::vector<int> > topology0to0;		//neighboring nodes
+	std::vector< std::vector<int> > topology0to1;		//edges containing node
+	std::vector< std::vector<int> > topology0to2;		//elements containing node
+
+	/* Mesh properties */
+	std::vector<double> edge_lengths;
+	std::vector<double> ele_areas;
+	
+};
+
+
+
+
+
+
 
 #endif

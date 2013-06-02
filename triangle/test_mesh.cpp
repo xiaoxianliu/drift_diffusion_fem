@@ -15,6 +15,8 @@ using namespace std;
 
 int main(){
 
+	using namespace MeshNamespace;
+
 	/* 1. Form new mesh input */
 	vector<vector<double> > interface_nodes;
 	vector<int> node_markers;

@@ -3,8 +3,10 @@
 #include <string>
 #include <cstdlib>
 #include <vector>
+#include "mesh.hpp"
 
 using namespace std;
+using namespace MeshNamespace;
 
 /************************************************************************************/
 /*This function write mesh information into a .poly file as input for "Triangle" to generate mesh
@@ -14,10 +16,10 @@ using namespace std;
 /*(3) no maximum area constraint; it would be stored in a ".area" file if needed
 /***********************************************************************************/
 
-int writePolyfile(string filename,
-		vector< vector<double> > nodes, vector<int> node_markers,		// vertices
-		vector< vector<int> > segments, vector<int> segment_markers,		// segments
-		vector< vector<double> > regions, vector<int> region_markers)		// regional attributes
+int MeshNamespace::writePolyfile(	string filename,
+					vector< vector<double> > nodes, vector<int> node_markers,		// vertices
+					vector< vector<int> > segments, vector<int> segment_markers,		// segments
+					vector< vector<double> > regions, vector<int> region_markers)		// regional attributes
 {
 	if (nodes.size()==0 || segments.size()==0)
 		{cout << "Invalid input: vertex/segmenet number have to be non-zero!\n";	return 1; }

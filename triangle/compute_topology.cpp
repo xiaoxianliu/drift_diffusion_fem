@@ -2,14 +2,16 @@
 #include <iostream>
 #include <vector>
 #include "mesh.hpp"
-using namespace std;
 
+
+using namespace std;			// std::vector, std::cout, std::endl
+using namespace MeshNamespace;
 
 /*****************************************************************************/
-///////////////////////////////////////////////////////////////////////////////////
 
 
-/* pre-declare each functions */
+
+/* pre-declare each local functions */
 void ComputeTopology2to0(MeshData &mesh);
 void ComputeTopology2to1(MeshData &mesh);
 void ComputeTopology2to2(MeshData &mesh);
@@ -23,7 +25,8 @@ void ComputeTopology0to1(MeshData &mesh);
 void ComputeTopology0to2(MeshData &mesh);
 
 
-int ComputeTopology (MeshData &mesh){
+/* Main function to compute every topology */
+int MeshNamespace::ComputeTopology (MeshData &mesh){
 
 	ComputeTopology2to0(mesh);
 	ComputeTopology1to0(mesh);
@@ -44,6 +47,13 @@ int ComputeTopology (MeshData &mesh){
 
 
 
+
+
+
+
+
+
+
 /***********************************************************************************/
 /*************** Define functions computing each topology **************************/
 
@@ -61,12 +71,7 @@ void ComputeTopology1to0 (MeshData &mesh){
 
 	// Set values to "mesh.topology1to0" array (a copy of "mesh.edges")
 	mesh.topology1to0.assign(mesh.edges.begin(), mesh.edges.end());
-/*	for (int i=0; i<mesh.num_edges; i++)
-	{	for (int j=0; j<2; j++)
-		{	mesh.topology1to0[i].push_back(mesh.edges[2*i+j]);		// Only 2 endpoints for each "edge"(i)
-		}
-	}
-*/
+
 }
 
 /* This may include midpoint of edges if elements are not linear */

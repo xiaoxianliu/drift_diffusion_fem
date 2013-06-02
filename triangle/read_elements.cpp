@@ -8,8 +8,9 @@
 #include "mesh.hpp"
 
 using namespace std;
+using namespace MeshNamespace;
 
-int ReadElements(MeshData &mesh, string ele_file_name){
+int MeshNamespace::ReadElements(MeshData &mesh, string ele_file_name){
 	ifstream input_file;
 	input_file.open(ele_file_name.c_str());
 	if (!input_file.is_open())

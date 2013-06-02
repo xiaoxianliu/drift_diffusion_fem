@@ -1,10 +1,11 @@
 #include "mesh.hpp"
 #include "cmath"
 using namespace std;
+using namespace MeshNamespace;
 
 /* Compute element area and edge length */
 
-void ComputeElementAreas(MeshData &mesh){
+void MeshNamespace::ComputeElementAreas(MeshData &mesh){
 	mesh.ele_areas.clear();
 	mesh.ele_areas.resize(mesh.num_elements);
 
@@ -26,7 +27,7 @@ void ComputeElementAreas(MeshData &mesh){
 	}
 }
 
-void ComputeEdgeLengths(MeshData &mesh){
+void MeshNamespace::ComputeEdgeLengths(MeshData &mesh){
 	mesh.edge_lengths.clear();
 	mesh.edge_lengths.resize(mesh.num_edges);
 

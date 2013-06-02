@@ -8,13 +8,14 @@
 #include "mesh.hpp"
 
 using namespace std;
+using namespace MeshNamespace;
 
 /* Read in information of edges */
 /* Input: (1) MeshData &mesh;
 	  (2) string edge_file_name.
 */
 
-int ReadEdges(MeshData &mesh, string edge_file_name){
+int MeshNamespace::ReadEdges(MeshData &mesh, string edge_file_name){
 	ifstream input_file;
 	input_file.open(edge_file_name.c_str());
 	if (!input_file.is_open())

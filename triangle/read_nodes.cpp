@@ -8,10 +8,11 @@
 #include "mesh.hpp"
 
 using namespace std;
+using namespace MeshNamespace;
 
 /* Function that modify the node information of given MeshData object "mesh" */
 /* Input: (1) MeshData &mesh; (2) full name of ".node" file */
-int ReadNodes(MeshData &mesh, string node_file_name){
+int MeshNamespace::ReadNodes(MeshData &mesh, string node_file_name){
 	ifstream input_file;
 	input_file.open(node_file_name.c_str());
 	if (!input_file.is_open())

@@ -6,17 +6,18 @@
 #define EOF 5e-16
 
 using namespace std;
+using namespace MeshNamespace;
 
 
 
 /* Given information of interface nodes in "nodes" as input, form a PSLG plot after adding (-1,0), (1,0), (1,1), (-1,1) to the list of nodes */
 
-int newMesh_rectangle_interface(vector< vector<double> >& nodes,\
-				vector<int>& node_markers,\
-				vector<vector<int> >& segments,\
-				vector<int>& segment_markers,\
-				vector<vector<double> >& regions,\
-				vector<int>& region_markers)
+int MeshNamespace::newMesh_rectangle_interface(	vector< vector<double> >& nodes,\
+						vector<int>& node_markers,\
+						vector<vector<int> >& segments,\
+						vector<int>& segment_markers,\
+						vector<vector<double> >& regions,\
+						vector<int>& region_markers)
 {
 	/* 1. Form list of nodes */
 	int num_interface_nodes = nodes.size();

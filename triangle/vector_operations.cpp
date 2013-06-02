@@ -1,8 +1,10 @@
 #include <vector>
+#include "mesh.hpp"
+
 using std::vector;
 
 /* Add an entry(int typed) "n" to given vector<int> v, if n is not in "v" already; otherwise do nothing */
-int add_one_entry(vector<int> &v, const int &n)
+int MeshNamespace::add_one_entry(vector<int> &v, const int &n)
 {	bool not_existing = true;
 
 	for (int i=0; i<v.size(); i++)
@@ -15,7 +17,7 @@ int add_one_entry(vector<int> &v, const int &n)
 }
 
 /* Subtract an entry(int typed) "n" from given vector<int> v, if n is in "v"; otherwise, do nothing. */
-int subtract_one_entry(vector<int> &v, const int &n)
+int MeshNamespace::subtract_one_entry(vector<int> &v, const int &n)
 {	for (int i=0; i<v.size(); i++)
 		if (v[i]==n)
 			v.erase(v.begin()+i);
@@ -23,7 +25,7 @@ int subtract_one_entry(vector<int> &v, const int &n)
 }
 
 /* Take intersection of two vector<int> object, "v1" and "v2". And return a vector<int> object, "v_out" */
-vector<int> intersect_vectors(const vector<int> &v1, const vector<int> &v2)
+vector<int> MeshNamespace::intersect_vectors(const vector<int> &v1, const vector<int> &v2)
 {	vector<int> v_out(v1);
 	bool in_both = false;
 	for (int i=0; i<v1.size(); i++)
@@ -39,7 +41,7 @@ vector<int> intersect_vectors(const vector<int> &v1, const vector<int> &v2)
 	return v_out;
 }
 
-vector<int> merge_vectors(const vector<int> &v1, const vector<int> &v2)
+vector<int> MeshNamespace::merge_vectors(const vector<int> &v1, const vector<int> &v2)
 {	vector<int> v_out;
 	for (int i=0; i<v1.size(); i++)
 		add_one_entry(v_out, v1[i]);
