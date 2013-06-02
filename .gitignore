@@ -8,5 +8,8 @@
 *.gnuplot
 *.dat
 *.txt
-*.1.*
-*.2.*
+
+*.node
+*.edge
+*.ele
+*.poly
