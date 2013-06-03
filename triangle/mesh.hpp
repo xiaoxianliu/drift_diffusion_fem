@@ -5,8 +5,8 @@
 
 
 
-#ifndef MESH
-#define MESH
+#ifndef MESH_H
+#define MESH_H
 
 #define MeshNamespace my_mesh				// "my_mesh" is replaced with "MeshNamespace" throughout this folder
 
