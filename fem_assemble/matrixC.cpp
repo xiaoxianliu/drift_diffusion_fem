@@ -1,7 +1,7 @@
 #include <armadillo>
 
 #include "fem_assemble.hpp"
-#include "mesh.hpp"
+#include "../triangle/mesh.hpp"
 
 /* 1.2 C_ij = c* phi_i * phi_j *dx(Omega) */
 

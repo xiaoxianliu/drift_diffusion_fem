@@ -1,5 +1,5 @@
 #include <armadillo>
-#include "mesh.hpp"
+#include "../triangle/mesh.hpp"
 
 using namespace arma;
 using namespace my_mesh;
