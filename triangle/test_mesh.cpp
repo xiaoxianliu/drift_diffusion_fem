@@ -35,9 +35,9 @@ int main(){
 	interface_nodes.push_back(new_node);
 
 
-	newMesh_rectangle_interface(	interface_nodes, node_markers,		// 4 corner vertices are added to "interface_nodes"
-					segments, segment_markers,
-					regions, region_markers);
+	newMesh(interface_nodes, node_markers,		// 4 corner vertices are added to "interface_nodes"
+		segments, segment_markers,
+		regions, region_markers);
 
 	vector<vector<double> > nodes = interface_nodes;
 

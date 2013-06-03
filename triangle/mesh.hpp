@@ -18,9 +18,9 @@ struct MeshData;
 
 /********* Function declarations ****************/
 /* New mesh input */
-int newMesh_rectangle_interface(std::vector< std::vector<double> >& nodes, std::vector<int>& node_markers,\
-				std::vector<std::vector<int> >& segments,	std::vector<int>& segment_markers,\
-				std::vector<std::vector<double> >& regions, std::vector<int>& region_markers);
+int newMesh(	std::vector< std::vector<double> >& nodes, std::vector<int>& node_markers,\
+		std::vector<std::vector<int> >& segments,	std::vector<int>& segment_markers,\
+		std::vector<std::vector<double> >& regions, std::vector<int>& region_markers);
 
 
 /* Read in mesh information and write to a .poly file as input for "triangle" */
