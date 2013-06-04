@@ -3,7 +3,7 @@
 #include <fstream>
 #include <cstdlib>
 #include <vector>
-#include "mesh.hpp"
+#include "../mesh.hpp"
 using namespace std;
 
 /* 1. Generate mesh and compute geometric and topological quantities
@@ -27,11 +27,9 @@ int main(){
 
 	/* 1.1 Add interface node to the vector of interface nodes */
 	vector<double> new_node(2);
-	new_node[0] = -0.5;	new_node[1]=1.0;
+	new_node[0] = 0.0;	new_node[1]=1.0;
 	interface_nodes.push_back(new_node);
-	new_node[0] = 0.2;	new_node[1]=0.5;
-	interface_nodes.push_back(new_node);
-	new_node[0] = -0.3;	new_node[1] = 0.0;
+	new_node[0] = 0.0;	new_node[1]=0.0;
 	interface_nodes.push_back(new_node);
 
 
@@ -60,7 +58,7 @@ int main(){
 	/*	# A: apply regional attributes
 	/*	# a: area constraint
 	*/
-	string cmd = "/home/xiaoxian/bin/triangle/triangle -qzpeAa.002 " + filename + ".poly";
+	string cmd = "/home/xiaoxian/bin/triangle/triangle -qzpeAa1 " + filename + ".poly";
 	system(cmd.c_str());
 
 
