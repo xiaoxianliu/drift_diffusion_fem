@@ -5,15 +5,21 @@ TrashDIR = /home/xiaoxian/.local/share/Trash/files/
 
 all: main.exe
 
-main.exe: main.o generate_mesh.o mesh_lib.o
+main.exe: fem_assemble.o mesh_lib.o generate_mesh.o functions.o main.o
 	g++ *.o -o main.exe
 	make clean_objs
 
 main.o: main.cpp exciton_single_geometry.hpp
 	g++ -c $<
 
+functions.o: functions.cpp
+	g++ -c $<
+
 generate_mesh.o: generate_mesh.cpp exciton_single_geometry.hpp
 	g++ -c $<
+
+fem_assemble.o: ../fem_assemble/*.cpp
+	g++ -c ../fem_assemble/*.cpp
 
 mesh_lib.o: ../triangle/*.cpp
 	g++ -c ../triangle/*.cpp
