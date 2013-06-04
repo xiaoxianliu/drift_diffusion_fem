@@ -49,7 +49,8 @@ void ComputeElementAreas(MeshData &mesh);
 void ComputeEdgeLengths(MeshData &mesh);
 
 /* Write .gnuplot file to plot mesh */
-void gnuplot_mesh(MeshData &mesh, const std::string& filename);
+void gnuplot_mesh(const MeshData &mesh, const std::string& filename);
+void gnuplot_interface(const MeshData &mesh, const std::string& filename);
 
 /* Find sub-mesh or interface */
 int extractInterface(	const MeshData& mesh, std::vector<int>& interface_edges, std::vector<int>& interface_nodes);

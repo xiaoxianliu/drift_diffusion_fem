@@ -58,7 +58,7 @@ int main(){
 	/*	# A: apply regional attributes
 	/*	# a: area constraint
 	*/
-	string cmd = "/home/xiaoxian/bin/triangle/triangle -qzpeAa1 " + filename + ".poly";
+	string cmd = "/home/xiaoxian/bin/triangle/triangle -qzpeAa0.04 " + filename + ".poly";
 	system(cmd.c_str());
 
 
@@ -86,6 +86,7 @@ int main(){
 
 	/* 5. Plot mesh */
 	gnuplot_mesh(mesh, filename);
+	gnuplot_interface(mesh, filename);
 
 
 
