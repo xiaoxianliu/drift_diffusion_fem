@@ -85,7 +85,7 @@ struct MeshNamespace::MeshData
 
 	/* Interface */
 	std::vector< int > interface_nodes;			// indices of nodes and edges on interface
-	std::vecotr< int > interface_edges;			// Note: num_interface_nodes = num_interface_edges+1
+	std::vector< int > interface_edges;			// Note: num_interface_nodes = num_interface_edges+1
 
 	/* Mesh topology */
 	std::vector< std::vector<int> > topology2to0;	// nodes of each element (3 for linear element, 6 for quadratic element)
