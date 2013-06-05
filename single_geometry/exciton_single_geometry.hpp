@@ -26,6 +26,12 @@ arma::vec interpolate_func(const my_mesh::MeshData &mesh, double (*f)(double, do
 /* Linear projection of functions */
 arma::vec project_func(const my_mesh::MeshData &mesh, double (*f)(double, double));
 
+/* Boundary conditions */
+int applyDirichletBC(const my_mesh::MeshData& mesh, arma::mat& M, arma::vec& b);
+
+/* Plot solution */
+int plotSolution(const my_mesh::MeshData& mesh, const arma::vec u, const std::string& filename);
+
 
 
 #endif

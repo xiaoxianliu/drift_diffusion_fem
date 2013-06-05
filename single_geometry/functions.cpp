@@ -16,7 +16,7 @@ double generation_rate(double x, double y)
 }
 
 double interface_reaction_rate(double x, double y)
-{	return 1.0;
+{	return 1.0e3;
 }
 
 

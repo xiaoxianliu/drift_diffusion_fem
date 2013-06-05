@@ -52,7 +52,7 @@ using namespace std;
 
 
 	/* 3. Generate mesh by "triangle" */
-	string cmd = "/home/xiaoxian/bin/triangle/triangle -qzpeAa1 " + filename + ".poly";
+	string cmd = "/home/xiaoxian/bin/triangle/triangle -qzpeAa0.005 " + filename + ".poly";
 	system(cmd.c_str());
 
 	/* 4. read in mesh information */

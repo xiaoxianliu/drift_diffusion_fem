@@ -28,8 +28,20 @@ int main()
 	/* 2.2 RHS vector */
 	arma::vec g = project_func(mesh, generation_rate);
 
-	std::cout<<"g is \n" << g << "\n";
+	/* 2.3 Apply Dirichlet boundary conditions to both coefficient matrix and rhs vector */
+	applyDirichletBC(mesh, M, g);
+
+	/* 3 Solve for and plot solution */
+	/* 3.1 solve for solution */
+	arma::vec u;
+	u = arma::solve(M,g);
+
+	/* 3.2 plot solution */
+	plotSolution(mesh, u, filename);
 
 
 	return 0;
 }
+
+
+
