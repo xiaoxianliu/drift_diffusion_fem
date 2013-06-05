@@ -1,7 +1,7 @@
 #include <vector>
 #include <armadillo>
 #include "../triangle/mesh.hpp"
-#include "exciton_single_geometry.hpp"
+#include "exciton_smart_geometry.hpp"
 
 
 int applyDirichletBC(const my_mesh::MeshData& mesh, arma::mat& M, arma::vec& b)

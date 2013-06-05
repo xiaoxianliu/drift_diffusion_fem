@@ -2,7 +2,7 @@
 CC=g++
 OBJS = main.o generate_mesh.o
 TrashDIR = /home/xiaoxian/.local/share/Trash/files/
-LOCAL_HPP = exciton_single_geometry.hpp
+LOCAL_HPP = exciton_smart_geometry.hpp
 CFLAGS = -larmadillo
 
 all: main.exe
@@ -27,7 +27,7 @@ boundary_conditions.o: boundary_conditions.cpp $(LOCAL_HPP)
 plotting.o: plotting.cpp $(LOCAL_HPP)
 	g++ -c $<
 
-main.o: main.cpp exciton_single_geometry.hpp
+main.o: main.cpp $(LOCAL_HPP)
 	g++ -c $<
 
 

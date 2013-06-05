@@ -3,7 +3,7 @@
 
 #include <armadillo>
 
-#include "exciton_single_geometry.hpp"
+#include "exciton_smart_geometry.hpp"
 #include "../fem_assemble/fem_assemble.hpp"
 
 int main()
