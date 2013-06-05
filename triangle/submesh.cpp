@@ -5,7 +5,7 @@
 using namespace std;
 using namespace MeshNamespace;
 
-#define EOF 5.0e-16
+#define EOF 1.0e-15
 
 int MeshNamespace::extractInterface(	const MeshData& mesh, \
 					vector<int>& interface_edges, \
