@@ -7,7 +7,7 @@ using namespace my_mesh;
 namespace linear_fem
 {
 
-mat assemble_matrix_D(const MeshData& mesh, const vec &d)
+mat assembleMatrixD(const MeshData& mesh, const vec &d)
 {
 	mat D(mesh.num_nodes, mesh.num_nodes);
 	D.zeros();
