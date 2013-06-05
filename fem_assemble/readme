@@ -1,3 +1,5 @@
-This folder contain the files that assemble matrices and vectors arising from FEM formulations of a PDE solver.
+This folder contain the files that assemble matrices arising from FEM formulations of a PDE solver.
+
+It also include interpolation of given functions
 
 
