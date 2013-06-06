@@ -2,9 +2,11 @@
 #include <string>
 #include <cmath>
 #include <cstdlib>
+#include <vector>
+
 #include "../triangle/mesh.hpp"
 
-#define PI 3.1415926
+#define PI 3.1415926535897932384626433832795
 
 my_mesh::MeshData generateMesh_CosInterface(const std::string &filename, double y_control)
 {
@@ -34,7 +36,7 @@ x = y_control * (1 - cos(2*pi*y)); */
 	{	vector<double> node(2);
 		double y;
 		if (i<num_interface_nodes-1)
-			y = 1.0 - i/static_cast<double>(num_interface_nodes);
+			y = 1.0 - i/static_cast<double>(num_interface_nodes-1);
 		else
 			y = 0.0;
 		double x = y_control * 0.5*(1 - std::cos(2*PI*y));
@@ -45,7 +47,6 @@ x = y_control * (1 - cos(2*pi*y)); */
 		interface_nodes.push_back(node);
 	}
 
-	std::cout << "num of interface nodes is " << interface_nodes.size() << "\n";
 
 	/* 1.2 Form other new mesh input */
 	vector<int> node_markers;
@@ -98,6 +99,9 @@ x = y_control * (1 - cos(2*pi*y)); */
 	ComputeElementAreas(mesh);
 
 
+	/* 6 Extract interface */
+	extractInterface(mesh, mesh.interface_edges, mesh.interface_nodes);
+
 
 	/* 6. Plot mesh and interface */
 	gnuplot_mesh(mesh, filename);
@@ -105,3 +109,11 @@ x = y_control * (1 - cos(2*pi*y)); */
 
 	return mesh;	
 }
+
+
+
+
+
+
+
+

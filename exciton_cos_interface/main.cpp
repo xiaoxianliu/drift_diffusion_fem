@@ -1,7 +1,14 @@
+#include <iostream>
 #include <string>
+#include <vector>
+#include <cmath>
+
+#include <armadillo>
 
 #include "exciton_cos_interface.hpp"
 #include "../triangle/mesh.hpp"
+
+#define PI 3.1415926535897932384626433832795
 
 int main()
 {
@@ -11,6 +18,18 @@ int main()
 	/* 1. Mesh */
 	my_mesh::MeshData mesh;
 	mesh = generateMesh_CosInterface(filename, y_control);
+
+	std::vector<double> curvatures = interfaceCurvature(mesh);		// interface curvature
+
+	/* 2. State equation */
+	arma::vec u = solveStateEq(mesh);
+
+	/* 3. Adjoint equation */
+	arma::vec xi = solveAdjointEq(mesh);
+
+	/* 3. Plot solution to state equaiton */
+	plotSolutionVec(mesh, u, filename+"_state");
+	plotSolutionVec(mesh, xi, filename+"_adjoint");
 
 	return 0;
 }
