@@ -13,3 +13,7 @@
 *.node
 *.edge
 *.ele
+
+.pdf
+.log
+.aux
