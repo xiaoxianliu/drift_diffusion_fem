@@ -147,6 +147,7 @@ struct MeshNamespace::MeshData
 		edge_lengths.clear();
 		ele_areas.clear();
 
+		return 0;
 	}
 	
 };
