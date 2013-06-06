@@ -15,7 +15,7 @@ double func_c(double x, double y)
 {	return 1.0;
 }
 double func_d(double x, double y)
-{	return 1.0e1;
+{	return 1.0e2;
 }
 double func_g(double x, double y)
 {	return 1.0;

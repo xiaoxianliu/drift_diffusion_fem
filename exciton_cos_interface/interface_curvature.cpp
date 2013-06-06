@@ -11,7 +11,7 @@
 
 
 
-
+/* Local function: estimate the curvature at given node of some curve */
 double computeCurvature(const std::vector<double>& v0, const std::vector<double>& v1, const std::vector<double>& v2)
 {
 using namespace std;
@@ -30,6 +30,9 @@ using namespace std;
 }
 
 
+
+
+/* Compute curvature on the entire interface */
 std::vector<double> interfaceCurvature(const my_mesh::MeshData &mesh)
 {
 using namespace std;

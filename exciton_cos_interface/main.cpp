@@ -18,8 +18,9 @@ int main()
 	/* 1. Mesh */
 	my_mesh::MeshData mesh;
 	mesh = generateMesh_CosInterface(filename, y_control);
-
 	std::vector<double> curvatures = interfaceCurvature(mesh);		// interface curvature
+
+	plot_STLVector_Interface(mesh, curvatures, "curvatures");
 
 	/* 2. State equation */
 	arma::vec u = solveStateEq(mesh);
@@ -28,8 +29,11 @@ int main()
 	arma::vec xi = solveAdjointEq(mesh);
 
 	/* 3. Plot solution to state equaiton */
-	plotSolutionVec(mesh, u, filename+"_state");
-	plotSolutionVec(mesh, xi, filename+"_adjoint");
+	plot_ArmaVec(mesh, u, filename+"_state");
+	plot_ArmaVec(mesh, xi, filename+"_adjoint");
+
+	plot_ArmaVec_Interface(mesh, u, filename+"_state");			// plot State Eq solution on interface
+	plot_ArmaVec_Interface(mesh, xi, filename+"_adjoint");			// plot Adjoint Eq solution on interface
 
 	return 0;
 }

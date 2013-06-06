@@ -8,7 +8,7 @@
 #include "../triangle/mesh.hpp"
 
 
-int plotSolutionVec(const my_mesh::MeshData& mesh, const arma::vec u, const std::string& filename)
+int plot_ArmaVec(const my_mesh::MeshData& mesh, const arma::vec u, const std::string& filename)
 {using namespace std;
 
 
@@ -39,18 +39,107 @@ int plotSolutionVec(const my_mesh::MeshData& mesh, const arma::vec u, const std:
 	if (!gnuplot_fstream.is_open())
 		{cout<< "Failed to open " << gnuplot_filename << "\n"; exit(1);	}
 
-/*	gnuplot_fstream	<< "set terminal png\n"
+	gnuplot_fstream	<< "set terminal png\n"
 			<< "set output \"" << filename << "_solution.png\"\n"
 			<< "splot \"" << output_name << "\" with lines\n";
-*/
-	gnuplot_fstream << "splot \"" << output_name << "\" with lines\n";
 
 	gnuplot_fstream.close();
 
 
 	/* Run GNUplot file */
-//	string cmd = "gnuplot " + gnuplot_filename + "\n";
 	string cmd = "gnuplot " + gnuplot_filename + " --persist\n";
+	system(cmd.c_str());
+
+	return 0;
+}
+
+
+
+
+
+
+
+int plot_ArmaVec_Interface(const my_mesh::MeshData &mesh, const arma::vec &u, std::string filename)
+{
+using namespace std;
+
+	/* Write ".dat" file */
+	string dat_filename = filename + "(on_interface).dat";
+	ofstream dat_file;
+	dat_file.open(dat_filename.c_str());
+	if (!dat_file.is_open())
+	{	cout << "Failed to open " << dat_filename << " in function \"plotSolution_on_Interface\"\n";	exit(1);	}
+
+	for (int i=0; i<mesh.interface_nodes.size(); i++)
+	{
+		int node_index = mesh.interface_nodes[i];
+		double y = mesh.nodes[node_index][1];
+		dat_file << y << "\t" << u(node_index) << "\n";
+	}
+	dat_file.close();
+
+
+	/* Write ".gnuplot" file */
+	string gnuplot_filename = filename + "(on_interface).gnuplot";
+	ofstream gnuplot_file;
+	gnuplot_file.open(gnuplot_filename.c_str());
+	if (!gnuplot_file.is_open())
+	{	cout << "Failed to open " << gnuplot_filename << " in function \"plotSolution_on_Interface\"\n";	exit(1);}
+	
+	gnuplot_file << "set terminal png\n";
+	gnuplot_file << "set output \"" << filename << "(on_interface).png\"\n";
+	gnuplot_file << "plot \"" << dat_filename << "\" with lines\n";
+
+	gnuplot_file.close();
+
+	/* Run gnuplot */
+	string cmd = "gnuplot \"" + gnuplot_filename + "\" --persist\n";
+	system(cmd.c_str());
+
+	return 0;
+}
+
+
+
+
+
+int plot_STLVector_Interface(const my_mesh::MeshData &mesh, const std::vector<double> &u, std::string filename)
+{
+/* Note: "std::vector<double> u" MUST BE consistent with the order of "mesh.interface_nodes" */
+
+using namespace std;
+
+	/* Write ".dat" file */
+	string dat_filename = filename + "(on_interface).dat";
+	ofstream dat_file;
+	dat_file.open(dat_filename.c_str());
+	if (!dat_file.is_open())
+	{	cout << "Failed to open " << dat_filename << " in function \"plotSolution_on_Interface\"\n";	exit(1);	}
+
+	for (int i=0; i<mesh.interface_nodes.size(); i++)
+	{
+		int node_index = mesh.interface_nodes[i];
+		double y = mesh.nodes[node_index][1];
+		dat_file << y << "\t" << u[i] << "\n";
+	}
+	dat_file.close();
+
+
+	/* Write ".gnuplot" file */
+	string gnuplot_filename = filename + "(on_interface).gnuplot";
+	ofstream gnuplot_file;
+	gnuplot_file.open(gnuplot_filename.c_str());
+	if (!gnuplot_file.is_open())
+	{	cout << "Failed to open " << gnuplot_filename << " in function \"plotSolution_on_Interface\"\n";	exit(1);}
+	
+	gnuplot_file << "set terminal png\n";
+	gnuplot_file << "set output \"" << filename << "(on_interface).png\"\n";
+	gnuplot_file << "plot \"" << dat_filename << "\" with lines\n";
+
+	gnuplot_file.close();
+
+	/* Run gnuplot */
+	string cmd = "gnuplot \"" + gnuplot_filename + "\" --persist\n";
 	system(cmd.c_str());
 
 	return 0;

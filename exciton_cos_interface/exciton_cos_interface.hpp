@@ -24,5 +24,6 @@ arma::vec solveAdjointEq(const my_mesh::MeshData &mesh);
 
 
 /* Plotting */
-int plotSolutionVec(const my_mesh::MeshData& mesh, const arma::vec u, const std::string& filename);
-
+int plot_ArmaVec(const my_mesh::MeshData& mesh, const arma::vec u, const std::string& filename);
+int plot_ArmaVec_Interface(const my_mesh::MeshData &mesh, const arma::vec &u, std::string filename);		
+int plot_STLVector_Interface(const my_mesh::MeshData &mesh, const std::vector<double> &u, std::string filename);
