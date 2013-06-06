@@ -103,6 +103,51 @@ struct MeshNamespace::MeshData
 	/* Mesh properties */
 	std::vector<double> edge_lengths;
 	std::vector<double> ele_areas;
+
+
+
+
+
+	int clear_meshdata()
+	{
+		num_nodes=0; num_attributes_per_node=0;	num_marker_per_node=0;
+		nodes.clear();	
+		node_attributes.clear();
+		node_markers.clear();
+
+		num_edges=0;	num_marker_per_edge=0;
+		edges.clear();	
+		edge_markers.clear();
+
+		/* Elements */
+		num_elements=0;	
+		num_nodes_per_ele=0;
+		num_attributes_per_ele=0;
+		elements.clear();	
+		element_markers.clear();
+
+		/* Interface */
+		interface_nodes.clear();
+		interface_edges.clear();
+
+		/* Mesh topology */
+		topology2to0.clear();	
+		topology2to1.clear();	
+		topology2to2.clear();	
+
+		topology1to0.clear();	
+		topology1to1.clear();	
+		topology1to2.clear();	
+
+		topology0to0.clear();	
+		topology0to1.clear();	
+		topology0to2.clear();	
+
+		/* Mesh properties */
+		edge_lengths.clear();
+		ele_areas.clear();
+
+	}
 	
 };
 
