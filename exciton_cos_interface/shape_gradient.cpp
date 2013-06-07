@@ -4,53 +4,30 @@
 
 #include "../triangle/mesh.hpp"
 
+#include "misc.hpp"			// include functions related to the definition of state and adjoint equations
 
 
-double func_g1(double x, double y)
+
+// to be removed...
+/*double func_g1(double x, double y)
 {	return 1.0;
 }
+*/
 
 
-/* "u" and "v" are two linear function defined over "mesh". */
-/* "gradv_dot_gradu"(...) computes the dot product of grad(v) and grad(u) over a given triangular element with index "ele_index" */
+
+
+// Declare function to be used in "computeShapeGradient" 
 double gradv_dot_gradu_over_one_triangle(	const my_mesh::MeshData &mesh, 
 						const int t,		// "t" being the index of the chosen element in "mesh"
 						const arma::vec &u,
-						const arma::vec &v)
-{
-	int v0 = mesh.elements[t][0];
-	int v1 = mesh.elements[t][1];
-	int v2 = mesh.elements[t][2];
-
-	/* Compute J_inv */
-	arma::vec r1(2);						// difference vector: node_1 - node_0
-	arma::vec r2(2);						// difference vector: node_2 - node_0
-	r1(0) = mesh.nodes[v1][0] - mesh.nodes[v0][0];	r1(1) = mesh.nodes[v1][1] - mesh.nodes[v0][1];
-	r2(0) = mesh.nodes[v2][0] - mesh.nodes[v0][0];	r2(1) = mesh.nodes[v2][1] - mesh.nodes[v0][1];
-
-	arma::mat J(2,2);
-	J(0,0) = arma::dot(r1, r1);	J(0,1) = arma::dot(r1, r2);
-	J(1,0) = arma::dot(r1, r2);	J(1,1) = arma::dot(r2, r2);
-	arma::mat J_inv = arma::inv(J);
-
-	/* arma::vec for nodal differences in both "u" and "v" */
-	arma::vec delta_u(2);
-	arma::vec delta_v(2);
-	delta_u(0) = u(v1) - u(v0);	delta_u(1) = u(v2) - u(v0);
-	delta_v(0) = v(v1) - v(v0);	delta_v(1) = v(v2) - v(v0);
-
-	/* Compute <grad_u, grad_v> */
-	double result;
-	result = arma::dot( J_inv*delta_u, delta_v);
-
-	return result;
-}
+						const arma::vec &v);
 
 
 
 
-
-/* Methodology: project shape gradient to L2(interface) by Galerkin method */
+/*******************************************************************************/
+/***** compute shape gradient (function to be included in main.cpp) ************/
 
 arma::vec computeShapeGradient(	const my_mesh::MeshData &mesh,
 				const arma::vec u,					// solution to state equation
@@ -129,12 +106,12 @@ arma::vec computeShapeGradient(	const my_mesh::MeshData &mesh,
 
 		std::vector<int> neigh_elements = mesh.topology0to2[ node_global_index ];	// indices of neighboring elements
 												// to "node_global_index"-th node
-		std::cout << "this is the " << i << "-th node on interface with global index " << node_global_index << "\n";
+//		std::cout << "this is the " << i << "-th node on interface with global index " << node_global_index << "\n";
 
 		for (int j=0; j<neigh_elements.size(); j++)
 		{	int t = neigh_elements[j];				// global_index for each neighboring triangle
 
-			std::cout << j << "-th neighboring element has global index " << t << "\n";		
+//			std::cout << j << "-th neighboring element has global index " << t << "\n";		
 
 			if (mesh.element_markers[t] == 1)
 			{
@@ -176,7 +153,7 @@ arma::vec computeShapeGradient(	const my_mesh::MeshData &mesh,
 			{
 				rhs2(i) += mesh.ele_areas[t]/3.0 
 					  * ( xi(node_global_index) - 1.0 )
-					  * ( func_g1(x,y) - u(node_global_index));
+					  * ( func_g(x,y) - u(node_global_index));
 				rhs2(i) -= gradv_dot_gradu_over_one_triangle(mesh, t, xi_phi, u);
 			}
 		}
@@ -204,9 +181,66 @@ arma::vec computeShapeGradient(	const my_mesh::MeshData &mesh,
 	g = arma::solve(M, rhs);
 
 
-
-
-
-	return rhs1;
+	return g;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* Start of definition of function to be called by "computeShapeGradient(...)" */
+
+
+/* "u" and "v" are two linear function defined over "mesh". */
+/* "gradv_dot_gradu"(...) computes the dot product of grad(v) and grad(u) over a given triangular element with index "ele_index" */
+double gradv_dot_gradu_over_one_triangle(	const my_mesh::MeshData &mesh, 
+						const int t,		// "t" being the index of the chosen element in "mesh"
+						const arma::vec &u,
+						const arma::vec &v)
+{
+	int v0 = mesh.elements[t][0];
+	int v1 = mesh.elements[t][1];
+	int v2 = mesh.elements[t][2];
+
+	/* Compute J_inv */
+	arma::vec r1(2);						// difference vector: node_1 - node_0
+	arma::vec r2(2);						// difference vector: node_2 - node_0
+	r1(0) = mesh.nodes[v1][0] - mesh.nodes[v0][0];	r1(1) = mesh.nodes[v1][1] - mesh.nodes[v0][1];
+	r2(0) = mesh.nodes[v2][0] - mesh.nodes[v0][0];	r2(1) = mesh.nodes[v2][1] - mesh.nodes[v0][1];
+
+	arma::mat J(2,2);
+	J(0,0) = arma::dot(r1, r1);	J(0,1) = arma::dot(r1, r2);
+	J(1,0) = arma::dot(r1, r2);	J(1,1) = arma::dot(r2, r2);
+	arma::mat J_inv = arma::inv(J);
+
+	/* arma::vec for nodal differences in both "u" and "v" */
+	arma::vec delta_u(2);
+	arma::vec delta_v(2);
+	delta_u(0) = u(v1) - u(v0);	delta_u(1) = u(v2) - u(v0);
+	delta_v(0) = v(v1) - v(v0);	delta_v(1) = v(v2) - v(v0);
+
+	/* Compute <grad_u, grad_v> */
+	double result;
+	result = arma::dot( J_inv*delta_u, delta_v);
+
+	return result;
+}
+
+/* End of definition of function to be called by "computeShapeGradient(...)" */
 

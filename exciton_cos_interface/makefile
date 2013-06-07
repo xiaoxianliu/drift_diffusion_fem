@@ -1,6 +1,7 @@
 TrashDIR = /home/xiaoxian/.local/share/Trash/files/
 CFLAGS = -lm -larmadillo
-LOCAL_HPP = exciton_cos_interface.hpp
+MAIN_HPP = exciton_cos_interface.hpp
+LOCAL_HPP = misc.hpp
 
 
 
@@ -8,7 +9,8 @@ LOCAL_HPP = exciton_cos_interface.hpp
 all: main.exe
 
 main.exe: 	mesh_libs fem_assemble\
-		generate_mesh.o state_eq.o adjoint_eq.o shape_gradient.o plotting.o main.o
+		generate_mesh.o misc.o functionals.o\
+		state_eq.o adjoint_eq.o shape_gradient.o plotting.o main.o
 	g++ *.o -o $@ $(CFLAGS)
 
 quick_build: 	
@@ -19,28 +21,36 @@ quick_build:
 
 
 ##### Compile each individual module
-main.o: main.cpp $(LOCAL_HPP)
+main.o: main.cpp $(MAIN_HPP)
 	g++ -c main.cpp
 
 # mesh
-generate_mesh.o: generate_mesh.cpp $(LOCAL_HPP)
+generate_mesh.o: generate_mesh.cpp $(MAIN_HPP)
 	g++ -c generate_mesh.cpp $(CFLAGS)
 
 
+# functions to be called by other programs
+misc.o:	misc.cpp misc.hpp
+	g++ -c misc.cpp
+
 
 # state equation
-state_eq.o: state_eq.cpp $(LOCAL_HPP)
+state_eq.o: state_eq.cpp $(MAIN_HPP) $(LOCAL_HPP)
 	g++ -c state_eq.cpp $(CFLAGS)
 # adjoint equation
-adjoint_eq.o: adjoint_eq.cpp $(LOCAL_HPP)
+adjoint_eq.o: adjoint_eq.cpp $(MAIN_HPP) $(LOCAL_HPP)
 	g++ -c adjoint_eq.cpp $(CFLAGS)
 
-shape_gradient.o: shape_gradient.cpp $(LOCAL_HPP)
+# shape gradient
+shape_gradient.o: shape_gradient.cpp $(MAIN_HPP) $(LOCAL_HPP)
 	g++ -c shape_gradient.cpp $(CFLAGS)
 
-plotting.o: plotting.cpp $(LOCAL_HPP)
-	g++ -c plotting.cpp $(CFLAGS)
+functionals.o: functionals.cpp $(LOCAL_HPP)
+	g++ -c functionals.cpp
 
+# plotting
+plotting.o: plotting.cpp $(MAIN_HPP)
+	g++ -c plotting.cpp $(CFLAGS)
 
 
 

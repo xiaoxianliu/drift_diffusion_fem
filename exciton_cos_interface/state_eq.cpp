@@ -6,25 +6,7 @@
 
 #include "exciton_cos_interface.hpp"
 
-
-/* Individual functions*/
-double func_a(double x, double y)
-{	return 1.0;
-}
-double func_c(double x, double y)
-{	return 1.0;
-}
-double func_d(double x, double y)
-{	return 1.0e2;
-}
-double func_g(double x, double y)
-{	return 1.0;
-}
-double uD(double x, double y)
-{	return 0.0;
-}
-
-
+#include "misc.hpp"			// include functions related to the definition of state and adjoint equations
 
 
 /* Main solver for state equation */

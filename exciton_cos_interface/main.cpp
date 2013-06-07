@@ -27,18 +27,21 @@ int main()
 
 	/* 4. Compute shape gradient */
 	arma::vec shape_grad = computeShapeGradient(mesh, u, xi);
-	std::cout << "shape gradient:\n" << shape_grad << "\n";
+
+	/* 5. Compute functional */
+	double loss = interfaceIntegral( mesh, u );
+	std::cout << "total loss at interface is " << loss << "\n";
 
 
-
-	/****  Plot solution to state equaiton */
+	/****  Plot solution to state equaiton ****/
 	plot_ArmaVec(mesh, u, filename+"_state");
 	plot_ArmaVec(mesh, xi, filename+"_adjoint");
 
-	plot_ArmaVec_Interface(mesh, u, filename+"_state");			// plot State Eq solution on interface
-	plot_ArmaVec_Interface(mesh, xi, filename+"_adjoint");			// plot Adjoint Eq solution on interface
+	plot_ArmaVec_on_Interface(mesh, u, filename+"_state");			// plot State Eq solution on interface
+	plot_ArmaVec_on_Interface(mesh, xi, filename+"_adjoint");		// plot Adjoint Eq solution on interface
 
-	plot_STLVector_Interface(mesh, mesh.interface_curvatures, "curvatures");// plot interface curvature
+	plot_InterfaceSTLVector(mesh, mesh.interface_curvatures, "curvatures");	// plot interface curvature
+	plot_InterfaceArmaVec(mesh, shape_grad, "shape_gradient");		// shape gradient
 
 	return 0;
 }

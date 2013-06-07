@@ -29,7 +29,7 @@ using namespace my_mesh;
 x = y_control * (1 - cos(2*pi*y)); */
 
 	/* 1.1 Inteface node coordinates */
-	int num_interface_nodes = 101;
+	int num_interface_nodes = 401;
 	vector< vector<double> > interface_nodes;
 
 	for (int i=0; i<num_interface_nodes; i++)
@@ -73,7 +73,7 @@ x = y_control * (1 - cos(2*pi*y)); */
 
 
 	/* 3. Generate mesh by "triangle" */
-	string cmd = "/home/xiaoxian/bin/triangle/triangle -qzpeAa0.005 " + filename + ".poly";
+	string cmd = "/home/xiaoxian/bin/triangle/triangle -qzpeAa0.001 " + filename + ".poly";
 	system(cmd.c_str());
 
 

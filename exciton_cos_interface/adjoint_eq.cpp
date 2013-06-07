@@ -6,18 +6,7 @@
 #include "../fem_assemble/fem_assemble.hpp"
 #include "exciton_cos_interface.hpp"
 
-double func_a_adjoint(double x, double y)
-{	return 1.0;
-}
-double func_c_adjoint(double x, double y)
-{	return 1.0;
-}
-double func_d_adjoint(double x, double y)
-{	return 1.0;
-}
-double xiD(double x, double y)				// xi_D is Dirichlet boundary condition
-{	return 0.0;
-}
+#include "misc.hpp"			// include functions related to the definition of state and adjoint equations
 
 
 
