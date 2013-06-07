@@ -25,7 +25,13 @@ int main()
 	/* 3. Adjoint equation */
 	arma::vec xi = solveAdjointEq(mesh);
 
-	/* 3. Plot solution to state equaiton */
+	/* 4. Compute shape gradient */
+	arma::vec shape_grad = computeShapeGradient(mesh, u, xi);
+	std::cout << "shape gradient:\n" << shape_grad << "\n";
+
+
+
+	/****  Plot solution to state equaiton */
 	plot_ArmaVec(mesh, u, filename+"_state");
 	plot_ArmaVec(mesh, xi, filename+"_adjoint");
 

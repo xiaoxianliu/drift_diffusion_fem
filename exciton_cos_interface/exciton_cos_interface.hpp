@@ -21,6 +21,11 @@ arma::vec solveAdjointEq(const my_mesh::MeshData &mesh);
 
 
 
+/* Shape gradient */
+arma::vec computeShapeGradient(	const my_mesh::MeshData &mesh, const arma::vec u, const arma::vec xi);
+
+
+
 /* Plotting */
 int plot_ArmaVec(const my_mesh::MeshData& mesh, const arma::vec u, const std::string& filename);
 int plot_ArmaVec_Interface(const my_mesh::MeshData &mesh, const arma::vec &u, std::string filename);		

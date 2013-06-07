@@ -8,9 +8,10 @@ LOCAL_HPP = exciton_cos_interface.hpp
 all: main.exe
 
 main.exe: 	mesh_libs fem_assemble\
-		generate_mesh.o state_eq.o adjoint_eq.o plotting.o main.o
+		generate_mesh.o state_eq.o adjoint_eq.o shape_gradient.o plotting.o main.o
 	g++ *.o -o $@ $(CFLAGS)
-quick_build.o: 	
+
+quick_build: 	
 	g++ *.o -o main.exe $(CFLAGS)
 
 
@@ -33,6 +34,9 @@ state_eq.o: state_eq.cpp $(LOCAL_HPP)
 # adjoint equation
 adjoint_eq.o: adjoint_eq.cpp $(LOCAL_HPP)
 	g++ -c adjoint_eq.cpp $(CFLAGS)
+
+shape_gradient.o: shape_gradient.cpp $(LOCAL_HPP)
+	g++ -c shape_gradient.cpp $(CFLAGS)
 
 plotting.o: plotting.cpp $(LOCAL_HPP)
 	g++ -c plotting.cpp $(CFLAGS)
