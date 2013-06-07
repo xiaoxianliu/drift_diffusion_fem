@@ -20,7 +20,5 @@ mesh_lib.o: $(OBJS)
 clean_objs:
 	-mv *.o $(HOME)/.local/share/Trash/files/
 
-clean_data:
-	-mv *.node *.edge *.ele *.poly *.dat *.gnuplot *.png *.txt $(HOME)/.local/share/Trash/files/
 complete_clean:
-	-make clean_objs clean_data
+	-make clean_objs
