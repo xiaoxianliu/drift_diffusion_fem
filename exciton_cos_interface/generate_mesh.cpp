@@ -95,15 +95,17 @@ x = y_control * (1 - cos(2*pi*y)); */
 
 	/* 5. Compute topology(connectivity) and geometric quantities (areas, lengths) */
 	ComputeTopology(mesh);
-	ComputeEdgeLengths(mesh);
-	ComputeElementAreas(mesh);
-
 
 	/* 6 Extract interface */
 	extractInterface(mesh, mesh.interface_edges, mesh.interface_nodes);
 
+	/* 7 Compute geometric quantities: areas, lengths, interface curvature */
+	ComputeEdgeLengths(mesh);
+	ComputeElementAreas(mesh);
+	ComputeInterfaceCurvatures(mesh);
 
-	/* 6. Plot mesh and interface */
+
+	/* 8. Plot mesh and interface */
 	gnuplot_mesh(mesh, filename);
 	gnuplot_interface(mesh, filename);
 

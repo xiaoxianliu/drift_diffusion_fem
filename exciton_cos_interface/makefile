@@ -8,7 +8,7 @@ LOCAL_HPP = exciton_cos_interface.hpp
 all: main.exe
 
 main.exe: 	mesh_libs fem_assemble\
-		generate_mesh.o interface_curvature.o state_eq.o adjoint_eq.o plotting.o main.o
+		generate_mesh.o state_eq.o adjoint_eq.o plotting.o main.o
 	g++ *.o -o $@ $(CFLAGS)
 quick_build.o: 	
 	g++ *.o -o main.exe $(CFLAGS)
@@ -24,8 +24,9 @@ main.o: main.cpp $(LOCAL_HPP)
 # mesh
 generate_mesh.o: generate_mesh.cpp $(LOCAL_HPP)
 	g++ -c generate_mesh.cpp $(CFLAGS)
-interface_curvatures.o: interface_curvature.cpp
-	g++ -c interface_curvature.cpp $(CFLAGS)
+
+
+
 # state equation
 state_eq.o: state_eq.cpp $(LOCAL_HPP)
 	g++ -c state_eq.cpp $(CFLAGS)

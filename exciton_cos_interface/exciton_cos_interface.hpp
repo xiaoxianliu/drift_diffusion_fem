@@ -7,8 +7,6 @@
 
 /* Mesh */
 my_mesh::MeshData generateMesh_CosInterface(const std::string &filename, double y_control);
-/* interface curvature */
-std::vector<double> interfaceCurvature(const my_mesh::MeshData &mesh);
 
 
 /* Function approximation */
