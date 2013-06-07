@@ -88,9 +88,9 @@ int MeshNamespace::newMesh(	vector< vector<double> >& nodes,\
 
 	vector<double> new_reg(2);
 	new_reg[0] = -0.99;	new_reg[1] = 0.99;					// Left region
-	regions.push_back(new_reg);	region_markers.push_back(0);
+	regions.push_back(new_reg);	region_markers.push_back(1);
 	new_reg[0] = 0.99;	new_reg[1] = 0.99;
-	regions.push_back(new_reg);	region_markers.push_back(1);			// Right region
+	regions.push_back(new_reg);	region_markers.push_back(2);			// Right region
 
 	return 0;
 
