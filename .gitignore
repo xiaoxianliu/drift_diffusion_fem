@@ -14,6 +14,6 @@
 *.edge
 *.ele
 
-.pdf
-.log
-.aux
+*.pdf
+*.log
+*.aux
