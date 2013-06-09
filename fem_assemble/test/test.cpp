@@ -19,7 +19,7 @@ int plotSolution(const my_mesh::MeshData& , const arma::vec u, const std::string
 
 int main()
 {
-//	using namespace std;
+
 	using namespace my_mesh;
 	using namespace linear_fem;
 
