@@ -106,7 +106,8 @@ struct MeshNamespace::MeshData
 	std::vector<double> edge_lengths;
 	std::vector<double> ele_areas;
 
-
+	/* Marker for mesh refinement */
+	std::vector<int> refinement_markers;
 
 
 
