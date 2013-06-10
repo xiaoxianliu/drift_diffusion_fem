@@ -17,7 +17,7 @@ mesh_lib.a: ../*.cpp
 
 
 clean_data:
-	- mv *.poly *.ele *.node *.edge *.png *.gnuplot *.dat *.txt $(TrashDIR)
+	- mv *.poly *.ele *.node *.edge *.area *.png *.gnuplot *.dat *.txt $(TrashDIR)
 clean_objs:
 	- mv *.o $(TrashDIR)
 clean_libs:
