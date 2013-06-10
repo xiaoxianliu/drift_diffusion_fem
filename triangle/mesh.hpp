@@ -56,6 +56,10 @@ void gnuplot_interface(const MeshData &mesh, const std::string& filename);
 /* Find sub-mesh or interface */
 int extractInterface(	const MeshData& mesh, std::vector<int>& interface_edges, std::vector<int>& interface_nodes);
 
+/* Refine mesh */
+MeshData refineMesh(	const MeshData &old_mesh, std::string filename, int level);
+
+
 }
 
 
