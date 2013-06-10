@@ -1,4 +1,6 @@
 *~
+
+*.a
 *.o
 *.exe
 *.out
@@ -13,6 +15,7 @@
 *.node
 *.edge
 *.ele
+*.area
 
 *.pdf
 *.log

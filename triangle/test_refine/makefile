@@ -6,8 +6,8 @@ test.exe: mesh_lib.a test.o
 	g++ *.o *.a -o $@
 #	make clean_objs
 
-test.o: test_mesh.cpp
-	g++ -c test_mesh.cpp
+test.o: test_refine.cpp
+	g++ -c test_refine.cpp
 
 mesh_lib.a: ../*.cpp
 	g++ -c $^
