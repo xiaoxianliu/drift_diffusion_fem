@@ -23,7 +23,9 @@ arma::vec solveAdjointEq(const my_mesh::MeshData &mesh);
 double interfaceIntegral(const my_mesh::MeshData& mesh, const arma::vec& u );
 
 /* Shape gradient */
-arma::vec computeShapeGradient(	const my_mesh::MeshData &mesh, const arma::vec u, const arma::vec xi);
+arma::vec computeShapeGradient(	const my_mesh::MeshData &mesh,
+				const arma::vec &u, const arma::vec &xi);
+
 
 
 

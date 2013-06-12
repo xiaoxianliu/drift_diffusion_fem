@@ -29,7 +29,7 @@ using namespace my_mesh;
 x = y_control * (1 - cos(2*pi*y)); */
 
 	/* 1.1 Inteface node coordinates */
-	int num_interface_nodes = 401;
+	int num_interface_nodes = 101;
 	vector< vector<double> > interface_nodes;
 
 	for (int i=0; i<num_interface_nodes; i++)
