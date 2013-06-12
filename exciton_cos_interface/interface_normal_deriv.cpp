@@ -11,7 +11,7 @@
 double dphi_dx_dot_du_dx(const my_mesh::MeshData &mesh, const arma::vec &u, int node_i, int ele_i);
 
 
-
+/******** Main function in this file *************/
 int computeInterfaceNormalDerivative(	const my_mesh::MeshData &mesh, 
 					const arma::vec &u,
 					arma::vec &du_dnu_1, arma::vec &du_dnu_2) //"nu" indicates the outer normal direction on surface

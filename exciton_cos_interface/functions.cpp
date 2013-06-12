@@ -1,8 +1,3 @@
-/*** Functions used only locally ****/
-
-
-
-
 
 /****** Functions related to state equation of unknown "u" ******/
 

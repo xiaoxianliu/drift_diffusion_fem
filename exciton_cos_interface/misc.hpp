@@ -21,3 +21,8 @@ double func_d_adjoint(double x, double y);
 double xiD(double x, double y);
 
 
+
+/******* Function to compute L2 projection of normal derivative on interface for a given solution ************/
+int computeInterfaceNormalDerivative(	const my_mesh::MeshData &mesh, 
+					const arma::vec &u,
+					arma::vec &du_dnu_1, arma::vec &du_dnu_2);
