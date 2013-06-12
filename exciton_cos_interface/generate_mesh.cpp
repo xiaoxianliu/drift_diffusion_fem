@@ -48,7 +48,7 @@ x = y_control * (1 - cos(2*pi*y)); */
 	}
 
 
-	/* 1.2 Form other new mesh input */
+	/* 1.2 Form other "newMesh" input */
 	vector<int> node_markers;
 	vector<vector<int> > segments;
 	vector<int> segment_markers;

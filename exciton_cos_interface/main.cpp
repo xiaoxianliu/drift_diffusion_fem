@@ -12,36 +12,39 @@
 
 int main()
 {
-	std::string filename = "cos_interface";
+	std::string filename = "Cosine";
 	double y_control = 0.5;
 
 	/* 1. Mesh */
 	my_mesh::MeshData mesh;
 	mesh = generateMesh_CosInterface(filename, y_control);
+	plot_InterfaceSTLVector(mesh, mesh.interface_curvatures, "curvatures");	// plot interface curvature
 
-	/* 2. State equation */
+	// 2. State equation 
 	arma::vec u = solveStateEq(mesh);
+	plot_ArmaVec(mesh, u, filename+"_state");
+	plot_ArmaVec_on_Interface(mesh, u, filename+"_state");			// plot State Eq solution on interface
 
-	/* 3. Adjoint equation */
+
+
+	// 3. Adjoint equation 
 	arma::vec xi = solveAdjointEq(mesh);
+	plot_ArmaVec(mesh, xi, filename+"_adjoint");
+	plot_ArmaVec_on_Interface(mesh, xi, filename+"_adjoint");		// plot Adjoint Eq solution on interface
 
-	/* 4. Compute shape gradient */
+	// 4. Compute shape gradient 
 	arma::vec shape_grad = computeShapeGradient(mesh, u, xi);
+	plot_InterfaceArmaVec(mesh, shape_grad, "shape_gradient");		// shape gradient
+
+
 
 	/* 5. Compute functional */
 	double loss = interfaceIntegral( mesh, u );
 	std::cout << "total loss at interface is " << loss << "\n";
 
 
-	/****  Plot solution to state equaiton ****/
-	plot_ArmaVec(mesh, u, filename+"_state");
-	plot_ArmaVec(mesh, xi, filename+"_adjoint");
 
-	plot_ArmaVec_on_Interface(mesh, u, filename+"_state");			// plot State Eq solution on interface
-	plot_ArmaVec_on_Interface(mesh, xi, filename+"_adjoint");		// plot Adjoint Eq solution on interface
 
-	plot_InterfaceSTLVector(mesh, mesh.interface_curvatures, "curvatures");	// plot interface curvature
-	plot_InterfaceArmaVec(mesh, shape_grad, "shape_gradient");		// shape gradient
 
 	return 0;
 }

@@ -8,14 +8,6 @@
 
 
 
-// to be removed...
-/*double func_g1(double x, double y)
-{	return 1.0;
-}
-*/
-
-
-
 
 // Declare function to be used in "computeShapeGradient" 
 double gradv_dot_gradu_over_one_triangle(	const my_mesh::MeshData &mesh, 
