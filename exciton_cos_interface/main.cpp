@@ -13,7 +13,7 @@
 int main()
 {
 	std::string filename = "Cosine";
-	double y_control = 0.5;
+	double y_control = 0.89;
 
 	/* 1. Mesh */
 	my_mesh::MeshData mesh;
