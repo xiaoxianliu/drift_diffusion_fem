@@ -13,11 +13,3 @@ double uD(double x, double y);
 
 
 
-/******* Functions related to adjoint equation of unknown "xi" *********/
-
-double func_a_adjoint(double x, double y);
-double func_c_adjoint(double x, double y);
-double func_d_adjoint(double x, double y);
-double xiD(double x, double y);
-
-

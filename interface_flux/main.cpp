@@ -5,7 +5,7 @@
 
 #include <armadillo>
 
-#include "exciton_cos_interface.hpp"
+#include "exciton_interface_flux.hpp"
 #include "../triangle/mesh.hpp"
 
 #define PI 3.1415926535897932384626433832795
@@ -26,15 +26,11 @@ int main()
 	plot_ArmaVec_on_Interface(mesh, u, filename+"_state");			// plot State Eq solution on interface
 
 
-
-	// 3. Adjoint equation 
-	arma::vec xi = solveAdjointEq(mesh);
-	plot_ArmaVec(mesh, xi, filename+"_adjoint");
-	plot_ArmaVec_on_Interface(mesh, xi, filename+"_adjoint");		// plot Adjoint Eq solution on interface
-
-	// 4. Compute shape gradient 
-	arma::vec shape_grad = computeShapeGradient(mesh, u, xi);
-	plot_InterfaceArmaVec(mesh, shape_grad, "shape_gradient");		// shape gradient
+	// 3. Compute normal derivative on interface
+	arma::vec du_dnu_1, du_dnu_2;
+	computeInterfaceNormalDerivative (mesh, u, du_dnu_1, du_dnu_2);
+	plot_InterfaceArmaVec(mesh, du_dnu_1, filename+"_interface_normal_deriv_1");
+	plot_InterfaceArmaVec(mesh, du_dnu_2, filename+"_interface_normal_deriv_2");
 
 
 

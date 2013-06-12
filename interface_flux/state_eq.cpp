@@ -5,7 +5,7 @@
 #include "../triangle/mesh.hpp"
 #include "../fem_assemble/fem_assemble.hpp"
 
-#include "exciton_cos_interface.hpp"
+#include "exciton_interface_flux.hpp"
 
 #include "misc.hpp"			// include functions related to the definition of state and adjoint equations
 

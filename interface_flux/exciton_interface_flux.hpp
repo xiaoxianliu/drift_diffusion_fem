@@ -16,14 +16,15 @@ arma::vec interpolateFunc(const my_mesh::MeshData& mesh, double (*f)(double, dou
 
 /* State equation */
 arma::vec solveStateEq(const my_mesh::MeshData mesh);
-/* Adjoint equation */
-arma::vec solveAdjointEq(const my_mesh::MeshData &mesh);
 
 /* Functionals */
 double interfaceIntegral(const my_mesh::MeshData& mesh, const arma::vec& u );
 
-/* Shape gradient */
-arma::vec computeShapeGradient(	const my_mesh::MeshData &mesh, const arma::vec u, const arma::vec xi);
+/* Interface flux */
+int computeInterfaceNormalDerivative(	const my_mesh::MeshData &mesh, 
+					const arma::vec &u,
+					arma::vec &du_dnu_1, arma::vec &du_dnu_2);
+//Note: Above, "nu" indicates the outer normal direction on surface
 
 
 
