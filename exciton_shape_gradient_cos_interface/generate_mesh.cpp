@@ -8,25 +8,29 @@
 
 #define PI 3.1415926535897932384626433832795
 
-my_mesh::MeshData generateMesh_CosInterface(const std::string &filename, double y_control)
+my_mesh::MeshData generateMesh_CosInterface(const std::string &filename, double x_control)
 {
 using namespace std;
 using namespace my_mesh;
 
 	MeshData mesh;
 
+	double x_offset = -0.5;
 
-	/* 0. Determine if "y_control" is valid */
-	double y_control_max = 0.9;
-	if (std::fabs(y_control) > y_control_max)
-	{	std::cout << "abs(y_control) has to be smaller than " << y_control_max << "\n";
+	/* 0. Determine if "x_control" is valid */
+	double x_limit = 0.95;
+	if ( x_offset + x_control > x_limit )
+	{
+		std::cout << "x_offset is " << x_offset << "\n";
+		std::cout << "x_control (amplitude of cos curve) is " << x_control << "\n";
+		std::cout << "abs(x_offset +/- x_control) has to be smaller than " << x_limit << "\n";
 		exit(1);
 	}
 
 
 	/* 1. Generate sample points on interface */
 /* all sample points with coordinates (x,y) satisfy the formula:
-x = y_control * (1 - cos(2*pi*y)); */
+x = x_control * (1 - cos(2*pi*y)); */
 
 	/* 1.1 Inteface node coordinates */
 	int num_interface_nodes = 201;
@@ -39,7 +43,7 @@ x = y_control * (1 - cos(2*pi*y)); */
 			y = 1.0 - i/static_cast<double>(num_interface_nodes-1);
 		else
 			y = 0.0;
-		double x = y_control * 0.5*(1 - std::cos(2*PI*y));
+		double x = x_offset + x_control * 0.5*(1 - std::cos(2*PI*y));
 
 		node[0] = x;
 		node[1] = y;
