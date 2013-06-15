@@ -59,6 +59,8 @@ int extractInterface(	const MeshData& mesh, std::vector<int>& interface_edges, s
 /* Refine mesh */
 MeshData refineMesh(	const MeshData &old_mesh, std::string filename, int level);
 
+/* Compute barry points for each element */
+int computeBarryPoints( MeshData &mesh);
 
 }
 
@@ -112,6 +114,9 @@ struct MeshNamespace::MeshData
 
 	/* Marker for mesh refinement */
 	std::vector<int> refinement_markers;
+
+	/* Barry point for each triangular element */
+	std::vector< std::vector<double> > barry_points;
 
 
 
