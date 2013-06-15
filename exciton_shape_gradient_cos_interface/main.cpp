@@ -13,11 +13,11 @@
 int main()
 {
 	std::string filename = "Cosine";
-	double y_control = 0.89;
+	double x_control = 1.;
 
 	/* 1. Mesh */
 	my_mesh::MeshData mesh;
-	mesh = generateMesh_CosInterface(filename, y_control);
+	mesh = generateMesh_CosInterface(filename, x_control);
 	plot_InterfaceSTLVector(mesh, mesh.interface_curvatures, "curvatures");	// plot interface curvature
 
 	// 2. State equation 
