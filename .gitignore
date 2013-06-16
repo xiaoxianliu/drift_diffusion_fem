@@ -1,4 +1,6 @@
 *~
+
+*.a
 *.o
 *.exe
 *.out
@@ -9,7 +11,19 @@
 *.dat
 *.txt
 
+<<<<<<< HEAD
 *.node
 *.edge
 *.ele
 *.poly
+=======
+*.poly
+*.node
+*.edge
+*.ele
+*.area
+
+*.pdf
+*.log
+*.aux
+>>>>>>> newmesh

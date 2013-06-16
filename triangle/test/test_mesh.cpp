@@ -2,7 +2,8 @@
 #include <string>
 #include <fstream>
 #include <cstdlib>
-#include "mesh.hpp"
+#include <vector>
+#include "../mesh.hpp"
 using namespace std;
 
 /* 1. Generate mesh and compute geometric and topological quantities
@@ -12,53 +13,43 @@ using namespace std;
 
 #define OUTPUT output
 
-int main(){
+int main()
+{
+using namespace MeshNamespace;
+
+	/* Form new interface */
+	vector<vector<double> > interface_nodes;
+
+	vector<double> new_node(2);
+	new_node[0] = 0.0;	new_node[1]=1.0;
+	interface_nodes.push_back(new_node);
+	new_node[0] = 0.0;	new_node[1]=0.0;
+	interface_nodes.push_back(new_node);
+
+	/* Generate new mesh */
 	MeshData mesh;
-	/* Generate mesh by running a script calling "triangle" */
-	/*	# q: quality mesh
-	/*	# p: read input from a .poly file
-	/*	# e: generate edge file
-	/*	# A: apply regional attributes
-	/*	# a: area constraint
-	*/
-	string polyfile_name = "example";
+	double max_area = 0.001;
+	bool is_to_plot=false;
+	mesh = generateMesh("test", interface_nodes);
 
-	string cmd="/home/xiaoxian/bin/triangle/triangle -qzpeAa0.001 " + polyfile_name + ".poly";
-	system(cmd.c_str());
-
-	/* Read in mesh information and compute mesh quantities */
-	string node_file_name= polyfile_name + ".1.node";
-	string edge_file_name= polyfile_name + ".1.edge";
-	string ele_file_name = polyfile_name + ".1.ele";
-
-	ReadNodes(mesh, node_file_name);
-	ReadEdges(mesh, edge_file_name);
-	ReadElements(mesh, ele_file_name);
-
-	ComputeTopology(mesh);
-
-	ComputeEdgeLengths(mesh);
-	ComputeElementAreas(mesh);
-
-	WriteGNUplot(mesh, polyfile_name);
 
 
 	/****************************** OUTPUT ************************************/
 	/* Write output file */
 	ofstream output;
-	output.open("output.txt");
+	output.open("test_output.txt");
 
 	OUTPUT << "Nodal information:" << endl;
 	for (int i=0; i<mesh.num_nodes; i++)
 	{
-		OUTPUT << i << "\t" << mesh.nodes[i*2] << "\t" << mesh.nodes[i*2+1] << "\t" << mesh.node_markers[i] << endl;
+		OUTPUT << i << "\t" << mesh.nodes[i][0] << "\t" << mesh.nodes[i][1] << "\t" << mesh.node_markers[i] << endl;
 	}
 	OUTPUT << "\n";
 
 	OUTPUT << "Edge information:" << endl;
 	for (int i=0; i<mesh.num_edges; i++)
 	{
-		OUTPUT << i << "\t" << mesh.edges[i*2] << "\t" << mesh.edges[i*2+1] << "\t" << mesh.edge_markers[i] << endl;
+		OUTPUT << i << "\t" << mesh.edges[i][0] << "\t" << mesh.edges[i][1] << "\t" << mesh.edge_markers[i] << endl;
 	}
 	OUTPUT << "\n";
 
@@ -67,10 +58,10 @@ int main(){
 	{
 		OUTPUT << i << "\t";
 		for (int j=0; j<mesh.num_nodes_per_ele; j++)
-			{OUTPUT << mesh.elements[ i*mesh.num_nodes_per_ele + j ] << "\t";	}
+			{OUTPUT << mesh.elements[i][j] << "\t";	}
 		OUTPUT << mesh.element_markers[i] << endl << endl;
 	}
-	OUTPUT << endl;
+	OUTPUT << "\n";
 
 
 	/************* Topology Start */
@@ -154,7 +145,7 @@ int main(){
 			OUTPUT << mesh.topology2to2[i][j] << "\t";
 		OUTPUT << endl;
 	}
-	OUTPUT << "\n\n";
+	OUTPUT << "\n\n\n";
 
 	/************ Topology ends */
 
@@ -162,18 +153,34 @@ int main(){
 	OUTPUT << "Lengths of edges" << endl;
 	for (int i=0; i<mesh.num_edges; i++)
 		OUTPUT << "Edge "<<i<<":\t" << mesh.edge_lengths[i] << "\n";
-	cout << "\n";
+	OUTPUT << "\n\n";
 
-	OUTPUT << "Areas of elements" << endl;
+	OUTPUT << "Areas of elements" << "\n";
 	for (int i=0; i<mesh.num_elements; i++)
 		OUTPUT << "Element " << i << ":\t" << mesh.ele_areas[i] << "\n";
-	cout << "\n\n";
+	OUTPUT << "\n\n";
 
 
+	/*********** Submesh begins *******************/
+	/* Interface */
+	OUTPUT << "Interface nodes are:\n";
+	for (int i=0; i<mesh.interface_nodes.size(); i++)
+	{	int node_index = mesh.interface_nodes[i];
+		OUTPUT << node_index << "\t" << mesh.nodes[node_index][0] << "\t" << mesh.nodes[node_index][1] << "\n";
+	}
+	OUTPUT << "\n\n";
 
-	
+	OUTPUT << "Interface edges are:\n";
+	for (int i=0; i<mesh.interface_edges.size(); i++)
+	{	int edge_index = mesh.interface_edges[i];
+		OUTPUT << edge_index << "\t" << mesh.edges[edge_index][0] << "\t" << mesh.edges[edge_index][1] << "\n";
+	}
+
+	/************ Submesh ends *******************/
 
 	output.close();
+
+
 	return 0;
 
 }
