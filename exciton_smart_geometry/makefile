@@ -7,37 +7,24 @@ CFLAGS = -larmadillo
 
 all: main.exe
 
-main.exe: 	fem_assemble.o mesh_lib.o \
-		generate_mesh.o functions.o boundary_conditions.o plotting.o \
-		main.o
-	g++ *.o -o main.exe $(CFLAGS)
+main.exe: 	mesh_libs.a fem_assemble.a local_objs
+	g++ *.o *.a -o main.exe $(CFLAGS)
+
+
+local_objs: *.cpp
+	g++ -c $^
+
+
+
+fem_assemble.a: ../fem_assemble/*.cpp
+	g++ -c ../fem_assemble/*.cpp
+	ar cr $@ *.o
 	make clean_objs
 
-
-
-generate_mesh.o: generate_mesh.cpp $(LOCAL_HPP)
-	g++ -c $<
-
-functions.o: functions.cpp
-	g++ -c $<
-
-boundary_conditions.o: boundary_conditions.cpp $(LOCAL_HPP)
-	g++ -c $<
-
-plotting.o: plotting.cpp $(LOCAL_HPP)
-	g++ -c $<
-
-main.o: main.cpp $(LOCAL_HPP)
-	g++ -c $<
-
-
-
-
-fem_assemble.o: ../fem_assemble/*.cpp
-	g++ -c ../fem_assemble/*.cpp
-
-mesh_lib.o: ../triangle/*.cpp
-	g++ -c ../triangle/*.cpp
+mesh_libs.a: ../triangle/*.cpp
+	g++ -c $^
+	ar cr $@ *.o
+	make clean_objs
 
 
 
@@ -50,7 +37,9 @@ clean_objs:
 	- mv *.o $(TrashDIR)
 clean_data:
 	- mv *.node *.edge *.ele *.poly *.dat *.gnuplot *.png *.txt $(TrashDIR)
+clean_libs:
+	- mv *.a $(TrashDIR)
 clean_exe:
 	- mv *.exe $(TrashDIR)
-complete_clean:
+clean:
 	make clean_objs clean_data clean_exe

@@ -1,6 +1,6 @@
 #include <iostream>
 #include <string>
-
+#include <vector>
 #include <armadillo>
 
 #include "exciton_smart_geometry.hpp"
@@ -8,10 +8,31 @@
 
 int main()
 {
+using namespace std;
+
 	std::string filename = "smart";
 
 	/* 1. Generate mesh */
-	my_mesh::MeshData mesh = generateMesh("smart");
+
+	vector<vector<double> > interface_nodes;
+	/* 1.1 Add interface node to the vector of interface nodes */
+	vector<double> new_node(2);
+	new_node[0] = -0.2;	new_node[1]=1.0;
+	interface_nodes.push_back(new_node);
+	new_node[0] = -0.2;	new_node[1]=2/3.0;
+	interface_nodes.push_back(new_node);
+	new_node[0] = 0.3;	new_node[1]=2/3.0;
+	interface_nodes.push_back(new_node);
+	new_node[0] = 0.3;	new_node[1]=1/3.0;
+	interface_nodes.push_back(new_node);
+	new_node[0] = -0.2;	new_node[1]=1/3.0;
+	interface_nodes.push_back(new_node);
+	new_node[0] = -0.2;	new_node[1]=0.0;
+	interface_nodes.push_back(new_node);
+
+	double max_area = 0.001;
+	my_mesh::MeshData mesh = my_mesh::generateMesh(filename, interface_nodes, max_area);
+
 
 	/* 2. Form coefficient matrix and RHS vector */
 	/* 2.1 Coefficient matrix */
