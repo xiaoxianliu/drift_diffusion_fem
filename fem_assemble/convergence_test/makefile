@@ -8,15 +8,13 @@ quick_build:
 	g++ *.o *.a -o main.exe $(CFLAGS)
 
 main.exe: mesh_lib.a fem_assemble.a \
-		main.o generate_mesh.o solve.o functionals.o
+		main.o solve.o functionals.o
 	g++ *.o *.a -o $@ $(CFLAGS)
 #	make clean_objs
 
 main.o: main.cpp
 	g++ -c main.cpp $(CFLAGS)
 
-generate_mesh.o: generate_mesh.cpp $(LOCAL_HPP)
-	g++ -c generate_mesh.cpp 
 functionals.o: functionals.cpp $(LOCAL_HPP)
 	g++ -c functionals.cpp
 solve.o: solve.cpp $(LOCAL_HPP)
