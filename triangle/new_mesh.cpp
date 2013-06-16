@@ -12,12 +12,12 @@ using namespace MeshNamespace;
 
 /* Given information of interface nodes in "nodes" as input, form a PSLG plot after adding (-1,0), (1,0), (1,1), (-1,1) to the list of nodes */
 /* Nonempty input: only interface "nodes" */
-int MeshNamespace::newMesh(	vector< vector<double> >& nodes,\
-				vector<int>& node_markers,\
-				vector<vector<int> >& segments,\
-				vector<int>& segment_markers,\
-				vector<vector<double> >& regions,\
-				vector<int>& region_markers)
+int MeshNamespace::initializeMesh(	vector< vector<double> >& nodes,\
+					vector<int>& node_markers,\
+					vector<vector<int> >& segments,\
+					vector<int>& segment_markers,\
+					vector<vector<double> >& regions,\
+					vector<int>& region_markers)
 {
 	/* 1. Form list of nodes */
 	int num_interface_nodes = nodes.size();
@@ -42,8 +42,7 @@ int MeshNamespace::newMesh(	vector< vector<double> >& nodes,\
 	}
 
 	/* 2. Form the segment */
-	segments.clear();
-	vector<int> new_seg(2);
+	segments.clear();	segment_markers.clear();
 
 	/* 2.1 Identify which end of the interface is on the top boundary */
 	int top_end = -1, bottom_end = -1;
@@ -68,6 +67,7 @@ int MeshNamespace::newMesh(	vector< vector<double> >& nodes,\
 	boundary_node_indices[5] = bottom_end;	boundary_segment_markers[4] = 2;
 	boundary_node_indices[6] = 0;		boundary_segment_markers[5] = 2;
 
+	vector<int> new_seg(2);
 	for (int i=0; i<6; i++)
 	{
 		new_seg[0] = boundary_node_indices[i];	new_seg[1] = boundary_node_indices[i+1];

@@ -1,24 +1,16 @@
 
-CC=g++
-OBJS =	new_mesh.o read_nodes.o read_edges.o read_elements.o compute_topology.o vector_operations.o geometric.o \
-	submesh.o plot_mesh.o write_polyfile.o 
-
-# Output: 
-#  mesh_lib.o: an object file to be called by other programs.
-
-all : mesh_lib.o
-
-mesh_lib.o: $(OBJS)
-	ld -r $(OBJS) -o $@
+TrashDir = /home/xiaoxian/.local/share/Trash/files/
 
 
-# compile each .cpp source file seperately
-%.o: %.cpp mesh.hpp
-	$(CC) -c $<
+all : mesh_libs
+
+mesh_libs: *.cpp
+	g++ -c $^
+
 
 
 clean_objs:
-	-mv *.o $(HOME)/.local/share/Trash/files/
+	- mv *.o $(TrashDir)
 
-complete_clean:
-	-make clean_objs
+clean:
+	make clean_objs

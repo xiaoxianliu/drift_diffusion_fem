@@ -12,15 +12,29 @@
 
 namespace MeshNamespace
 {
-
 /* Structure for storing mesh information (e.g. topology, triangle areas, etc.)*/
 struct MeshData;
 
-/********* Function declarations ****************/
+
+
+/******** Functions returning a "MeshData" *************************************/
+/* Generate a mesh */
+MeshData generateMesh(	std::string filename, 
+			const std::vector< std::vector<double> > &interface_nodes, 
+			double max_area=1.0,
+			bool is_to_plot=true);
+/* Refine mesh */
+MeshData refineMesh(	const MeshData &old_mesh, std::string filename, int level);
+
+
+
+
+
+/********* Individual Function declarations ****************/
 /* New mesh input */
-int newMesh(	std::vector< std::vector<double> >& nodes, std::vector<int>& node_markers,\
-		std::vector<std::vector<int> >& segments,	std::vector<int>& segment_markers,\
-		std::vector<std::vector<double> >& regions, std::vector<int>& region_markers);
+int initializeMesh(	std::vector< std::vector<double> >& nodes, std::vector<int>& node_markers,\
+			std::vector<std::vector<int> >& segments,	std::vector<int>& segment_markers,\
+			std::vector<std::vector<double> >& regions, std::vector<int>& region_markers);
 
 
 /* Read in mesh information and write to a .poly file as input for "triangle" */
@@ -35,7 +49,7 @@ int ReadNodes(MeshData&, std::string);
 int ReadEdges(MeshData&, std::string);
 int ReadElements(MeshData&, std::string);
 
-/* vector operations */
+/* STL vector operations */
 int add_one_entry(std::vector<int>&, const int&);
 int subtract_one_entry(std::vector<int>&, const int&);
 std::vector<int> intersect_vectors(const std::vector<int>&, const std::vector<int>&);
@@ -54,10 +68,7 @@ void gnuplot_mesh(const MeshData &mesh, const std::string& filename);
 void gnuplot_interface(const MeshData &mesh, const std::string& filename);
 
 /* Find sub-mesh or interface */
-int extractInterface(	const MeshData& mesh, std::vector<int>& interface_edges, std::vector<int>& interface_nodes);
-
-/* Refine mesh */
-MeshData refineMesh(	const MeshData &old_mesh, std::string filename, int level);
+int extractInterface( MeshData& mesh );
 
 /* Compute barry points for each element */
 int computeBarryPoints( MeshData &mesh);

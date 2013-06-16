@@ -10,8 +10,8 @@ namespace MeshNamespace
 
 MeshData generateMesh(	std::string filename, 
 			const std::vector< std::vector<double> > &interface_nodes, 
-			double max_area = 1.0,
-			bool is_to_plot=true)
+			double max_area,
+			bool is_to_plot)
 {
 using namespace MeshNamespace;
 
@@ -70,8 +70,8 @@ using namespace MeshNamespace;
 
 	/* 5. Plot mesh */
 	if (is_to_plot)
-	{	gnuplot_mesh(mesh, filename);
-		gnuplot_interface(mesh, filename);
+	{	gnuplot_mesh(mesh, filename+".1");
+		gnuplot_interface(mesh, filename+".1");
 	}
 
 
