@@ -11,12 +11,6 @@
 *.dat
 *.txt
 
-<<<<<<< HEAD
-*.node
-*.edge
-*.ele
-*.poly
-=======
 *.poly
 *.node
 *.edge
@@ -26,4 +20,4 @@
 *.pdf
 *.log
 *.aux
->>>>>>> newmesh
+
