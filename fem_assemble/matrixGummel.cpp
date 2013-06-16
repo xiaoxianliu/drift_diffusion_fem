@@ -23,6 +23,7 @@ arma::mat assembleMatrixGummel(const my_mesh::MeshData &mesh, const arma::vec &p
 	for (int t=0; t<mesh.elements.size(); t++)			// element "t"
 	{
 		double mu_t = mu(t);					// element-wise constant mobility "mu_t"
+		double area_t = mesh.ele_areas[t];			// area of triangle "t"
 
 		for (int i=0; i<3; i++)					// cycle through all 3 vertices as "row index"
 		{							// compute M(v0, v0), M(v0, v1), M(v0, v2)
@@ -50,9 +51,9 @@ arma::mat assembleMatrixGummel(const my_mesh::MeshData &mesh, const arma::vec &p
 			b1(0) = BernoulliFunc(psi1 - psi0) * std::exp(psi1 - psi0);	b1(1) = 0.;
 			b2(0) = 0.;	b2(1) = BernoulliFunc(psi2 - psi0) * std::exp(psi2 - psi0);
 
-			M(v0, v0) += mu_t * arma::dot( b0, JtJ_inv * dphi_dxi );
-			M(v0, v1) += mu_t * arma::dot( b1, JtJ_inv * dphi_dxi );
-			M(v0, v2) += mu_t * arma::dot( b2, JtJ_inv * dphi_dxi );
+			M(v0, v0) += mu_t * area_t * arma::dot( b0, JtJ_inv * dphi_dxi );
+			M(v0, v1) += mu_t * area_t * arma::dot( b1, JtJ_inv * dphi_dxi );
+			M(v0, v2) += mu_t * area_t * arma::dot( b2, JtJ_inv * dphi_dxi );
 		}
 		
 
