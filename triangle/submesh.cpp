@@ -7,12 +7,10 @@ using namespace MeshNamespace;
 
 #define EOF 1.0e-15
 
-int MeshNamespace::extractInterface(	const MeshData& mesh, \
-					vector<int>& interface_edges, \
-					vector<int>& interface_nodes)
+int MeshNamespace::extractInterface( MeshData& mesh )
 {
-	interface_edges.clear();
-	interface_nodes.clear();
+	mesh.interface_edges.clear();
+	mesh.interface_nodes.clear();
 
 	/* Find first node on "top" segment: the node = (x,y) with y==1*/
 	int first_node=-1;
@@ -31,7 +29,7 @@ int MeshNamespace::extractInterface(	const MeshData& mesh, \
 	}
 
 	if (first_node >=0)
-	{	interface_nodes.push_back(first_node);
+	{	mesh.interface_nodes.push_back(first_node);
 	}
 	else
 	{	cout << "Didn't find the node on top segment with y-coordinate == 1... Go check where went wrong!\n"; exit(1);}
@@ -55,7 +53,7 @@ int MeshNamespace::extractInterface(	const MeshData& mesh, \
 			if (mesh.edge_markers[edge] == 5 && edge != last_edge)			// if a new neighboring edge is found
 			{	new_edge = edge;
 				last_edge = new_edge;
-				interface_edges.push_back(new_edge);
+				mesh.interface_edges.push_back(new_edge);
 
 				new_edge_found = true;
 				break;
@@ -74,7 +72,7 @@ int MeshNamespace::extractInterface(	const MeshData& mesh, \
 			 cout<< "---> Last node must be one of " << v0 << " and " << v1 << "\n";
 			}
 
-			interface_nodes.push_back(new_node);
+			mesh.interface_nodes.push_back(new_node);
 			last_node = new_node;
 			last_node_y = mesh.nodes[new_node][1];
 		}
