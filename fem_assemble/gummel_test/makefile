@@ -5,9 +5,9 @@ TrashDir = /home/xiaoxian/.local/share/Trash/files
 
 
 
-all: gummel_test.exe
+all: assemble_gummel_matrix.exe
 
-gummel_test.exe: mesh_lib.a fem_lib.a local_objs
+assemble_gummel_matrix.exe: mesh_lib.a fem_lib.a local_objs
 	g++ *.o *.a -o $@ -larmadillo
 
 local_objs: *.cpp
