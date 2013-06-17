@@ -17,6 +17,9 @@ arma::mat assembleMatrixGummel(const my_mesh::MeshData& mesh, const arma::vec& p
 arma::vec interpolateConstant(const my_mesh::MeshData &mesh, double C);		// interpolation of a constant
 arma::vec interpolateFunction(const my_mesh::MeshData& mesh, double (*f)(double, double));	// interpolation of a function
 
+// L2 projection of a given function/vector
+arma::vec L2projection_Func(	const my_mesh::MeshData &mesh, double (*f)(double, double) );
+arma::vec L2projection_Vec(	const my_mesh::MeshData &mesh, const arma::vec &u);
 }
 
 
