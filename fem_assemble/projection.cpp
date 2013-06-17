@@ -5,7 +5,7 @@
 namespace linear_fem
 {
 
-arma::vec L2projection_Vec(	const my_mesh::MeshData &mesh,
+arma::vec L2project_Vec(	const my_mesh::MeshData &mesh,
 				const arma::vec &u)
 {
 	arma::vec result(mesh.num_nodes);
@@ -23,7 +23,7 @@ arma::vec L2projection_Vec(	const my_mesh::MeshData &mesh,
 	return result;
 }
 
-arma::vec L2projection_Func(	const my_mesh::MeshData &mesh,
+arma::vec L2project_Func(	const my_mesh::MeshData &mesh,
 				double (*f)(double, double)	)
 {
 	arma::vec result(mesh.num_nodes);
