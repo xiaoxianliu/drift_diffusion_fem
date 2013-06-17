@@ -13,8 +13,9 @@ arma::mat assembleMatrixC(const my_mesh::MeshData& mesh, const arma::vec& c);
 arma::mat assembleMatrixD(const my_mesh::MeshData& mesh, const arma::vec& d);
 arma::mat assembleMatrixGummel(const my_mesh::MeshData& mesh, const arma::vec& psi, const arma::vec &mu);
 
-// interpolate function at nodal points of given mesh
-arma::vec interpolateFunction(const my_mesh::MeshData& mesh, double (*f)(double, double));	
+// interpolation at nodal points of a given mesh
+arma::vec interpolateConstant(const my_mesh::MeshData &mesh, double C);		// interpolation of a constant
+arma::vec interpolateFunction(const my_mesh::MeshData& mesh, double (*f)(double, double));	// interpolation of a function
 
 }
 

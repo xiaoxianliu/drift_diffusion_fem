@@ -17,4 +17,15 @@ arma::vec interpolateFunction(const my_mesh::MeshData &mesh, double (*f)(double,
 	return u;
 }
 
+
+arma::vec interpolateConstant(const my_mesh::MeshData &mesh, double C)
+{
+	int N = mesh.num_nodes;
+	arma::vec u(N);
+	for (int i=0; i<N; i++)
+	{	u(i) = C;
+	}
+	return u;
+}
+
 }
