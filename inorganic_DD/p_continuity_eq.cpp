@@ -8,7 +8,7 @@
 #include "parameters.hpp"
 
 // local function declaration
-int applyDirichletBC_p(	const my_mesh::MeshData &mesh, const arma::vec p_D, arma::mat Mp, arma::vec rhs);
+int applyDirichletBC_p(	const my_mesh::MeshData &mesh, const arma::vec p_D, arma::mat &Mp, arma::vec &rhs);
 
 
 /** Main solver for NContinuity equation */
@@ -48,7 +48,7 @@ using namespace linear_fem;
 
 
 
-int applyDirichletBC_p(	const my_mesh::MeshData &mesh, const arma::vec p_D, arma::mat Mp, arma::vec rhs)
+int applyDirichletBC_p(	const my_mesh::MeshData &mesh, const arma::vec p_D, arma::mat &Mp, arma::vec &rhs)
 {
 	for (int i=0; i<mesh.num_nodes; i++)
 	{

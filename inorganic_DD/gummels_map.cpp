@@ -22,12 +22,12 @@ int gummelIteration(	const my_mesh::MeshData &mesh,
 	arma::vec psi_D = psi_D_Vec(mesh, psi_bi, psi_applied);
 
 
-/*	psi = psi_D;	n = n_D;	p = p_D;
-	plot_ArmaVec(mesh, C, "dopant_density");
+//	psi = psi_D;	n = n_D;	p = p_D;
+/*	plot_ArmaVec(mesh, C, "dopant_density");
 	plot_ArmaVec(mesh, psi_bi, "built-in_potential");
-	plot_ArmaVec(mesh, psi, "initial_psi");
-	plot_ArmaVec(mesh, n, "initial_n");
-	plot_ArmaVec(mesh, p, "initial_p");
+	plot_ArmaVec(mesh, psi_D, "initial_psi");
+	plot_ArmaVec(mesh, n_D, "initial_n");
+	plot_ArmaVec(mesh, p_D, "initial_p");
 */
 
 
@@ -39,15 +39,12 @@ int gummelIteration(	const my_mesh::MeshData &mesh,
 			new_p(mesh.num_nodes), 
 			new_psi(mesh.num_nodes);
 
-	int max_iter = 5;
+	int max_iter = 10;
 	double gummel_err = 1.0, gummel_tol = 1e-3;
 	for (int i=0; i<max_iter; i++)
 	{
 
 		std::cout << "Gummel iteration " << i << ":\n";
-
-
-
 
 		// 3.1 compute solution of N-continuity equation 
 		new_n = solveNContinuityEq (mesh, prev_psi, prev_n, prev_p, n_D);
@@ -77,9 +74,7 @@ int gummelIteration(	const my_mesh::MeshData &mesh,
 
 	psi = new_psi;	n = new_n;	p = new_p;
 
-	plot_ArmaVec(mesh, psi, "psi");
-	plot_ArmaVec(mesh, n, "n");
-	plot_ArmaVec(mesh, p, "p");
+
 
 	
 	return 0;

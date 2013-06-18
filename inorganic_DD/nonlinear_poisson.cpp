@@ -62,7 +62,7 @@ using namespace linear_fem;
 	}
 
 	// 2. Assemble right-hand-side matrix
-	arma::vec dummy_vec = (input_n + input_p) % input_psi + C + input_p - input_n;	// element-wise formula for rhs function
+	arma::vec dummy_vec = (input_n + input_p) % input_psi + C + input_p - input_n;	// node-wise formula for rhs function
 	arma::vec rhs = L2project_Vec(mesh, dummy_vec);
 
 	// 3. Apply Dirichlet boundary condition
@@ -104,12 +104,12 @@ arma::vec solveNonlinearPoissonEq(	const my_mesh::MeshData &mesh,
 		std::cout << "\t" << iter << "-th Newton's iteration... \n";
 
 		new_psi = solveLinearizedPoissonEq(mesh, prev_psi, input_n, input_p, psi_D, C);
+
 		newton_err = arma::norm( arma::abs( new_psi - prev_psi ), "inf");
+		prev_psi = new_psi;
 
 		std::cout << "\tNewton's error is " << newton_err << "\n";
 		if (newton_err < newton_tol)	break;
-		else
-		{	prev_psi = new_psi;	}
 	}
 
 	return new_psi;

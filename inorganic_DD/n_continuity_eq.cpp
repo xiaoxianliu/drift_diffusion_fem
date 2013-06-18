@@ -8,7 +8,7 @@
 #include "parameters.hpp"
 
 // local function declaration
-int applyDirichletBC_n(	const my_mesh::MeshData &mesh, const arma::vec n_D, arma::mat Mn, arma::vec rhs);
+int applyDirichletBC_n(	const my_mesh::MeshData &mesh, const arma::vec n_D, arma::mat &Mn, arma::vec &rhs);
 
 
 /** Main solver for NContinuity equation */
@@ -37,6 +37,7 @@ using namespace linear_fem;
 	// 3. Apply Dirichlet boundary conditions
 	applyDirichletBC_n(mesh, n_D, Mn, rhs);
 
+
 	// 4. Solve for and return solution
 	output_n = arma::solve(Mn, rhs);
 
@@ -55,7 +56,7 @@ using namespace linear_fem;
 
 
 
-int applyDirichletBC_n(	const my_mesh::MeshData &mesh, const arma::vec n_D, arma::mat Mn, arma::vec rhs)
+int applyDirichletBC_n(	const my_mesh::MeshData &mesh, const arma::vec n_D, arma::mat &Mn, arma::vec &rhs)
 {
 	for (int i=0; i<mesh.num_nodes; i++)
 	{

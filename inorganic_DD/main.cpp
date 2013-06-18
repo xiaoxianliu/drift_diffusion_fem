@@ -24,6 +24,10 @@ int main (int argc, char* argv[])
 	arma::vec psi, n, p;
 	gummelIteration(mesh, psi, n, p);
 
+	plot_ArmaVec(mesh, psi, "psi");
+	plot_ArmaVec(mesh, n, "n");
+	plot_ArmaVec(mesh, p, "p");
+
 	
 
 	return 0;
