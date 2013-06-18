@@ -1,3 +1,4 @@
+#include <iostream>
 #include <vector>
 #include <armadillo>
 #include "../triangle/mesh.hpp"
@@ -19,6 +20,7 @@ arma::vec solvePContinuityEq(	const my_mesh::MeshData &mesh,
 {
 using namespace linear_fem;
 
+	std::cout << "In solving p continuity equation...\n";
 
 	// 1. Assemble coefficient matrix
 	arma::vec mu_p_vec = interpolateConstant(mesh, parameters::mu_p);
@@ -39,6 +41,11 @@ using namespace linear_fem;
 
 	return output_p;
 }
+
+
+
+
+
 
 
 int applyDirichletBC_p(	const my_mesh::MeshData &mesh, const arma::vec p_D, arma::mat Mp, arma::vec rhs)

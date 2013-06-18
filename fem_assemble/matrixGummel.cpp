@@ -22,7 +22,7 @@ arma::mat assembleMatrixGummel(const my_mesh::MeshData &mesh, const arma::vec &p
 
 	for (int t=0; t<mesh.elements.size(); t++)			// element "t"
 	{
-		double mu_t = mu(t);					// element-wise constant mobility "mu_t"
+
 		double area_t = mesh.ele_areas[t];			// area of triangle "t"
 
 		for (int i=0; i<3; i++)					// cycle through all 3 vertices as "row index"
@@ -36,6 +36,7 @@ arma::mat assembleMatrixGummel(const my_mesh::MeshData &mesh, const arma::vec &p
 				x2 = mesh.nodes[v2][0], y2 = mesh.nodes[v2][1];
 
 			double psi0 = psi(v0), psi1 = psi(v1), psi2 = psi(v2);
+			double mu_t = (mu(v0) + mu(v1) + mu(v2))/3.0;
 
 
 			arma::mat J(2,2);				// Jacobian matrix "d_x/d_xi" of transformation
@@ -54,9 +55,8 @@ arma::mat assembleMatrixGummel(const my_mesh::MeshData &mesh, const arma::vec &p
 			M(v0, v0) += mu_t * area_t * arma::dot( b0, JtJ_inv * dphi_dxi );
 			M(v0, v1) += mu_t * area_t * arma::dot( b1, JtJ_inv * dphi_dxi );
 			M(v0, v2) += mu_t * area_t * arma::dot( b2, JtJ_inv * dphi_dxi );
-		}
-		
 
+		}
 	}
 
 

@@ -8,7 +8,7 @@ main.exe: mesh_libs.a fem_assemble.a local_objs
 	g++ *.o *.a -o $@ $(CFLAGS)
 
 local_objs: *.cpp *.hpp
-	g++ -c $^ $(CFLAGS)
+	g++ -c *.cpp $(CFLAGS)
 
 
 fem_assemble.a: ../fem_assemble/*.cpp

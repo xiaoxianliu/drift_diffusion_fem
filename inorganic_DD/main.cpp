@@ -17,7 +17,7 @@ int main (int argc, char* argv[])
 	new_node[0]=0;	new_node[1]=0;	interface_nodes.push_back(new_node);
 
 	my_mesh::MeshData mesh;	
-	double max_area = 1;
+	double max_area = 0.001;
 	mesh = my_mesh::generateMesh(filename, interface_nodes, max_area);
 
 	/*** 2. Gummel's map *********/

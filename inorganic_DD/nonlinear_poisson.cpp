@@ -1,3 +1,4 @@
+#include <iostream>
 #include <vector>
 #include <armadillo>
 #include "../triangle/mesh.hpp"
@@ -49,6 +50,8 @@ arma::vec solveLinearizedPoissonEq(	const my_mesh::MeshData &mesh,
 {
 using namespace linear_fem;
 
+	std::cout << "\tIn solving linearized Poisson's equation... \n";
+
 	// 1. Assemble coefficient matrix
 	arma::mat M;
 	{	arma::vec a_vec = interpolateConstant(mesh, parameters::lambda_squared);
@@ -89,15 +92,21 @@ arma::vec solveNonlinearPoissonEq(	const my_mesh::MeshData &mesh,
 					const arma::vec &psi_D,
 					const arma::vec &C	)			// "C" is arma::vec form of doping density
 {
+	std::cout << "In solving nonlinear Poisson's equation...\n";
+
 	arma::vec prev_psi = input_psi;			// initial "psi" to start Newton's iteration
 	arma::vec new_psi;
 
 	double newton_err=1.0, newton_tol = 1e-3;
-	int max_iter = 10;
-	for (int iter; iter < max_iter; iter++)
+	int max_iter = 1;
+	for (int iter=0; iter < max_iter; iter++)
 	{
-		new_psi = solveLinearizedPoissonEq(mesh, input_psi, input_n, input_p, psi_D, C);
+		std::cout << "\t" << iter << "-th Newton's iteration... \n";
+
+		new_psi = solveLinearizedPoissonEq(mesh, prev_psi, input_n, input_p, psi_D, C);
 		newton_err = arma::norm( arma::abs( new_psi - prev_psi ), "inf");
+
+		std::cout << "\tNewton's error is " << newton_err << "\n";
 		if (newton_err < newton_tol)	break;
 		else
 		{	prev_psi = new_psi;	}

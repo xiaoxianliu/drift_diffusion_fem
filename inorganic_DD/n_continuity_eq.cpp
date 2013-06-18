@@ -1,3 +1,4 @@
+#include <iostream>
 #include <vector>
 #include <armadillo>
 #include "../triangle/mesh.hpp"
@@ -19,10 +20,13 @@ arma::vec solveNContinuityEq(	const my_mesh::MeshData &mesh,
 {
 using namespace linear_fem;
 
+	std::cout << "In solving n continuity equation...\n";
+
+	arma::vec output_n;
 
 	// 1. Assemble coefficient matrix
 	arma::vec mu_n_vec = interpolateConstant(mesh, parameters::mu_n);
-	arma::mat Mn = assembleMatrixGummel(mesh, input_psi, mu_n_vec);
+	arma::mat Mn = assembleMatrixGummel(mesh, -input_psi, mu_n_vec);
 
 	// 2. Assemble right-hand-side vector
 	arma::vec rhs;
@@ -34,11 +38,21 @@ using namespace linear_fem;
 	applyDirichletBC_n(mesh, n_D, Mn, rhs);
 
 	// 4. Solve for and return solution
-	arma::vec output_n;
 	output_n = arma::solve(Mn, rhs);
 
 	return output_n;
 }
+
+
+
+
+
+
+
+
+
+
+
 
 
 int applyDirichletBC_n(	const my_mesh::MeshData &mesh, const arma::vec n_D, arma::mat Mn, arma::vec rhs)

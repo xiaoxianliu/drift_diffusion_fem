@@ -44,8 +44,8 @@ arma::vec builtinPsi_Vec(const arma::vec &C)		// given doping density "C" in the
 {
 using parameters::delta_squared;
 
-	arma::vec psi_bi(C.n_cols);
-	for (int i=0; i<C.n_cols; i++)
+	arma::vec psi_bi(C.n_rows);
+	for (int i=0; i<C.n_rows; i++)
 	{	psi_bi(i) = log( (C(i) + sqrt(C(i)*C(i) + 4*delta_squared*delta_squared) )
 				/(2*delta_squared) );
 	}
