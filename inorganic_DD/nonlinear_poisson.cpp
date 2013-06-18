@@ -98,7 +98,8 @@ arma::vec solveNonlinearPoissonEq(	const my_mesh::MeshData &mesh,
 	arma::vec new_psi;
 
 	double newton_err=1.0, newton_tol = 1e-3;
-	int max_iter = 1;
+	int max_iter = 1;						// Max 1 iteration effectively means 
+									// there's only 1 iteration for linearized Poisson's eqn
 	for (int iter=0; iter < max_iter; iter++)
 	{
 		std::cout << "\t" << iter << "-th Newton's iteration... \n";

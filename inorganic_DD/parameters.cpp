@@ -7,7 +7,7 @@ namespace parameters
 {
 // Prescribed physical parameters
 double n_intrinsic = 1E10;							// 3-D intrinsic carrier density in cm^(-3)
-double N_typical = 1E13;							// Typical doping level in cm^(-3)
+double N_typical = 1E15;							// Typical doping level in cm^(-3)
 double l_typical = 2E-3;							// Typical length of devices in cm. 
 double mu_typical = 1E3;    							// Typical mobility, in cm^2/(Volt*sec)
 double epsilon_0 = 8.854E-14;							// Vacuum permittivity in F/cm

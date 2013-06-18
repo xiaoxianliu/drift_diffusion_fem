@@ -10,7 +10,7 @@ int gummelIteration(	const my_mesh::MeshData &mesh,
 			arma::vec &p)
 {
 	/* 1. Initialize physical input and unknowns */
-	double C_p = -1.0, C_n = 1.0;
+	double C_p = -2.0e3, C_n = 2.0e3;
 	arma::vec C = doping_Vec(mesh, C_p, C_n);				// Dopant density
 	double psi_applied = 1.0;						// applied potential on p-end
 	arma::vec psi_bi = builtinPsi_Vec(C);					// built-in potential
@@ -22,7 +22,6 @@ int gummelIteration(	const my_mesh::MeshData &mesh,
 	arma::vec psi_D = psi_D_Vec(mesh, psi_bi, psi_applied);
 
 
-//	psi = psi_D;	n = n_D;	p = p_D;
 /*	plot_ArmaVec(mesh, C, "dopant_density");
 	plot_ArmaVec(mesh, psi_bi, "built-in_potential");
 	plot_ArmaVec(mesh, psi_D, "initial_psi");
@@ -39,7 +38,7 @@ int gummelIteration(	const my_mesh::MeshData &mesh,
 			new_p(mesh.num_nodes), 
 			new_psi(mesh.num_nodes);
 
-	int max_iter = 10;
+	int max_iter = 15;
 	double gummel_err = 1.0, gummel_tol = 1e-3;
 	for (int i=0; i<max_iter; i++)
 	{
