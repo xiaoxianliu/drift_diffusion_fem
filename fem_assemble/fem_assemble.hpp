@@ -27,6 +27,9 @@ arma::vec L2project_Vec(	const my_mesh::MeshData &mesh, const arma::vec &u);
 // Functionals
 double integrate_Domain(const my_mesh::MeshData &mesh, const arma::vec u);
 
+// Gradient of a given function
+int computeGradient(const my_mesh::MeshData &mesh, const arma::vec &psi, arma::vec &psi_grad_x, arma::vec &psi_grad_y);
+
 }
 
 
