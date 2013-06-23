@@ -2,7 +2,7 @@
 #include <string>
 #include <armadillo>
 
-#include "../fem_assemble.hpp"
+#include "../my_fem.hpp"
 #include "../../triangle/mesh.hpp"
 
 
@@ -21,7 +21,7 @@ int main()
 {
 	using namespace std;
 	using namespace my_mesh;
-	using namespace linear_fem;
+	using namespace my_fem;
 
 
 	string filename = "test_fem";

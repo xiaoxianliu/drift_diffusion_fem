@@ -5,7 +5,7 @@
 #include <fstream>
 #include <armadillo>
 #include "../../triangle/mesh.hpp"
-#include "../fem_assemble.hpp"
+#include "../my_fem.hpp"
 #include "test.hpp"
 
 /* This file computes the gradient of a given function "f" (represented in an FEM space already, of course).
@@ -45,18 +45,18 @@ int main(int argc, char* argv[])
 		mesh = my_mesh::generateMesh (filename, interface_nodes, max_area);
 
 		// 2.2 Interpolate function and its gradient
-		arma::vec psi = linear_fem::interpolateFunction (mesh, f);
-		arma::vec psi_grad_x_interpolated = linear_fem::interpolateFunction (mesh, grad_f_x);
-		arma::vec psi_grad_y_interpolated = linear_fem::interpolateFunction (mesh, grad_f_y);
+		arma::vec psi = my_fem::interpolateFunction (mesh, f);
+		arma::vec psi_grad_x_interpolated = my_fem::interpolateFunction (mesh, grad_f_x);
+		arma::vec psi_grad_y_interpolated = my_fem::interpolateFunction (mesh, grad_f_y);
 
 		// 2.3 Compute gradients by Galerkin method
-		linear_fem::computeGradient (mesh, psi, psi_grad_x, psi_grad_y);
+		my_fem::computeGradient (mesh, psi, psi_grad_x, psi_grad_y);
 
 		// 2.4 Compute error vector
 		arma::vec error_x = psi_grad_x - psi_grad_x_interpolated;
 
 		double L2_error;
-		L2_error = sqrt (linear_fem::integrate_Domain(mesh, error_x % error_x));
+		L2_error = sqrt (my_fem::integrate_Domain(mesh, error_x % error_x));
 		L2_errors.push_back(L2_error);
 	}
 

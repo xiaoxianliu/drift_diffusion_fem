@@ -7,7 +7,7 @@ all: main.exe
 quick_build:
 	g++ *.o *.a -o main.exe $(CFLAGS)
 
-main.exe: mesh_lib.a fem_assemble.a \
+main.exe: mesh_lib.a my_fem.a \
 		main.o solve.o functionals.o
 	g++ *.o *.a -o $@ $(CFLAGS)
 #	make clean_objs
@@ -21,7 +21,7 @@ solve.o: solve.cpp $(LOCAL_HPP)
 	g++ -c $< $(CFLAGS)
 
 
-fem_assemble.a: ../*.cpp
+my_fem.a: ../*.cpp
 	g++ -c ../*.cpp $(CFLAGS)
 	ar cr $@ *.o
 	make clean_objs

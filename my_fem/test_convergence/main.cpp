@@ -3,7 +3,7 @@
 #include <string>
 #include <armadillo>
 
-#include "../fem_assemble.hpp"
+#include "../my_fem.hpp"
 #include "../../triangle/mesh.hpp"
 #include "test.hpp"
 

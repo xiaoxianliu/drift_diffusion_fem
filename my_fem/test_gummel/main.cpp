@@ -3,7 +3,7 @@
 #include <vector>
 #include <armadillo>
 #include "../../triangle/mesh.hpp"
-#include "../fem_assemble.hpp"
+#include "../my_fem.hpp"
 
 #include "main.hpp"
 
@@ -11,7 +11,7 @@ using namespace std;
 using namespace arma;
 
 using namespace my_mesh;
-using namespace linear_fem;
+using namespace my_fem;
 
 int main(int argc, char* argv[])
 {
@@ -38,8 +38,8 @@ int main(int argc, char* argv[])
 	// 2.3 Apply Dirichlet boundary conditions
 	applyDirichletBC(mesh, M, rhs);
 
-	cout << M << "\n";
-	cout << rhs << "\n";
+//	cout << M << "\n";
+//	cout << rhs << "\n";
 
 	// 2.4 Solve for solution
 	arma::vec u = solve(M, rhs);

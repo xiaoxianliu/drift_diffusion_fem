@@ -2,7 +2,7 @@
 #include <string>
 #include <armadillo>
 #include "../../triangle/mesh.hpp"
-#include "../fem_assemble.hpp"
+#include "../my_fem.hpp"
 
 /******** Function declarations ****************/
 double trueSolutionFunc(double x, double y);
@@ -23,8 +23,8 @@ int solveEq(const my_mesh::MeshData mesh, const std::string &filename, arma::vec
 {
 
 	/* 1. coefficient matrix */
-	arma::mat A = linear_fem::assembleMatrixA(mesh, arma::ones<arma::vec>(mesh.num_nodes));
-	arma::mat C = linear_fem::assembleMatrixC(mesh, arma::ones<arma::vec>(mesh.num_nodes));
+	arma::mat A = my_fem::assembleMatrixA(mesh, arma::ones<arma::vec>(mesh.num_nodes));
+	arma::mat C = my_fem::assembleMatrixC(mesh, arma::ones<arma::vec>(mesh.num_nodes));
 	arma::mat M = A + C;
 
 	/* 2. rhs vector */

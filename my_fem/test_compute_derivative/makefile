@@ -3,14 +3,14 @@ CFLAGS = -larmadillo
 
 all: test.exe
 
-test.exe: mesh_lib.a fem_assemble.a local_objs
+test.exe: mesh_lib.a my_fem.a local_objs
 	g++ *.o *.a -o test.exe $(CFLAGS)
 
 
 local_objs: *.cpp
 	g++ *.cpp -c
 
-fem_assemble.a: ../*.cpp
+my_fem.a: ../*.cpp
 	g++ -c ../*.cpp $(CFLAGS)
 	ar cr $@ *.o
 	make clean_objs
