@@ -3,7 +3,7 @@
 #include <armadillo>
 
 #include "../triangle/mesh.hpp"
-#include "../fem_assemble/fem_assemble.hpp"
+#include "../my_fem/my_fem.hpp"
 #include "exciton_cos_interface.hpp"
 
 #include "misc.hpp"			// include functions related to the definition of state and adjoint equations
@@ -22,14 +22,14 @@ arma::vec solveAdjointEq(const my_mesh::MeshData &mesh)
 	/* 1.1 Coefficient matrix */
 	arma::mat M;
 	{
-	arma::vec vec_a = linear_fem::interpolateFunction(mesh, func_a_adjoint) ;
-	arma::mat A = linear_fem::assembleMatrixA(mesh, vec_a);
+	arma::vec vec_a = my_fem::interpolateFunction(mesh, func_a_adjoint) ;
+	arma::mat A = my_fem::assembleMatrixA(mesh, vec_a);
 
-	arma::vec vec_c = linear_fem::interpolateFunction(mesh, func_c_adjoint);
-	arma::mat C = linear_fem::assembleMatrixC(mesh, vec_c);
+	arma::vec vec_c = my_fem::interpolateFunction(mesh, func_c_adjoint);
+	arma::mat C = my_fem::assembleMatrixC(mesh, vec_c);
 
-	arma::vec vec_d = linear_fem::interpolateFunction(mesh, func_d_adjoint);
-	arma::mat D = linear_fem::assembleMatrixD(mesh, vec_d);
+	arma::vec vec_d = my_fem::interpolateFunction(mesh, func_d_adjoint);
+	arma::mat D = my_fem::assembleMatrixD(mesh, vec_d);
 
 	M = A + C + D;
 	}
@@ -37,7 +37,7 @@ arma::vec solveAdjointEq(const my_mesh::MeshData &mesh)
 	arma::vec rhs_vec;
 	{
 	arma::vec vec_ones = arma::ones<arma::vec>(num_nodes);
-	arma::mat D = linear_fem::assembleMatrixD(mesh, vec_ones);
+	arma::mat D = my_fem::assembleMatrixD(mesh, vec_ones);
 	rhs_vec = D*vec_ones;
 	}
 

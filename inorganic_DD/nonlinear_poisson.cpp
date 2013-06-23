@@ -2,7 +2,7 @@
 #include <vector>
 #include <armadillo>
 #include "../triangle/mesh.hpp"
-#include "../fem_assemble/fem_assemble.hpp"
+#include "../my_fem/my_fem.hpp"
 
 #include "parameters.hpp"
 //#include "inorganicDD.hpp"
@@ -48,7 +48,7 @@ arma::vec solveLinearizedPoissonEq(	const my_mesh::MeshData &mesh,
 					const arma::vec &psi_D,
 					const arma::vec &C	)			// "C" is arma::vec form of doping density
 {
-using namespace linear_fem;
+using namespace my_fem;
 
 	std::cout << "\tIn solving linearized Poisson's equation... \n";
 

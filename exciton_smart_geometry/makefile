@@ -7,7 +7,7 @@ CFLAGS = -larmadillo
 
 all: main.exe
 
-main.exe: 	mesh_libs.a fem_assemble.a local_objs
+main.exe: 	mesh_libs.a fem_lib.a local_objs
 	g++ *.o *.a -o main.exe $(CFLAGS)
 
 
@@ -16,8 +16,8 @@ local_objs: *.cpp
 
 
 
-fem_assemble.a: ../fem_assemble/*.cpp
-	g++ -c ../fem_assemble/*.cpp
+fem_lib.a: ../my_fem/*.cpp
+	g++ -c ../my_fem/*.cpp
 	ar cr $@ *.o
 	make clean_objs
 
@@ -42,4 +42,4 @@ clean_libs:
 clean_exe:
 	- mv *.exe $(TrashDIR)
 clean:
-	make clean_objs clean_data clean_exe
+	make clean_objs clean_data clean_exe clean_libs

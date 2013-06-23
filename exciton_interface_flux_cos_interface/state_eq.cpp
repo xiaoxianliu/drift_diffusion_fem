@@ -3,7 +3,7 @@
 
 #include <armadillo>
 #include "../triangle/mesh.hpp"
-#include "../fem_assemble/fem_assemble.hpp"
+#include "../my_fem/my_fem.hpp"
 
 #include "exciton_interface_flux.hpp"
 
@@ -15,24 +15,25 @@ arma::vec solveStateEq(const my_mesh::MeshData mesh)
 {
 using namespace arma;
 using std::cout;
+using namespace my_fem;
 
 	/* 1. Assemble linear system (without imposing Dirichlet BC)*/
 	/*	M*u = vec_rhs	*/
 
 	/* 1.1 Coefficient matrix */
 	arma::mat M;
-	{	arma::vec vec_a = linear_fem::interpolateFunction(mesh, func_a);
-		arma::mat A = linear_fem::assembleMatrixA(mesh, vec_a);
+	{	arma::vec vec_a = interpolateFunction(mesh, func_a);
+		arma::mat A = assembleMatrixA(mesh, vec_a);
 //		cout << "vec_a is\n" << vec_a << "\n";
 //		cout << "matrix A is \n" << A << "\n";
 
-		arma::vec vec_c = linear_fem::interpolateFunction(mesh, func_c);
-		arma::mat C = linear_fem::assembleMatrixC(mesh, vec_c);
+		arma::vec vec_c = interpolateFunction(mesh, func_c);
+		arma::mat C = assembleMatrixC(mesh, vec_c);
 //		cout << "vec_c is\n" << vec_c << "\n";
 //		cout << "matrix C is \n" << C << "\n";
 
-		arma::vec vec_d = linear_fem::interpolateFunction(mesh, func_d);
-		arma::mat D = linear_fem::assembleMatrixD(mesh, vec_d);
+		arma::vec vec_d = interpolateFunction(mesh, func_d);
+		arma::mat D = assembleMatrixD(mesh, vec_d);
 //		cout << "vec_d is\n" << vec_d << "\n";
 //		cout << "matrix D is \n" << D << "\n";
 

@@ -8,7 +8,7 @@ LOCAL_HPP = misc.hpp
 ##### Linking everything
 all: main.exe
 
-main.exe: 	mesh_lib.a fem_assemble.a local_objs
+main.exe: 	mesh_lib.a fem_lib.a local_objs
 	g++ *.o *.a -o $@ $(CFLAGS)
 
 
@@ -16,8 +16,8 @@ local_objs: *.cpp *.hpp
 	g++ -c *.cpp $(CFLAGS)
 
 ##### Files from other folder
-fem_assemble.a: ../fem_assemble/*.cpp
-	g++ -c ../fem_assemble/*.cpp
+fem_lib.a: ../my_fem/*.cpp
+	g++ -c $^
 	ar cr $@ *.o
 	make clean_objs
 

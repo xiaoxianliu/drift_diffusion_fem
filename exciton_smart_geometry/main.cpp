@@ -4,7 +4,7 @@
 #include <armadillo>
 
 #include "exciton_smart_geometry.hpp"
-#include "../fem_assemble/fem_assemble.hpp"
+#include "../my_fem/my_fem.hpp"
 
 int main()
 {
@@ -40,9 +40,9 @@ using namespace std;
 	arma::vec c = interpolate_func(mesh, decay_rate);
 	arma::vec d = interpolate_func(mesh, interface_reaction_rate);
 
-	arma::mat A = linear_fem::assembleMatrixA(mesh, a);
-	arma::mat C = linear_fem::assembleMatrixC(mesh, c);
-	arma::mat D = linear_fem::assembleMatrixD(mesh, d);
+	arma::mat A = my_fem::assembleMatrixA(mesh, a);
+	arma::mat C = my_fem::assembleMatrixC(mesh, c);
+	arma::mat D = my_fem::assembleMatrixD(mesh, d);
 
 	arma::mat M = A + C + D;
 

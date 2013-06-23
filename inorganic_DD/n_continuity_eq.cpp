@@ -2,7 +2,7 @@
 #include <vector>
 #include <armadillo>
 #include "../triangle/mesh.hpp"
-#include "../fem_assemble/fem_assemble.hpp"
+#include "../my_fem/my_fem.hpp"
 #include "inorganicDD.hpp"
 
 #include "parameters.hpp"
@@ -18,7 +18,7 @@ arma::vec solveNContinuityEq(	const my_mesh::MeshData &mesh,
 				const arma::vec &input_p,
 				const arma::vec &n_D)				// Dirichlet boundary condition
 {
-using namespace linear_fem;
+using namespace my_fem;
 
 	std::cout << "In solving n continuity equation...\n";
 
