@@ -91,8 +91,8 @@ int computeInterfaceNormalDerivative(	const my_mesh::MeshData &mesh,
 
 
 
-
-
+// Input: linear interpolated function "u", linear basis function at node_i "phi_i", chosen element index "ele_i"
+// Output: grad(phi_i)_dot_grad(u) on triangle element "ele_i"; it's a piecewise constant on different elements
 double dphi_dx_dot_du_dx(	const my_mesh::MeshData &mesh,
 				const arma::vec &u,
 				int node_i, int ele_i)		// "node_i" is the index of the node correponding to basis "phi_i"
