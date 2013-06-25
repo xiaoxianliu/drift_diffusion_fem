@@ -24,6 +24,7 @@ arma::mat assembleMatrixGummel(const my_mesh::MeshData &mesh, const arma::vec &p
 	{
 
 		double area_t = mesh.ele_areas[t];			// area of triangle "t"
+		double mu_t = mu(t);
 
 		for (int i=0; i<3; i++)					// cycle through all 3 vertices as "row index"
 		{							// compute M(v0, v0), M(v0, v1), M(v0, v2)
@@ -36,7 +37,6 @@ arma::mat assembleMatrixGummel(const my_mesh::MeshData &mesh, const arma::vec &p
 				x2 = mesh.nodes[v2][0], y2 = mesh.nodes[v2][1];
 
 			double psi0 = psi(v0), psi1 = psi(v1), psi2 = psi(v2);
-			double mu_t = mu(t);
 
 
 			arma::mat J(2,2);				// Jacobian matrix "d_x/d_xi" of transformation
