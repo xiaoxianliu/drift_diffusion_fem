@@ -36,7 +36,7 @@ arma::mat assembleMatrixGummel(const my_mesh::MeshData &mesh, const arma::vec &p
 				x2 = mesh.nodes[v2][0], y2 = mesh.nodes[v2][1];
 
 			double psi0 = psi(v0), psi1 = psi(v1), psi2 = psi(v2);
-			double mu_t = (mu(v0) + mu(v1) + mu(v2))/3.0;
+			double mu_t = mu(t);
 
 
 			arma::mat J(2,2);				// Jacobian matrix "d_x/d_xi" of transformation

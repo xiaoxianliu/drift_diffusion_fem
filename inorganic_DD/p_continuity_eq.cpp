@@ -24,7 +24,14 @@ using namespace my_fem;
 
 	// 1. Assemble coefficient matrix
 	arma::vec mu_p_vec = interpolateConstant(mesh, parameters::mu_p);
-	arma::mat Mp = assembleMatrixGummel(mesh, input_psi, mu_p_vec);
+	arma::vec mu_p_elementwise(mesh.num_elements);
+	for (int t=0; t<mesh.num_elements; t++)
+	{	int 	v0 = mesh.elements[t][0],
+			v1 = mesh.elements[t][1],
+			v2 = mesh.elements[t][2];
+		mu_p_elementwise(t) = (mu_p_vec(v0) + mu_p_vec(v1) + mu_p_vec(v2))/3.0;
+	}
+	arma::mat Mp = assembleMatrixGummel(mesh, input_psi, mu_p_elementwise);
 
 	// 2. Assemble right-hand-side vector
 	arma::vec rhs (mesh.num_nodes);
