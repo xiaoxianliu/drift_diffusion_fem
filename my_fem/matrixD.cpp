@@ -19,8 +19,8 @@ mat assembleMatrixD(const MeshData& mesh, const vec &d)
 			int v1 = mesh.edges[e][1];
 			double length = mesh.edge_lengths[e];
 
-			D(v0, v0) = d(v0) * length / 2.0;
-			D(v1, v1) = d(v1) * length / 2.0;
+			D(v0, v0) += d(v0) * length / 2.0;
+			D(v1, v1) += d(v1) * length / 2.0;
 		}
 	}
 	return D;
