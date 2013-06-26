@@ -1,7 +1,7 @@
+#include <iostream>
 #include <cmath>
 #include <cstdlib>
 #include <vector>
-#include <cstdlib>
 
 #include <armadillo>
 
@@ -26,7 +26,7 @@ int solve_NContinuityEq(const my_mesh::MeshData &mesh,
 			const arma::vec &input_u,
 			arma::vec &output_n)
 {
-	// 1. Compute element-wise mobility of electron
+	// 1. Compute related function/vectors
 	// 1.1 electric field amplitude
 	arma::vec E(mesh.num_nodes);
 	compute_ElectricFieldAmplitude(mesh, input_psi, E);
@@ -48,7 +48,7 @@ int solve_NContinuityEq(const my_mesh::MeshData &mesh,
 		arma::mat M1;
 		M1 = my_fem::assembleMatrixGummel(mesh, -input_psi, mu_n_elementwise);
 
-		// 2.2 MatrixD (matrix due to interface integral)
+		// 2.2 "matrixD" from the interface integral of "n"
 		arma::mat M2;
 		M2 = my_fem::assembleMatrixD(mesh, recomb_interface % input_p);
 
@@ -58,6 +58,7 @@ int solve_NContinuityEq(const my_mesh::MeshData &mesh,
 	// 3. Assemble right-hand-side vector
 	arma::vec rhs;
 	{	arma::vec M_rhs;
+		// "matrixD" from the interface integral of exciton dissociation
 		M_rhs = my_fem::assembleMatrixD(mesh, k_diss_interface);
 		rhs = M_rhs * input_u;
 	}
@@ -79,7 +80,7 @@ int solve_NContinuityEq(const my_mesh::MeshData &mesh,
 // Local function definitions
 int	compute_MobilityN_elementwise(	const my_mesh::MeshData &mesh,
 					const arma::vec &E,				// electric field intensity
-					arma::vec &mu_n)
+					arma::vec &mu_n_elementwise)
 {
 	// 1. Copy the corresponding parameters from namespace "parameters"
 	double mu_n_1 = parameters::mu_n_donor;
@@ -103,11 +104,11 @@ int	compute_MobilityN_elementwise(	const my_mesh::MeshData &mesh,
 			exit(1);
 		}
 
-		mu_n(t) = mu_n_t_zerofield *
-				  ( exp(gamma * sqrt(E(v0))) 
-				   +exp(gamma * sqrt(E(v1)))
-				   +exp(gamma * sqrt(E(v2)))
-				  )/3.0;
+		mu_n_elementwise(t) = mu_n_t_zerofield *
+					  ( exp(gamma * sqrt(E(v0))) 
+					   +exp(gamma * sqrt(E(v1)))
+					   +exp(gamma * sqrt(E(v2)))
+					  )/3.0;
 	}
 
 	return 0;

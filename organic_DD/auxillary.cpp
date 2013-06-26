@@ -222,6 +222,19 @@ int compute_ExcitonDissociationRate(	const my_mesh::MeshData &mesh,
 	return 0;
 }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
 /*********************************************************************************************************************/
 // Recombination rate
 int compute_RecombinationRate(	const my_mesh::MeshData &mesh,
@@ -233,8 +246,8 @@ int compute_RecombinationRate(	const my_mesh::MeshData &mesh,
 	recomb_interface.zeros();
 
 	// 2. Identify the mobility to use on interface
-	double mu_n_0 = parameters::mu_n_donor < parameters::mu_n_acceptor ? parameters::mu_n_donor : parameters::mu_n_acceptor;
-	double mu_p_0 = parameters::mu_p_donor < parameters::mu_p_acceptor ? parameters::mu_p_donor : parameters::mu_p_acceptor;
+	double mu_n_0 = parameters::mu_n_donor > parameters::mu_n_acceptor ? parameters::mu_n_donor : parameters::mu_n_acceptor;
+	double mu_p_0 = parameters::mu_p_donor > parameters::mu_p_acceptor ? parameters::mu_p_donor : parameters::mu_p_acceptor;
 
 	// 3. Compute recombination rate on interface
 	using parameters::h_interface;						// dimensionless interface width
@@ -247,8 +260,8 @@ int compute_RecombinationRate(	const my_mesh::MeshData &mesh,
 	{	int node_index = mesh.interface_nodes[i];
 		double volume_recomb = recomb_coefficient * (	  mu_n_0 * exp(gamma_n * sqrt(E(node_index)))
 								+ mu_p_0 * exp(gamma_p * sqrt(E(node_index)))
-							      ) / epsilon_rel;
-		double interface_recomb = volume_recomb * h_interface;
+							      ) / epsilon_rel;	// volume recombination rate
+		double interface_recomb = volume_recomb * h_interface;		// surface recombination rate
 		recomb_interface(node_index) = interface_recomb;
 	}
 	return 0;
