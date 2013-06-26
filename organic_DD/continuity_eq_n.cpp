@@ -19,7 +19,7 @@ int apply_DirichletBC_N (const my_mesh::MeshData &mesh, arma::mat &M, arma::vec 
 
 /*******************************************************************************************************************************/
 // Main function to solve electron continuity equation
-int solve_NContinuityEq(const my_mesh::MeshData &mesh, 
+int solve_ContinuityEq_n(const my_mesh::MeshData &mesh, 
 			const arma::vec &input_psi,
 			const arma::vec &input_n,
 			const arma::vec &input_p,

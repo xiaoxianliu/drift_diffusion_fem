@@ -28,7 +28,7 @@ int apply_DirichletBC_P(const my_mesh::MeshData &mesh,			// apply Dirichlet boun
 
 /***************************************************************************************************************************/
 // Main function to solve hole continuity equation in Gummel's iteration
-int solve_PContinuityEq(const my_mesh::MeshData &mesh, 
+int solve_ContinuityEq_p(const my_mesh::MeshData &mesh, 
 			const arma::vec &input_psi,
 			const arma::vec &input_n,
 			const arma::vec &input_p,
