@@ -98,12 +98,12 @@ double gamma_p = hole_mobility_field_dependent_coefficient * sqrt( U_T / typical
 // 1.1 Light absorption
 double photon_absorption_rate = 1e25;			// m^(-3)_s^(-1), i.e. counts per unit volume per second
 							// Ref: Falco, Porro, etc
-double absorption_coefficient = 1e7;			// "m^(-1)"; Q ~ exp(-alpha*x)
+double absorption_coefficient = 1e6;			// "m^(-1)"; Q ~ exp(-alpha*x)
 double absorption_length = 1.0/absorption_coefficient;	// "m"
 // 1.2 Recombination of electron-hole pair
 double typical_recombination_rate = q_unit * typical_mobility / epsilon_vacuum ;
 // 1.3 Exciton dissociation
-double exciton_dissociation_rate_zero_field = 1e6;			// s^(-1)
+double exciton_dissociation_rate_zero_field = 1e8;			// s^(-1)
 
 // 2. Dimensionless form
 // Light absorption
@@ -129,7 +129,7 @@ double lambda_squared = epsilon_vacuum * U_T / (q_unit * typical_density * pow(t
 /***** Dirichlet boundary values ************************************************************************/
 // 1. Physical values
 // 1.1 electrical potential
-double builtin_potential_anode = -0.6;
+double builtin_potential_anode = -0.4;
 double builtin_potential_cathode = 0.0;
 double builtin_potential = builtin_potential_anode - builtin_potential_cathode;
 

@@ -1,11 +1,19 @@
 #include <iostream>
+#include <cmath>
+
 #include <armadillo>
 
 #include "../triangle/mesh.hpp"
 #include "parameters.hpp"
-#include "main.hpp"
+#include "gummel_iteration.hpp"
 
 
+
+
+
+/*************************************************************************************************************************/
+// Declaration of local functions
+// initialize vectors with a guess of solution to Drift-Diffusion equations for organic semiconductor
 int initialization(	const my_mesh::MeshData &mesh,
 			arma::vec &psi,
 			arma::vec &n,
@@ -15,8 +23,8 @@ int initialization(	const my_mesh::MeshData &mesh,
 
 
 
-
-
+/*************************************************************************************************************************/
+// Main function
 int solve_GummelIteration(	const my_mesh::MeshData &mesh,
 				arma::vec &psi,
 				arma::vec &n,
@@ -29,30 +37,43 @@ int solve_GummelIteration(	const my_mesh::MeshData &mesh,
 	initialization(mesh, psi, n, p, u, applied_psi);
 
 	// 2. Gummel's iteration
-	arma::vec prev_psi = psi,
-		  prev_n = n,
-		  prev_p = p,
-		  prev_u = u;
-	double gummel_err = 1.0, gummel_tol = 1e-3;
-	int max_iter = 5;
+	// 2.1 setup
+	arma::vec prev_psi = psi, prev_n = n, prev_p = p, prev_u = u;
+	arma::vec new_psi, new_n, new_p, new_u;
+
+	double gummel_err = 1.0, gummel_tol = 1e-5;
+	int max_iter = 10;
+
+	// 2.2 gummel's iteration
 	for (int iter=0; iter<max_iter; iter++)
 	{
+		std::cout << "Gummel iteration: " << iter << "\n";
 
-//		given "psi", 
-//(1)compute "-E = grad(psi)"
-//(2)compute normal derivative of "psi" on interface
+		// 2.2.1 Solve equations one by one
+		solve_ContinuityEq_n(mesh, prev_psi, prev_n, prev_p, prev_u, new_n);
+		solve_ContinuityEq_p(mesh, prev_psi, prev_n, prev_p, prev_u, new_p);
+		solve_ContinuityEq_x(mesh, prev_psi, prev_n, prev_p, prev_u, new_u);
+		solve_NonlinearPoissonEq(mesh, prev_psi, n, p, u, new_psi, applied_psi);
 
+		// 2.2.2 compute gummel error
+		double max_dn = arma::norm(new_n-prev_n, "inf");
+		double max_dp = arma::norm(new_p-prev_p, "inf");
+		double max_du = arma::norm(new_u-prev_u, "inf");
+		double max_dpsi = arma::norm(new_psi-prev_psi, "inf");
 
-//		solve_NContinuityEq();
-//		solve_PContinuityEq();
-//		solve_XContinuityEq();
-//		solve_NonlinearPoissonEq();
+		double max_dn_vs_dp = fmax(max_dn, max_dp);
+		double max_du_vs_dpsi = fmax(max_du, max_dpsi);
+		gummel_err = fmax(max_dn_vs_dp, max_du_vs_dpsi);
 
-//		compute gummel error
+		std::cout << "Gummel's error is " << gummel_err << "\n";
 
 		if (gummel_err < gummel_tol)
 			break;
+
+		prev_psi = new_psi;	prev_n = new_n;	prev_p = new_p;	prev_u = new_u;
 	}
+
+	psi = new_psi;	n = new_n;	p = new_p;	u = new_u;
 
 
 	return 0;
@@ -64,8 +85,11 @@ int solve_GummelIteration(	const my_mesh::MeshData &mesh,
 
 
 
+/*************************************************************************************************************************/
 
+// Definition of local functions
 
+// Initialize solution vectors with a guess to start Gummel's iteration
 int initialization(	const my_mesh::MeshData &mesh,
 			arma::vec &psi,
 			arma::vec &n,

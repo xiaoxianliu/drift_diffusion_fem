@@ -20,7 +20,7 @@ int compute_MobilityP_elementwise (	const my_mesh::MeshData &mesh, 	// compute e
 					const arma::vec &E, 
 					arma::vec &mu_p_elementwise);
 
-int apply_DirichletBC_P(const my_mesh::MeshData &mesh,			// apply Dirichlet boundary conditions
+int apply_DirichletBC_p(const my_mesh::MeshData &mesh,			// apply Dirichlet boundary conditions
 			arma::mat &M,
 			arma::vec &rhs);
 
@@ -66,7 +66,7 @@ int solve_ContinuityEq_p(const my_mesh::MeshData &mesh,
 	}
 
 	// 4. Apply Dirichlet boundary conditions
-	apply_DirichletBC_P(mesh, M, rhs);
+	apply_DirichletBC_p(mesh, M, rhs);
 
 	// 5. Solve for solution "output_p"
 	output_p = arma::solve(M, rhs);
@@ -120,7 +120,7 @@ int compute_MobilityP_elementwise (	const my_mesh::MeshData &mesh,
 
 
 // Dirichlet boundary condition for p-continuity equation
-int apply_DirichletBC_P(const my_mesh::MeshData &mesh,
+int apply_DirichletBC_p(const my_mesh::MeshData &mesh,
 			arma::mat &M,
 			arma::vec &rhs)
 {

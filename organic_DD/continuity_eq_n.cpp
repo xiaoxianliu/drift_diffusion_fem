@@ -13,7 +13,7 @@
 /*******************************************************************************************************************************/
 // Local function declarations
 int compute_MobilityN_elementwise(	const my_mesh::MeshData &mesh,	const arma::vec &E, arma::vec &mu_n);
-int apply_DirichletBC_N (const my_mesh::MeshData &mesh, arma::mat &M, arma::vec &rhs);
+int apply_DirichletBC_n (const my_mesh::MeshData &mesh, arma::mat &M, arma::vec &rhs);
 
 
 
@@ -26,7 +26,7 @@ int solve_ContinuityEq_n(const my_mesh::MeshData &mesh,
 			const arma::vec &input_u,
 			arma::vec &output_n)
 {
-	// 1. Compute related function/vectors
+	// 1. Compute related functions/vectors
 	// 1.1 electric field amplitude
 	arma::vec E(mesh.num_nodes);
 	compute_ElectricFieldAmplitude(mesh, input_psi, E);
@@ -57,14 +57,14 @@ int solve_ContinuityEq_n(const my_mesh::MeshData &mesh,
 
 	// 3. Assemble right-hand-side vector
 	arma::vec rhs;
-	{	arma::vec M_rhs;
+	{	arma::mat M_rhs;
 		// "matrixD" from the interface integral of exciton dissociation
 		M_rhs = my_fem::assembleMatrixD(mesh, k_diss_interface);
 		rhs = M_rhs * input_u;
 	}
 
 	// 4. Apply Dirichlet boundary condition
-	apply_DirichletBC_N(mesh, M, rhs);
+	apply_DirichletBC_n(mesh, M, rhs);
 
 	// 5. solve
 	output_n = arma::solve(M, rhs);
@@ -117,7 +117,7 @@ int	compute_MobilityN_elementwise(	const my_mesh::MeshData &mesh,
 
 
 
-int apply_DirichletBC_N(const my_mesh::MeshData &mesh,
+int apply_DirichletBC_n(const my_mesh::MeshData &mesh,
 			arma::mat &M,
 			arma::vec &rhs)
 {

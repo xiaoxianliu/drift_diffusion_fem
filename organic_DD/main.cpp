@@ -7,7 +7,7 @@
 #include "../gnuplot/my_gnuplot.hpp"
 
 //#include "parameters.hpp"
-#include "main.hpp"
+#include "gummel_iteration.hpp"
 
 
 int main (int argc, char* argv[])
@@ -22,7 +22,7 @@ using namespace std;
 	node[0] = 0.0;	node[1] = 1.0;	interface_nodes.push_back(node);
 	node[1] = 0.0;	interface_nodes.push_back(node);
 
-	double max_area = 0.01;
+	double max_area = 5e-3;
 	my_mesh::MeshData mesh = my_mesh::generateMesh (filename, interface_nodes, max_area);
 
 
