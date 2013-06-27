@@ -98,7 +98,7 @@ double gamma_p = hole_mobility_field_dependent_coefficient * sqrt( U_T / typical
 // 1.1 Light absorption
 double photon_absorption_rate = 1e25;			// m^(-3)_s^(-1), i.e. counts per unit volume per second
 							// Ref: Falco, Porro, etc
-double absorption_coefficient = 1e6;			// "m^(-1)"; Q ~ exp(-alpha*x)
+double absorption_coefficient = 3e6;			// "m^(-1)"; Q ~ exp(-alpha*x)
 double absorption_length = 1.0/absorption_coefficient;	// "m"
 // 1.2 Recombination of electron-hole pair
 double typical_recombination_rate = q_unit * typical_mobility / epsilon_vacuum ;
