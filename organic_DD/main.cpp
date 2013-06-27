@@ -36,10 +36,12 @@ using namespace std;
 	bool is_to_plot=true;
 	if (is_to_plot)
 	{
-		my_gnuplot::plot_ArmaVec(mesh, psi, filename+"_psi");
-		my_gnuplot::plot_ArmaVec(mesh, n, filename+"_n");
-		my_gnuplot::plot_ArmaVec(mesh, p, filename+"_p");
-		my_gnuplot::plot_ArmaVec(mesh, u, filename+"_u");
+		my_gnuplot::plot_ArmaVec(mesh, psi, filename+"_psi", "wxt");
+		my_gnuplot::plot_ArmaVec(mesh, n, filename+"_n", "wxt");
+		my_gnuplot::plot_ArmaVec(mesh, p, filename+"_p", "wxt");
+		my_gnuplot::plot_ArmaVec(mesh, u, filename+"_u", "wxt");
+
+		my_gnuplot::plot_ArmaVec(mesh, p-n, filename+"_p-n", "wxt");
 	}
 
 	return 0;

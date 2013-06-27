@@ -23,6 +23,9 @@ int initialization(	const my_mesh::MeshData &mesh,
 
 
 
+
+
+
 /*************************************************************************************************************************/
 // Main function
 int solve_GummelIteration(	const my_mesh::MeshData &mesh,
@@ -38,11 +41,11 @@ int solve_GummelIteration(	const my_mesh::MeshData &mesh,
 
 	// 2. Gummel's iteration
 	// 2.1 setup
-	arma::vec prev_psi = psi, prev_n = n, prev_p = p, prev_u = u;
-	arma::vec new_psi, new_n, new_p, new_u;
+/*	arma::vec prev_psi = psi, prev_n = n, prev_p = p, prev_u = u;
+	arma::vec new_psi = psi, new_n = n, new_p = p, new_u = u;
 
-	double gummel_err = 1.0, gummel_tol = 1e-5;
-	int max_iter = 0;
+	double gummel_err = 1.0, gummel_tol = 1e-3;
+	int max_iter = 5;
 
 	// 2.2 gummel's iteration
 	for (int iter=0; iter<max_iter; iter++)
@@ -75,7 +78,7 @@ int solve_GummelIteration(	const my_mesh::MeshData &mesh,
 
 	psi = new_psi;	n = new_n;	p = new_p;	u = new_u;
 
-
+*/
 	return 0;
 }
 
@@ -86,10 +89,79 @@ int solve_GummelIteration(	const my_mesh::MeshData &mesh,
 
 
 /*************************************************************************************************************************/
-
 // Definition of local functions
 
-// Initialize solution vectors with a guess to start Gummel's iteration
+// 1. Initialize solution vectors with a guess to start Gummel's iteration
+
+// 1.1potential "psi"
+int initialize_psi(	const my_mesh::MeshData &mesh,
+			arma::vec &psi,
+			double applied_psi)
+{
+using namespace parameters;
+	psi.resize(mesh.num_nodes);	psi.zeros();
+	for (int i=0; i<mesh.num_nodes; i++)
+	{	double x = mesh.nodes[i][0];
+		psi(i) = psi_A + applied_psi + (psi_C - psi_A - applied_psi)*(x+1)/2.0;
+	}
+
+return 0;
+}
+
+
+
+// 1.2 electron
+int initialize_n(	const my_mesh::MeshData &mesh,
+			arma::vec &n)
+{
+using namespace parameters;
+	n.resize(mesh.num_nodes);	n.zeros();
+	for (int i=0; i<mesh.num_nodes; i++)
+	{	double x = mesh.nodes[i][0];
+		n(i) = n_A + (n_C - n_A)*(x+1)/2.0;
+	}
+return 0;
+}
+
+
+
+// 1.3 hole
+int initialize_p(	const my_mesh::MeshData &mesh,
+			arma::vec &p)
+{
+using namespace parameters;
+	p.resize(mesh.num_nodes);	p.zeros();
+	for (int i=0; i<mesh.num_nodes; i++)
+	{	double x = mesh.nodes[i][0];
+		p(i) = p_A + (p_C - p_A)*(x+1)/2.0;
+	}
+return 0;
+}
+
+
+
+
+
+// 1.4 exciton
+int initialize_u(	const my_mesh::MeshData &mesh,
+			arma::vec &u)
+{
+using namespace parameters;
+	u.resize(mesh.num_nodes);	u.zeros();
+	for (int i=0; i<mesh.num_nodes; i++)
+	{	double x = mesh.nodes[i][0];
+		u(i) = u_A + (u_C - u_A)*(x+1)/2.0;
+	}
+return 0;
+}
+
+
+
+
+
+
+
+// 1.5 Initialize all 4 unkowns
 int initialization(	const my_mesh::MeshData &mesh,
 			arma::vec &psi,
 			arma::vec &n,
@@ -100,18 +172,10 @@ int initialization(	const my_mesh::MeshData &mesh,
 /**** Initialize every unkown with linear interpolation of the boundary values ************/
 using namespace parameters;
 
-	int num_nodes = mesh.num_nodes;
-	psi.resize(num_nodes);	n.resize(num_nodes);	p.resize(num_nodes);	u.resize(num_nodes);
-	psi.zeros();	n = n.zeros();	p.zeros();	u.zeros();
-
-	for (int i=0; i<mesh.num_nodes; i++)
-	{	double x = mesh.nodes[i][0];
-
-		psi(i) = psi_A + applied_psi + (psi_C - psi_A - applied_psi)*(x+1)/2.0;
-		n(i) = n_A + (n_C - n_A)*(x+1)/2.0;
-		p(i) = p_A + (p_C - p_A)*(x+1)/2.0;
-		u(i) = u_A + (u_C - u_A)*(x+1)/2.0;
-	}
+	initialize_psi(mesh, psi, applied_psi);
+	initialize_n(mesh, n);
+	initialize_p(mesh, p);
+	initialize_u(mesh, u);
 
 	return 0;
 }
