@@ -11,7 +11,7 @@ namespace my_gnuplot
 {
 
 /* Plot arma::vec over the entire domain "Omega" */
-int plot_ArmaVec(const my_mesh::MeshData& mesh, const arma::vec u, const std::string& filename)
+int plot_ArmaVec(const my_mesh::MeshData& mesh, const arma::vec u, const std::string& filename, std::string terminal)
 {using namespace std;
 
 
@@ -42,10 +42,15 @@ int plot_ArmaVec(const my_mesh::MeshData& mesh, const arma::vec u, const std::st
 	if (!gnuplot_fstream.is_open())
 		{cout<< "Failed to open " << gnuplot_filename << "\n"; exit(1);	}
 
-	gnuplot_fstream	<< "set terminal png\n"
-			<< "set output \"" << filename << "_solution.png\"\n"
-			<< "splot \"" << output_name << "\" with lines\n";
-
+	if (terminal=="wxt")
+	{	gnuplot_fstream << "set terminal wxt\n"
+				<< "splot \"" << output_name << "\" with lines\n";
+	}
+	else if (terminal == "png")
+	{	gnuplot_fstream	<< "set terminal png\n"
+				<< "set output \"" << filename << "_solution.png\"\n"
+				<< "splot \"" << output_name << "\" with lines\n";
+	}
 	gnuplot_fstream.close();
 
 
@@ -62,7 +67,7 @@ int plot_ArmaVec(const my_mesh::MeshData& mesh, const arma::vec u, const std::st
 
 
 /* Plot a arma::vec defined over "Omega" only on the interface "Gamma" */
-int plot_ArmaVec_on_Interface(const my_mesh::MeshData &mesh, const arma::vec &u, std::string filename)
+int plot_ArmaVec_on_Interface(const my_mesh::MeshData &mesh, const arma::vec &u, std::string filename, std::string terminal)
 {
 using namespace std;
 
@@ -89,10 +94,16 @@ using namespace std;
 	if (!gnuplot_file.is_open())
 	{	cout << "Failed to open " << gnuplot_filename << " in function \"plotSolution_on_Interface\"\n";	exit(1);}
 	
-	gnuplot_file << "set terminal png\n";
-	gnuplot_file << "set output \"" << filename << "(on_interface).png\"\n";
-	gnuplot_file << "plot \"" << dat_filename << "\" with lines\n";
 
+	if (terminal == "wxt")
+	{	gnuplot_file << "set terminal wxt\n"
+				<< "plot \"" << dat_filename << "\" with lines\n";
+	}
+	else if (terminal == "png")
+	{	gnuplot_file << "set terminal png\n";
+		gnuplot_file << "set output \"" << filename << "(on_interface).png\"\n";
+		gnuplot_file << "plot \"" << dat_filename << "\" with lines\n";
+	}
 	gnuplot_file.close();
 
 	/* Run gnuplot */
@@ -113,7 +124,7 @@ using namespace std;
 
 
 /* Plot arma::vec that's only defined on the interface Gamma */
-int plot_InterfaceArmaVec(const my_mesh::MeshData &mesh, const arma::vec &u, std::string filename)
+int plot_InterfaceArmaVec(const my_mesh::MeshData &mesh, const arma::vec &u, std::string filename, std::string terminal)
 {
 /* Note: "arma::vec u" MUST BE consistent with the order of "mesh.interface_nodes" */
 
@@ -141,11 +152,17 @@ using namespace std;
 	gnuplot_file.open(gnuplot_filename.c_str());
 	if (!gnuplot_file.is_open())
 	{	cout << "Failed to open " << gnuplot_filename << " in function \"plot_InterfaceArmaVec\"\n";	exit(1);}
-	
-	gnuplot_file << "set terminal png\n";
-	gnuplot_file << "set output \"" << filename << "(on_interface).png\"\n";
-	gnuplot_file << "plot \"" << dat_filename << "\" with lines\n";
 
+
+	if (terminal == "wxt")
+	{	gnuplot_file << "set terminal wxt\n";
+		gnuplot_file << "plot \"" << dat_filename << "\" with lines\n";
+	}
+	else if (terminal == "png")
+	{	gnuplot_file << "set terminal png\n";
+		gnuplot_file << "set output \"" << filename << "(on_interface).png\"\n";
+		gnuplot_file << "plot \"" << dat_filename << "\" with lines\n";
+	}
 	gnuplot_file.close();
 
 	/* Run gnuplot */
@@ -164,7 +181,7 @@ using namespace std;
 
 
 /* Plot std::vector that's only defined on the interface Gamma */
-int plot_InterfaceSTLVector(const my_mesh::MeshData &mesh, const std::vector<double> &u, std::string filename)
+int plot_InterfaceSTLVector(const my_mesh::MeshData &mesh, const std::vector<double> &u, std::string filename, std::string terminal)
 {
 /* Note: "std::vector<double> u" MUST BE consistent with the order of "mesh.interface_nodes" */
 
@@ -192,10 +209,17 @@ using namespace std;
 	gnuplot_file.open(gnuplot_filename.c_str());
 	if (!gnuplot_file.is_open())
 	{	cout << "Failed to open " << gnuplot_filename << " in function \"plotSolution_on_Interface\"\n";	exit(1);}
-	
-	gnuplot_file << "set terminal png\n";
-	gnuplot_file << "set output \"" << filename << "(on_interface).png\"\n";
-	gnuplot_file << "plot \"" << dat_filename << "\" with lines\n";
+
+
+	if (terminal == "wxt")
+	{	gnuplot_file << "set terminal wxt\n";
+		gnuplot_file << "plot \"" << dat_filename << "\" with lines\n";
+	}
+	else if (terminal == "png")
+	{	gnuplot_file << "set terminal png\n";
+		gnuplot_file << "set output \"" << filename << "(on_interface).png\"\n";
+		gnuplot_file << "plot \"" << dat_filename << "\" with lines\n";
+	}
 
 	gnuplot_file.close();
 
