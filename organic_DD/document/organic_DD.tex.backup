@@ -1,0 +1,131 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{amssymb}
+
+\title{Numerical Solution to Drift-Diffusion Model for Organic Semiconductors}
+\author{Xiaoxian Liu}
+\date{\today}
+
+\newcommand{\grad}{\overrightarrow{\nabla}}
+\newcommand{\Jn}{\overrightarrow{J}_n}
+\newcommand{\Jp}{\overrightarrow{J}_p}
+\newcommand{\Ju}{\overrightarrow{J}_u}
+
+
+\begin{document}
+\maketitle
+
+
+\section{Drift-diffusion model}
+ \subsection{Model description}
+ The list of unknowns is given below. Let
+ \begin{itemize}
+  \item $\{\psi, n, p, u\}$ be the known electric potential, electron density, hole density, and exciton density, 
+ respectively;
+  \item $\Jn, \Jp, \Ju$ be the flux of $n, p, u$;
+ \end{itemize}
+ 
+ (Need to fill in geometric information of domain...)\\
+ 
+ Then the {\it Drift-Diffusion equations} for the organic semiconductor is
+ \begin{align}
+  &-\grad\cdot\left( \epsilon_r(x) \epsilon_0 \grad \psi \right) = q(p-n) 
+    &\\
+  &\grad\cdot \Jn = \delta(\Gamma)\, h\left( k(\grad\psi) u - \gamma np \right), 
+    & \Jn = -D_n\grad n + n\mu_n\grad\psi \\
+  &\grad\cdot \Jp = \delta(\Gamma)\, h\left( k(\grad\psi) u - \gamma np \right), 
+    & \Jp = -D_p\grad p - p\mu_p\grad\psi \\
+  &\grad\cdot \Ju = Q(x) - \frac{u}{\tau_u} - \delta(\Gamma)\, h\left( k(\grad\psi) - \gamma np \right),
+    & \Ju = -D_u\grad u
+ \end{align}
+ where
+ \begin{itemize}
+  \item $q$ is the unit charge of an electron; $\epsilon_0$ and $\epsilon_r$ are the vacumm electrical permittivity 
+    and relative permittivity, respectively
+  \item $k(\grad \psi)$ is the dissociation coefficient of exciton into free electron-hole carrier pairs
+  \item $\gamma$ is the recombination coefficient of electron-hole pairs into excitons
+  \item $Q(x)$ is the photo-generation rate of exciton; (the only generation rate from external source, i.e. sunlight)
+  \item $\tau_u$ is the lifetime of exciton decaying into ground state
+  \item $\delta(\Gamma)$ is the Delta distribution concentrating on the interface $\Gamma$
+  \item $h$ is the interface widths
+ \end{itemize}
+ 
+ (Need to add boundary conditions herein...)
+
+ 
+ 
+
+  
+ 
+ 
+ 
+ \subsection{Scaled model for numerical computation}
+ For numerical simulation, we need to introduce some constant values for each dimension. We let
+ \begin{itemize}
+  \item Universal constants 
+     \begin{itemize}
+	\item Unit charge: $q = 1.6 \times 10^{-19} $ C
+	\item Boltzman constant: $k_B = 1.38 \times 10^{-23} \, m^2\cdot kg\cdot s^{-2}\cdot K^{-1}$
+	\item Vacumm electric permittivity: $\epsilon_0 = 8.854 \times 10^{-12} \, F\cdot m^{-1}$
+     \end{itemize}
+  \item Physical settings of device
+      \begin{itemize}
+	\item Temperature: $T = 300 K$, room temperature
+	\item Device length: $L = 200nm = 2\times10^{-7}m$
+	\item Number density: $N=1\times 10^{20}\,m^{-3}$
+	\item Interface width: $h=2nm = 2\times10^{-9} m$
+	\item Typical mobility value: $\mu_0 = 1\times 10^{-9} m^2\cdot V^{-1}\cdot s^{-1}$
+      \end{itemize}
+  \item Derived quantities
+      \begin{itemize}
+	\item Thermal potential: $U_T = k_B T / q$
+	\item Typical time scale: $\tau = \frac{L^2}{\mu_0 U_T}$, i.e. the time for a particle with diffusivity 
+	  $\mu_0 UT$ to diffuse across the device with length $L$
+	\item $\lambda^2 = \frac{\epsilon_0 U_T}{qNL^2} = \frac{L_{Debye}^2}{L^2}$, 
+	  where $L_{Debye}^2 = \frac{\epsilon_0 U_T}{q N}$
+      \end{itemize}
+ \end{itemize}
+ Furthermore, we assume the Einstein relationship holds for each species, i.e.
+ \begin{align}
+  D_i = \mu_i U_T
+ \end{align}
+ where ''i'' can be either $n$, $p$, or $u$. \\
+
+ To derive the scaled equations, we use these quantities above to scale the physical quantities in original 
+ drift-diffusion equations. For instance,
+ $\psi = U_T \psi_s$, $\grad = \frac{1}{L} \grad_s$, where subscription ''s'' indicates it's a scaled 
+ quantity/operator. In what's coming, we shall omite subscription ''s'' for simplicity. Hence, the {\it\bf scaled 
+ drift-diffuion equations} are
+ \begin{align}
+ &-\lambda^2 \grad \cdot \left( \epsilon_r \grad\psi\right) = p - n,
+   & \\
+ &\grad \cdot \Jn = \delta(\Gamma) h\left( k(\grad\psi) - \gamma np \right)
+   & \Jn = -\mu_n(\grad\psi) \left(\grad n - n\grad\psi \right)\\
+ &\grad \cdot \Jp = \delta(\Gamma) h\left( k(\grad\psi) - \gamma np \right) 
+   & \Jp = -\mu_p(\grad\psi) \left(\grad p + n\grad\psi \right)\\
+ &\grad \cdot \Ju = Q - \frac{u}{\tau_u} - \delta(\Gamma) h\left( k(\grad\psi) - \gamma np \right)
+   & \Ju = -\mu_u \grad u
+ \end{align}
+
+
+\section{Numerical Simulation}
+ \subsection{Gummel's iteration}
+ Gummel's iteration is a solution map of drift-diffusion equation of Gauss-Seidel fashion. Concretely, for the 
+ scaled drift-diffusion equations introduced above, we start with an initial guess of solutions $\psi^{(0)}, 
+ n^{(0)}, p^{(0)}, u^{(0)}$. For $l = 1,2,...$, given $\psi^{(l-1)}, n^{(l-1)}, p^{(l-1)}, u^{(l-1)}$, 
+ the l-th step of Gummel's iteration consists of the following steps:
+ \begin{itemize}
+  \item Solve 
+    $-\grad \left[ \mu_n(\grad\psi^{(l-1)}) \left( \grad n^{(l)} - n^{(l)}\grad \psi^{(l-1)} \right) \right] 
+    = \delta(\Gamma) h\left[ k(\grad\psi^{(l-1)})u^{(l-1)} - \gamma n^{(l)}p^{(l-1)} \right]$
+    for $n^{(l)}$.
+  \item Solve
+    $-\grad \left[ \mu_p(\grad\psi^{(l-1)}) \left( \grad p^{(l)} + p^{(l)} \grad \psi^{(l-1)} \right) \right]
+    = \delta(\Gamma) h\left[ k(\grad\psi^{(l-1)})u^{(l-1)} - \gamma n^{(l-1)}p^{(l)} \right]$
+    for $p^{(l)}$.
+    
+ \end{itemize}
+
+ \subsection{Scharfetter-Gummel discretization for convection-diffusion equations}
+ 
+\end{document}
