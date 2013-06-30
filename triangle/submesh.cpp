@@ -7,6 +7,8 @@ using namespace MeshNamespace;
 
 #define EOF 1.0e-15
 
+/*****************************************************************************************************************************/
+// Extract interface between region "1" and region 
 int MeshNamespace::extractInterface( MeshData& mesh )
 {
 	mesh.interface_edges.clear();
@@ -83,5 +85,14 @@ int MeshNamespace::extractInterface( MeshData& mesh )
 
 
 
+
+
+
+
+
+
+
+
+/******************************************************************************************************************/
 
 
