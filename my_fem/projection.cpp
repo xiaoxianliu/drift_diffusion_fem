@@ -4,7 +4,9 @@
 
 namespace my_fem
 {
+/**** Compute int_Omega (u * phi_i)dx for each basis function "phi_i" *************************************************/
 
+// Version 1: "u" is an arma::vec 
 arma::vec L2project_Vec(	const my_mesh::MeshData &mesh,
 				const arma::vec &u)
 {
@@ -23,6 +25,7 @@ arma::vec L2project_Vec(	const my_mesh::MeshData &mesh,
 	return result;
 }
 
+// Version 2: "u" is a function
 arma::vec L2project_Func(	const my_mesh::MeshData &mesh,
 				double (*f)(double, double)	)
 {
