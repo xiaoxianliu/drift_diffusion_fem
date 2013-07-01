@@ -1,3 +1,7 @@
+#ifndef AUXILLARY_HPP
+#define AUXILLARY_HPP
+
+
 #include <cmath>
 #include <vector>
 
@@ -39,3 +43,18 @@ int compute_ExcitonDissociationRate(	const my_mesh::MeshData &mesh,
 int compute_RecombinationRate(	const my_mesh::MeshData &mesh,
 				const arma::vec &E,				// electric field amplitude
 				arma::vec &recomb_interface);
+
+
+
+
+
+/*************************************************************************************************************************/
+// Compute arma::vec of "photo generation function"
+int compute_PhotoGenerationVec(	const my_mesh::MeshData &mesh, arma::vec &Q_vec);
+
+
+
+
+
+
+#endif

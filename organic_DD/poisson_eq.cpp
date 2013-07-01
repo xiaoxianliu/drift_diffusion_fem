@@ -45,15 +45,15 @@ int solve_NonlinearPoissonEq(	const my_mesh::MeshData &mesh,
 
 	// 1. Set up Newton's iteration of solving nonlinear Poisson's equation
 	//	Note: when max_iter = 1, effectively one recovers the Gummel's iteration
-	int max_iter=10;
+	int max_iter=1;
 	double newton_err=1.0, newton_tol=1e-3;
-	arma::vec prev_psi = input_psi;
-	arma::vec new_psi;
+	arma::vec prev_psi = input_psi;				// previous "psi" for each iteration
+	arma::vec new_psi;					// new "psi" solved for after each iteration
 
 	// 2. Newton's iteration
 	for (int iter=0; iter < max_iter; iter++)
 	{
-		std::cout << "\tIn Newton's solver for Poisson's equation, iter " << iter << "\n";
+//		std::cout << "\tIn Newton's solver for Poisson's equation, iter " << iter << "\n";
 		// Solve linearized Poisson's equation
 		solve_LinearizedPoissonEq(mesh, prev_psi, input_n, input_p, input_u, new_psi, applied_psi);
 

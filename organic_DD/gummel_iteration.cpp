@@ -41,11 +41,11 @@ int solve_GummelIteration(	const my_mesh::MeshData &mesh,
 
 	// 2. Gummel's iteration
 	// 2.1 setup
-/*	arma::vec prev_psi = psi, prev_n = n, prev_p = p, prev_u = u;
+	arma::vec prev_psi = psi, prev_n = n, prev_p = p, prev_u = u;
 	arma::vec new_psi = psi, new_n = n, new_p = p, new_u = u;
 
-	double gummel_err = 1.0, gummel_tol = 1e-3;
-	int max_iter = 5;
+	double gummel_err = 1.0, gummel_tol = 1e-4;
+	int max_iter = 50;
 
 	// 2.2 gummel's iteration
 	for (int iter=0; iter<max_iter; iter++)
@@ -55,10 +55,10 @@ int solve_GummelIteration(	const my_mesh::MeshData &mesh,
 		// 2.2.1 Solve equations one by one
 		solve_ContinuityEq_n(mesh, prev_psi, prev_n, prev_p, prev_u, new_n);
 		solve_ContinuityEq_p(mesh, prev_psi, prev_n, prev_p, prev_u, new_p);
-		solve_ContinuityEq_x(mesh, prev_psi, prev_n, prev_p, prev_u, new_u);
-		solve_NonlinearPoissonEq(mesh, prev_psi, n, p, u, new_psi, applied_psi);
+		solve_ContinuityEq_x(mesh, prev_psi, new_n, new_p, prev_u, new_u);
+		solve_NonlinearPoissonEq(mesh, prev_psi, new_n, new_p, new_u, new_psi, applied_psi);
 
-		// 2.2.2 compute gummel error
+		// 2.2.2 compute error for gummel's iteration
 		double max_dn = arma::norm(new_n-prev_n, "inf");
 		double max_dp = arma::norm(new_p-prev_p, "inf");
 		double max_du = arma::norm(new_u-prev_u, "inf");
@@ -70,15 +70,17 @@ int solve_GummelIteration(	const my_mesh::MeshData &mesh,
 
 		std::cout << "Gummel's error is " << gummel_err << "\n";
 
+		// 2.2.3 Determine if iteration should be terminated
 		if (gummel_err < gummel_tol)
 			break;
 
+		// 	if not terminated, update unknowns
 		prev_psi = new_psi;	prev_n = new_n;	prev_p = new_p;	prev_u = new_u;
 	}
 
 	psi = new_psi;	n = new_n;	p = new_p;	u = new_u;
 
-*/
+
 	return 0;
 }
 

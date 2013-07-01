@@ -16,8 +16,6 @@
 /******************************************************************************************************************/
 // Declarations of local functions
 
-double photo_generation_Func(double x, double y);		// photo-generation rate of excitons
-
 int apply_DirichletBC_x(const my_mesh::MeshData &mesh,
 			arma::mat &M,
 			arma::vec &rhs);
@@ -50,7 +48,7 @@ int solve_ContinuityEq_x(	const my_mesh::MeshData &mesh,
 	compute_ExcitonDissociationRate (mesh, input_psi, input_n, input_p, input_u, k_diss_interface);
 	// 1.4 vector of photo generation rate of exciton
 	arma::vec Q_vec(mesh.num_nodes);
-	Q_vec = my_fem::interpolateFunction(mesh, photo_generation_Func);
+	compute_PhotoGenerationVec(mesh, Q_vec);
 	// 1.5 vector of electric field amplitude
 	arma::vec E;
 	compute_ElectricFieldAmplitude(mesh, input_psi, E);
@@ -106,15 +104,6 @@ return 0;
 /******************************************************************************************************************/
 // Definitions of local functions
 
-
-
-
-double photo_generation_Func(double x, double y)
-{
-using namespace parameters;
-	double x_incident = -1.0;
-	return Q0*exp(-alpha*(x - x_incident));		// assuming light comes from the left
-}
 
 
 int apply_DirichletBC_x(const my_mesh::MeshData &mesh,

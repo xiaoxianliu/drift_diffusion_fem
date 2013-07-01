@@ -25,7 +25,7 @@ double U_T = k_boltzmann * temperature / q_unit;	// thermal potential, in "V"; s
 /******** typical values of different physical quantities ********/
 // To de-dimensionlize quantities below
 double typical_length = 2e-7;				// device dimension is assumed to be 200 nm = 2e-7m
-double typical_mobility = 1e-9;				// measure of mobility is 1e-9 m^2_V^(-1)_s^(-1)
+double typical_mobility = 1e-8;				// measure of mobility is 1e-9 m^2_V^(-1)_s^(-1)
 double typical_density = 1e20;				// density of particles: 1e20 m^(-3)
 double typical_time = pow( typical_length, 2) / (typical_mobility * U_T);
  							// time scale associated with diffusion/drift process
@@ -67,13 +67,13 @@ double exciton_mobility = exciton_diffusivity / U_T;
 double exciton_diffusion_length = sqrt(exciton_diffusivity * exciton_lifetime);		// about 10nm
 							// around 10nm = 1e-8m
 // 1.2 Electron
-double electron_mobility_donor = 1e-9;			// Zero-field mobilities, in "m^2_V^(-1)_s^(-1)"
+double electron_mobility_donor = 1e-8;			// Zero-field mobilities, in "m^2_V^(-1)_s^(-1)"
 double electron_mobility_acceptor = 1e-8;	
 double electron_mobility_field_dependent_coefficient = 1.55e-3;		// m^(1/2)_V^(-1/2); "mu_n = mu0_n exp(gamma_n * sqrt(|E|))"
 
 // 1.3 Hole
 double hole_mobility_donor = 2e-8;
-double hole_mobility_acceptor = 2e-9;
+double hole_mobility_acceptor = 2e-8;
 double hole_mobility_field_dependent_coefficient = 3e-4;		// m^(1/2)_V^(-1/2); "mu_p = mu0_p exp(gamma_p * sqrt(|E|))"
 
 
@@ -96,14 +96,14 @@ double gamma_p = hole_mobility_field_dependent_coefficient * sqrt( U_T / typical
 /**** Reactions *********************************************************************************/
 // 1. Physical values
 // 1.1 Light absorption
-double photon_absorption_rate = 1e25;			// m^(-3)_s^(-1), i.e. counts per unit volume per second
+double photon_absorption_rate = 1e27;			// m^(-3)_s^(-1), i.e. counts per unit volume per second
 							// Ref: Falco, Porro, etc
-double absorption_coefficient = 3e6;			// "m^(-1)"; Q ~ exp(-alpha*x)
+double absorption_coefficient = 0e6;			// "m^(-1)"; Q ~ exp(-alpha*x)
 double absorption_length = 1.0/absorption_coefficient;	// "m"
 // 1.2 Recombination of electron-hole pair
 double typical_recombination_rate = q_unit * typical_mobility / epsilon_vacuum ;
 // 1.3 Exciton dissociation
-double exciton_dissociation_rate_zero_field = 1e8;			// s^(-1)
+double exciton_dissociation_rate_zero_field = 1e10;			// s^(-1)
 
 // 2. Dimensionless form
 // Light absorption
@@ -129,16 +129,16 @@ double lambda_squared = epsilon_vacuum * U_T / (q_unit * typical_density * pow(t
 /***** Dirichlet boundary values ************************************************************************/
 // 1. Physical values
 // 1.1 electrical potential
-double builtin_potential_anode = -0.4;
+double builtin_potential_anode = -0.6;
 double builtin_potential_cathode = 0.0;
 double builtin_potential = builtin_potential_anode - builtin_potential_cathode;
 
 // 1.2 electron
-double electron_density_anode = 0.0;
-double electron_density_cathode = 1e22;
+double electron_density_anode = 0e20;
+double electron_density_cathode = 0e20;
 // 1.3 hole
-double hole_density_anode = 1e22;
-double hole_density_cathode = 0.0;
+double hole_density_anode = 0e20;
+double hole_density_cathode = 0e20;
 // 1.4 exciton
 double exciton_density_anode = 0.0;
 double exciton_density_cathode = 0.0;

@@ -10,7 +10,7 @@
 
 #define PI 3.14159265359
 
-//// Auxillary functions that is needed by not only one solver
+//// Auxillary functions that is needed by equation solvers
 
 /*******************************************************************************************************************/
 // Compute magnitude of electrical field |E|
@@ -268,6 +268,27 @@ int compute_RecombinationRate(	const my_mesh::MeshData &mesh,
 }
 
 
+
+
+
+
+
+
+/*************************************************************************************************************************/
+// Compute arma::vec of "photo generation function"
+double photo_generation_Func(double x, double y)
+{
+using namespace parameters;
+	double x_incident = -1.0;
+	return Q0*exp(-alpha*(x - x_incident));		// assuming light comes from the left
+}
+
+int compute_PhotoGenerationVec(	const my_mesh::MeshData &mesh,
+				arma::vec &Q_vec)
+{
+	Q_vec = my_fem::interpolateFunction(mesh, photo_generation_Func);
+return 0;
+}
 
 
 
