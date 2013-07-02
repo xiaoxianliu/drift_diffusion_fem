@@ -113,3 +113,50 @@ return 0;
 // (1) On Gamma_anode:	Fx_dot_nu1
 // (2) On Gamma_interface:	Fx_dot_nu1, Fx_dot_nu2
 // (3) On Gamma_cathode:	Fx_dot_nu2
+
+
+
+
+/************************************************************************************************************************************/
+// averaged current density
+// (1) electron current on anode
+double compute_Boundary1CurrentDensity_n(	const my_mesh::MeshData &mesh,
+						const arma::vec &n,
+						const arma::vec &psi)
+{
+	double Jn_anode=0.0;
+
+	// 1. compute node-wise electron flux on anode
+	arma::vec Fn_nu1;
+	compute_Boundary1Flux_n(mesh, n, psi, Fn_nu1);
+
+	// 2.
+	for (int i=0; i<mesh.boundary1_edges.size(); i++)
+	{	int edge_index = mesh.boundary1_edges[i];
+		double length = mesh.edge_lengths [edge_index];
+		Jn_anode = -0.5 * length * (Fn_nu1(i) + Fn_nu1(i+1));
+	}
+
+	return Jn_anode;
+}
+
+// (2) hole current on anode
+double compute_Boundary1CurrentDensity_p(	const my_mesh::MeshData &mesh,
+						const arma::vec &p,
+						const arma::vec &psi)
+{
+	double Jp_anode=0.0;
+
+	// 1. compute node-wise hole flux on anode
+	arma::vec Fp_nu1;
+	compute_Boundary1Flux_p(mesh, p, psi, Fp_nu1);
+
+	// 2. 
+	for (int i=0; i<mesh.boundary1_edges.size(); i++)
+	{	int edge_index = mesh.boundary1_edges[i];
+		double length = mesh.edge_lengths[edge_index];
+		Jp_anode += 0.5 * length * (Fp_nu1(i) + Fp_nu1(i+1));
+	}
+
+	return Jp_anode;
+}

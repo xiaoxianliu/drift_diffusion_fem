@@ -139,9 +139,9 @@ double builtin_potential = builtin_potential_anode - builtin_potential_cathode;
 
 // 1.2 electron
 double electron_density_anode = 0e20;
-double electron_density_cathode = 0e20;
+double electron_density_cathode = 1e20;
 // 1.3 hole
-double hole_density_anode = 0e20;
+double hole_density_anode = 1e20;
 double hole_density_cathode = 0e20;
 // 1.4 exciton
 double exciton_density_anode = 0.0;

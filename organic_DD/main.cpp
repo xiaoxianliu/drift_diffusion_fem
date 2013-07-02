@@ -52,7 +52,7 @@ using namespace std;
 	// 2. Solve for solution
 	// 2.1 solve
 	arma::vec psi, n, p, u;
-	double applied_psi = 26.0;
+	double applied_psi = 0.0;
 	solve_GummelIteration(mesh, psi, n, p, u, applied_psi);
 
 	// 2.2 Plot solution
@@ -119,15 +119,25 @@ using namespace std;
 	}
 
 	// 4.3 Boundary flux
-	bool is_to_plot_boundary_flux = false;
+	bool is_to_plot_boundary_flux = true;
 	if (is_to_plot_boundary_flux)
 	{	arma::vec Fn_nu1_anode, Fp_nu1_anode;
 		compute_Boundary1Flux_n(mesh, n, psi, Fn_nu1_anode);
 		compute_Boundary1Flux_p(mesh, p, psi, Fp_nu1_anode);
-//		std::cout << "Fn on anode is " << Fn_nu1_anode << "\n\n";
-//		std::cout << "Fp on anode is " << Fp_nu1_anode << "\n\n";
+		std::cout << "Fn on anode is " << Fn_nu1_anode << "\n\n";
+		std::cout << "Fp on anode is " << Fp_nu1_anode << "\n\n";
 	}
 
+	// 4.4 Boundary current density
+	bool is_to_compute_boundary_current_density = true;
+	if (is_to_compute_boundary_current_density)
+	{	double Jp_anode, Jn_anode;
+		Jn_anode = compute_Boundary1CurrentDensity_n(mesh, n, psi);
+		Jp_anode = compute_Boundary1CurrentDensity_p(mesh, p, psi);
+		std::cout << "Jn = " << Jn_anode << "\n";
+		std::cout << "Jp = " << Jp_anode << "\n";
+		std::cout << "Total current J = " << Jp_anode + Jn_anode << "\n";
+	}
 
 
 return 0;

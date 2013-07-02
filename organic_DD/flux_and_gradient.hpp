@@ -96,4 +96,24 @@ int compute_Boundary1Flux_p(	const my_mesh::MeshData &mesh,
 // (1) On Gamma_anode:	Fx_dot_nu1
 // (2) On Gamma_interface:	Fx_dot_nu1, Fx_dot_nu2
 // (3) On Gamma_cathode:	Fx_dot_nu2
+
+
+
+
+
+
+
+
+
+
+/************************************************************************************************************************************/
+// averaged current density
+// (1) electron current on anode
+double compute_Boundary1CurrentDensity_n(	const my_mesh::MeshData &mesh,
+						const arma::vec &n,
+						const arma::vec &psi);
+// (2) hole current on anode
+double compute_Boundary1CurrentDensity_p(	const my_mesh::MeshData &mesh,
+						const arma::vec &p,
+						const arma::vec &psi);
 #endif
