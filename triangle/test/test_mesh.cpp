@@ -30,7 +30,7 @@ using namespace MeshNamespace;
 	MeshData mesh;
 	double max_area = 0.001;
 	bool is_to_plot=false;
-	mesh = generateMesh("test", interface_nodes);
+	mesh = generateMesh("test", interface_nodes, max_area);
 
 
 

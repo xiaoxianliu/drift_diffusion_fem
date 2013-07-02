@@ -68,6 +68,8 @@ void gnuplot_mesh(const MeshData &mesh, const std::string& filename);
 void gnuplot_interface(const MeshData &mesh, const std::string& filename);
 
 /* Find sub-mesh or interface */
+int extractBoundary1( MeshData &mesh);
+int extractBoundary3( MeshData &mesh);
 int extractInterface( MeshData& mesh );
 
 /* Compute barry points for each element */
@@ -101,7 +103,14 @@ struct MeshNamespace::MeshData
 	std::vector< std::vector<int> > elements;		// indices of all nodes of element (num_elements * num_nodes_per_ele)
 	std::vector<int> element_markers;			// Assume this is the only attribute each element has!!!
 
-	/* Interface and its (nodal) curvatures*/
+	/* Boundaries and interfaces */
+	// boundaries
+	std::vector< int > boundary1_nodes;
+	std::vector< int > boundary1_edges;
+	std::vector< int > boundary3_nodes;
+	std::vector< int > boundary3_edges;
+	
+	// Interface and its (nodal) curvatures
 	std::vector< int > interface_nodes;			// indices of nodes and edges on interface
 	std::vector< int > interface_edges;			// Note: num_interface_nodes = num_interface_edges+1
 	std::vector<double> interface_curvatures;

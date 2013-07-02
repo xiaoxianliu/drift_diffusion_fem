@@ -67,6 +67,8 @@ using namespace MeshNamespace;
 	computeBarryPoints(mesh);				// barry points for each element
 
 	extractInterface(mesh);					// interface nodes and edges
+	extractBoundary1(mesh);					// boundary 1 -> left boundary <-> "anode"
+	extractBoundary3(mesh);					// boundary3 <-> right boundary <-> "cathode"
 
 	/* 5. Plot mesh */
 	if (is_to_plot)
