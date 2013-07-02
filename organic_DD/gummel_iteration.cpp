@@ -44,7 +44,7 @@ int solve_GummelIteration(	const my_mesh::MeshData &mesh,
 	arma::vec prev_psi = psi, prev_n = n, prev_p = p, prev_u = u;
 	arma::vec new_psi = psi, new_n = n, new_p = p, new_u = u;
 
-	double gummel_err = 1.0, gummel_tol = 1e-4;
+	double gummel_err = 1.0, gummel_tol = 5e-4;
 	int max_iter = 50;
 
 	// 2.2 gummel's iteration
@@ -78,6 +78,7 @@ int solve_GummelIteration(	const my_mesh::MeshData &mesh,
 		prev_psi = new_psi;	prev_n = new_n;	prev_p = new_p;	prev_u = new_u;
 	}
 
+//	std::cout << "Difference between psi_gummel and psi_initial is " << arma::norm(new_psi - psi, "inf") << "\n";
 	psi = new_psi;	n = new_n;	p = new_p;	u = new_u;
 
 

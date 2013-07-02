@@ -48,6 +48,8 @@ extern double tau_x;		// exciton lifetime
 /**** Mobility (diffusivity) etc ***********/
 // 2. Dimensionless values
 extern double mu_x;		// exciton mobility
+extern double mu_x_donor;
+extern double mu_x_acceptor;
 extern double mu_n_donor;	// electron mobility in donor and acceptor
 extern double mu_n_acceptor;
 extern double mu_p_donor;	// hole mobility in donor and acceptor

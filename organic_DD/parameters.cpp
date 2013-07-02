@@ -49,6 +49,8 @@ double epsilon_donor = 4.0;
 double epsilon_rel = 0.5*(epsilon_acceptor + epsilon_donor);
 
 
+
+
 /**** Exciton characteristics ************************************************************************/
 // Dimensional values
 double typical_exciton_radius = 1e-9;			// typical exciton radius is 1nm
@@ -67,18 +69,20 @@ double exciton_mobility = exciton_diffusivity / U_T;
 double exciton_diffusion_length = sqrt(exciton_diffusivity * exciton_lifetime);		// about 10nm
 							// around 10nm = 1e-8m
 // 1.2 Electron
-double electron_mobility_donor = 1e-8;			// Zero-field mobilities, in "m^2_V^(-1)_s^(-1)"
+double electron_mobility_donor = 1e-9;			// Zero-field mobilities, in "m^2_V^(-1)_s^(-1)"
 double electron_mobility_acceptor = 1e-8;	
 double electron_mobility_field_dependent_coefficient = 1.55e-3;		// m^(1/2)_V^(-1/2); "mu_n = mu0_n exp(gamma_n * sqrt(|E|))"
 
 // 1.3 Hole
 double hole_mobility_donor = 2e-8;
-double hole_mobility_acceptor = 2e-8;
+double hole_mobility_acceptor = 2e-9;
 double hole_mobility_field_dependent_coefficient = 3e-4;		// m^(1/2)_V^(-1/2); "mu_p = mu0_p exp(gamma_p * sqrt(|E|))"
 
 
 // 2. Dimensionless values
 double mu_x = exciton_mobility / typical_mobility;		// exciton mobility
+double mu_x_donor = mu_x;
+double mu_x_acceptor = mu_x;
 double mu_n_donor = electron_mobility_donor / typical_mobility;	// electron mobility in donor and acceptor
 double mu_n_acceptor = electron_mobility_acceptor / typical_mobility;
 double mu_p_donor = hole_mobility_donor / typical_mobility;	// hole mobility in donor and acceptor
@@ -98,7 +102,7 @@ double gamma_p = hole_mobility_field_dependent_coefficient * sqrt( U_T / typical
 // 1.1 Light absorption
 double photon_absorption_rate = 1e27;			// m^(-3)_s^(-1), i.e. counts per unit volume per second
 							// Ref: Falco, Porro, etc
-double absorption_coefficient = 0e6;			// "m^(-1)"; Q ~ exp(-alpha*x)
+double absorption_coefficient = 3e6;			// "m^(-1)"; Q ~ exp(-alpha*x)
 double absorption_length = 1.0/absorption_coefficient;	// "m"
 // 1.2 Recombination of electron-hole pair
 double typical_recombination_rate = q_unit * typical_mobility / epsilon_vacuum ;

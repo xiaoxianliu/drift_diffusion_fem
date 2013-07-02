@@ -53,6 +53,11 @@ int	compute_MobilityN_elementwise(	const my_mesh::MeshData &mesh,
 					const arma::vec &E,				// electric field intensity
 					arma::vec &mu_n_elementwise)
 {
+	// 0. Reset "mu_n_elementwise"
+	if (mu_n_elementwise.n_rows != mesh.num_elements)
+	{	mu_n_elementwise.resize(mesh.num_elements);	mu_n_elementwise.zeros();
+	}
+
 	// 1. Copy the corresponding parameters from namespace "parameters"
 	double mu_n_1 = parameters::mu_n_donor;
 	double mu_n_2 = parameters::mu_n_acceptor;
@@ -90,6 +95,11 @@ int compute_MobilityP_elementwise (	const my_mesh::MeshData &mesh,
 					const arma::vec &E, 
 					arma::vec &mu_p_elementwise)
 {
+	// 0. Reset "mu_p_elementwise"
+	if (mu_p_elementwise.n_rows != mesh.num_elements)
+	{	mu_p_elementwise.resize(mesh.num_elements);	mu_p_elementwise.zeros();
+	}
+
 	// 1. Copy the corresponding parameters from namespace "parameters"
 	double mu_p_1 = parameters::mu_p_donor;
 	double mu_p_2 = parameters::mu_p_acceptor;
@@ -126,6 +136,11 @@ int compute_MobilityP_elementwise (	const my_mesh::MeshData &mesh,
 int compute_MobilityX_elementwise (	const my_mesh::MeshData &mesh,
 					arma::vec &mu_x_elementwise)
 {
+	// 0. Reset "mu_n_elementwise"
+	if (mu_x_elementwise.n_rows != mesh.num_elements)
+	{	mu_x_elementwise.resize(mesh.num_elements);	mu_x_elementwise.zeros();
+	}
+
 	double mu_x_1 = parameters::mu_x_donor;
 	double mu_x_2 = parameters::mu_x_acceptor;
 

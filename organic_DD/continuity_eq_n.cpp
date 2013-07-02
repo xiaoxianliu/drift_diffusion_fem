@@ -12,7 +12,6 @@
 
 /*******************************************************************************************************************************/
 // Local function declarations
-int compute_MobilityN_elementwise(	const my_mesh::MeshData &mesh,	const arma::vec &E, arma::vec &mu_n);
 int apply_DirichletBC_n (const my_mesh::MeshData &mesh, arma::mat &M, arma::vec &rhs);
 
 
@@ -78,44 +77,7 @@ int solve_ContinuityEq_n(const my_mesh::MeshData &mesh,
 
 /*******************************************************************************************************************************/
 // Local function definitions
-int	compute_MobilityN_elementwise(	const my_mesh::MeshData &mesh,
-					const arma::vec &E,				// electric field intensity
-					arma::vec &mu_n_elementwise)
-{
-	// 1. Copy the corresponding parameters from namespace "parameters"
-	double mu_n_1 = parameters::mu_n_donor;
-	double mu_n_2 = parameters::mu_n_acceptor;
-	double gamma = parameters::gamma_n;
-
-	// 2. Compute average mobility for each element
-	for (int t=0; t<mesh.num_elements; t++)
-	{	int v0 = mesh.topology2to0[t][0];
-		int v1 = mesh.topology2to0[t][1];
-		int v2 = mesh.topology2to0[t][2];
-
-		// Determine zero-field mobility of electron
-		double mu_n_t_zerofield;
-		if (mesh.element_markers[t]==1)
-			mu_n_t_zerofield = mu_n_1;
-		else if (mesh.element_markers[t] == 2)
-			mu_n_t_zerofield = mu_n_2;
-		else
-		{	std::cout << "marker of element " << t << " is " << mesh.element_markers[t] << ". It has to be 1 or 2.\n";
-			exit(1);
-		}
-
-		mu_n_elementwise(t) = mu_n_t_zerofield *
-					  ( exp(gamma * sqrt(E(v0))) 
-					   +exp(gamma * sqrt(E(v1)))
-					   +exp(gamma * sqrt(E(v2)))
-					  )/3.0;
-	}
-
-	return 0;
-}
-
-
-
+// Dirichlet boundary condition
 
 int apply_DirichletBC_n(const my_mesh::MeshData &mesh,
 			arma::mat &M,
