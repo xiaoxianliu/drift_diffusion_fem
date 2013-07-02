@@ -202,3 +202,19 @@ return 0;
 
 /************************************************************************************************************************************/
 // Exciton flux:	Fx = -mu_x * grad(u)
+int compute_Flux_x(	const my_mesh::MeshData &mesh,
+			const arma::vec &u,
+			arma::vec &Fx_x,					// Fx_x means it's x-component of an exciton flux 
+			arma::vec &Fx_y)
+{
+	// 1. compute relavant quantities
+	// 1.1 exciton mobility, element-wise
+	arma::vec mu_x;
+	compute_MobilityX_elementwise(mesh, mu_x);
+
+	// 2. compute diffusion flux of exciton
+	compute_DiffusionFlux(mesh, u, mu_x, Fx_x, Fx_y);
+
+return 0;
+}
+

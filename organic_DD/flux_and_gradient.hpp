@@ -37,9 +37,6 @@ int compute_ConvectionFlux(	const my_mesh::MeshData &mesh,
 				arma::vec &F_x,
 				arma::vec &F_y);
 
-
-
-
 /************************************************************************************************************************************/
 // Electron flux:	Fn = -mu_n(grad(psi)) * grad(n) + mu_n(grad(psi)) * n * grad(psi)
 int compute_Flux_n(	const my_mesh::MeshData &mesh,
@@ -47,11 +44,6 @@ int compute_Flux_n(	const my_mesh::MeshData &mesh,
 			const arma::vec &psi,
 			arma::vec &Fn_x,
 			arma::vec &Fn_y);
-
-
-
-
-
 
 /************************************************************************************************************************************/
 // Hole flux:		Fp = -mu_p(grad(psi)) ( grad(p) + p*grad(psi))
@@ -61,11 +53,12 @@ int compute_Flux_p(	const my_mesh::MeshData &mesh,
 			arma::vec &Fp_x,
 			arma::vec &Fp_y);
 
-
-
 /************************************************************************************************************************************/
 // Exciton flux:	Fx = -mu_x * grad(u)
-
+int compute_Flux_x(	const my_mesh::MeshData &mesh,
+			const arma::vec &u,
+			arma::vec &Fx_x,					// Fx_x means it's x-component of an exciton flux 
+			arma::vec &Fx_y);
 
 
 

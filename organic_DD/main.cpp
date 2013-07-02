@@ -109,9 +109,13 @@ int compute_Flux_p(	const my_mesh::MeshData &mesh,
 	my_gnuplot::plot_ArmaVec(mesh, Fp_x, filename+"_Fp_x", "wxt");
 	my_gnuplot::plot_ArmaVec(mesh, Fp_y, filename+"_Fp_y", "png");
 
-	// Total flux
+	// Current = Fp - Fn
 	my_gnuplot::plot_ArmaVec(mesh, Fp_x - Fn_x, filename+"_F_total_x", "wxt");
 
+	// Flux of exciton
+	arma::vec Fx_x, Fx_y;
+	compute_Flux_x(mesh, u, Fx_x, Fx_y);
+	my_gnuplot::plot_ArmaVec(mesh, Fx_x, filename+"_F_exciton", "wxt");
 
 	return 0;
 }
