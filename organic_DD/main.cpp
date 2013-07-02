@@ -87,30 +87,49 @@ using namespace std;
 
 	// 4. Compute derived quantities and plot
 	// 4.1 Electric field
-	arma::vec E_x, E_y;
-	compute_ElectricField(mesh, psi, E_x, E_y);
-	my_gnuplot::plot_ArmaVec(mesh, E_x, filename+"_Ex", "png");
-	my_gnuplot::plot_ArmaVec(mesh, E_y, filename+"_Ey", "png");
+	bool is_to_plot_E = false;
+	if (is_to_plot_E)
+	{	arma::vec E_x, E_y;
+		compute_ElectricField(mesh, psi, E_x, E_y);
+		my_gnuplot::plot_ArmaVec(mesh, E_x, filename+"_Ex", "png");
+		my_gnuplot::plot_ArmaVec(mesh, E_y, filename+"_Ey", "png");
+	}
 	// 4.2 Fluxes
-	// Flux of electrons
-	arma::vec Fn_x, Fn_y;
-	compute_Flux_n(mesh, n, psi, Fn_x, Fn_y);
-	my_gnuplot::plot_ArmaVec(mesh, Fn_x, filename+"_Fn_x", "wxt");
-	my_gnuplot::plot_ArmaVec(mesh, Fn_y, filename+"_Fn_y", "png");
+	bool is_to_plot_domain_flux = false;
+	if (is_to_plot_domain_flux)
+	{	// Flux of electrons
+		arma::vec Fn_x, Fn_y;
+		compute_Flux_n(mesh, n, psi, Fn_x, Fn_y);
+		my_gnuplot::plot_ArmaVec(mesh, Fn_x, filename+"_Fn_x", "wxt");
+		my_gnuplot::plot_ArmaVec(mesh, Fn_y, filename+"_Fn_y", "png");
 
-	// Flux of holes
-	arma::vec Fp_x, Fp_y;
-	compute_Flux_p (mesh, p, psi, Fp_x, Fp_y);
-	my_gnuplot::plot_ArmaVec(mesh, Fp_x, filename+"_Fp_x", "wxt");
-	my_gnuplot::plot_ArmaVec(mesh, Fp_y, filename+"_Fp_y", "png");
+		// Flux of holes
+		arma::vec Fp_x, Fp_y;
+		compute_Flux_p (mesh, p, psi, Fp_x, Fp_y);
+		my_gnuplot::plot_ArmaVec(mesh, Fp_x, filename+"_Fp_x", "wxt");
+		my_gnuplot::plot_ArmaVec(mesh, Fp_y, filename+"_Fp_y", "png");
 
-	// Current = Fp - Fn
-	my_gnuplot::plot_ArmaVec(mesh, Fp_x - Fn_x, filename+"_J_total_x", "wxt");
+		// Current = Fp - Fn
+		my_gnuplot::plot_ArmaVec(mesh, Fp_x - Fn_x, filename+"_F_total_x", "wxt");
 
-	// Flux of exciton
-	arma::vec Fx_x, Fx_y;
-	compute_Flux_x(mesh, u, Fx_x, Fx_y);
-	my_gnuplot::plot_ArmaVec(mesh, Fx_x, filename+"_Fx_x", "png");
+		// Flux of exciton
+		arma::vec Fx_x, Fx_y;
+		compute_Flux_x(mesh, u, Fx_x, Fx_y);
+		my_gnuplot::plot_ArmaVec(mesh, Fx_x, filename+"_F_exciton", "wxt");
+	}
 
-	return 0;
+	// 4.3 Boundary flux
+	bool is_to_plot_boundary_flux = false;
+	if (is_to_plot_boundary_flux)
+	{	arma::vec Fn_nu1_anode, Fp_nu1_anode;
+		compute_Boundary1Flux_n(mesh, n, psi, Fn_nu1_anode);
+		compute_Boundary1Flux_p(mesh, p, psi, Fp_nu1_anode);
+//		std::cout << "Fn on anode is " << Fn_nu1_anode << "\n\n";
+//		std::cout << "Fp on anode is " << Fp_nu1_anode << "\n\n";
+	}
+
+
+
+return 0;
+
 }

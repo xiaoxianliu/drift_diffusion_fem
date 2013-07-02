@@ -63,4 +63,37 @@ int compute_Flux_x(	const my_mesh::MeshData &mesh,
 
 
 
+/************************************************************************************************************************************/
+// Electric field: 	dE/dnu = -dpsi/dnu
+// (1) On Gamma_anode:	dE/dnu1
+// (2) On Gamma_interface:	dE/dnu1, dE/dnu2
+// (3) On Gamma_cathod:	dE/dnu2
+
+/************************************************************************************************************************************/
+// Normal component of Electron flux:		Fn_dot_nu
+// (1) On Gamma_anode:	Fn_dot_nu1
+
+int compute_Boundary1Flux_n(	const my_mesh::MeshData &mesh,
+				const arma::vec &n,
+				const arma::vec &psi,
+				arma::vec &Fn_nu1);
+
+// (2) On Gamma_interface:	Fn_dot_nu1, Fn_dot_nu2
+// (3) On Gamma_cathode:	Fn_dot_nu2
+
+/************************************************************************************************************************************/
+// Normal component of hole flux:		Fp_dot_nu
+// (1) On Gamma_anode:	Fp_dot_nu1
+int compute_Boundary1Flux_p(	const my_mesh::MeshData &mesh,
+				const arma::vec &p,
+				const arma::vec &psi,
+				arma::vec &Fp_nu1);
+// (2) On Gamma_interface:	Fp_dot_nu1, Fp_dot_nu2
+// (3) On Gamma_cathode:	Fp_dot_nu2
+
+/************************************************************************************************************************************/
+// Normal component of exciton flux:		Fx_dot_nu
+// (1) On Gamma_anode:	Fx_dot_nu1
+// (2) On Gamma_interface:	Fx_dot_nu1, Fx_dot_nu2
+// (3) On Gamma_cathode:	Fx_dot_nu2
 #endif
