@@ -45,6 +45,95 @@ int compute_ElectricFieldAmplitude(	const my_mesh::MeshData &mesh,
 
 
 
+/*********************************************************************************************************************/
+// mobility of electrons and holes
+// 1. element-wise mobility
+// 1.1 electron
+int	compute_MobilityN_elementwise(	const my_mesh::MeshData &mesh,
+					const arma::vec &E,				// electric field intensity
+					arma::vec &mu_n_elementwise)
+{
+	// 1. Copy the corresponding parameters from namespace "parameters"
+	double mu_n_1 = parameters::mu_n_donor;
+	double mu_n_2 = parameters::mu_n_acceptor;
+	double gamma = parameters::gamma_n;
+
+	// 2. Compute average mobility for each element
+	for (int t=0; t<mesh.num_elements; t++)
+	{	int v0 = mesh.topology2to0[t][0];
+		int v1 = mesh.topology2to0[t][1];
+		int v2 = mesh.topology2to0[t][2];
+
+		// Determine zero-field mobility of electron
+		double mu_n_t_zerofield;
+		if (mesh.element_markers[t]==1)
+			mu_n_t_zerofield = mu_n_1;
+		else if (mesh.element_markers[t] == 2)
+			mu_n_t_zerofield = mu_n_2;
+		else
+		{	std::cout << "marker of element " << t << " is " << mesh.element_markers[t] << ". It has to be 1 or 2.\n";
+			exit(1);
+		}
+
+		mu_n_elementwise(t) = mu_n_t_zerofield *
+					  ( exp(gamma * sqrt(E(v0))) 
+					   +exp(gamma * sqrt(E(v1)))
+					   +exp(gamma * sqrt(E(v2)))
+					  )/3.0;
+	}
+
+	return 0;
+}
+
+// 1.2 hole
+int compute_MobilityP_elementwise (	const my_mesh::MeshData &mesh, 
+					const arma::vec &E, 
+					arma::vec &mu_p_elementwise)
+{
+	// 1. Copy the corresponding parameters from namespace "parameters"
+	double mu_p_1 = parameters::mu_p_donor;
+	double mu_p_2 = parameters::mu_p_acceptor;
+	double gamma_p = parameters::gamma_p;
+
+	// 2. Compute average mobility for each element
+	for (int t=0; t<mesh.num_elements; t++)
+	{	int v0 = mesh.topology2to0[t][0];
+		int v1 = mesh.topology2to0[t][1];
+		int v2 = mesh.topology2to0[t][2];
+
+		// Determine zero-field mobility of electron
+		double mu_p_t_zerofield;
+		if (mesh.element_markers[t]==1)
+			mu_p_t_zerofield = mu_p_1;
+		else if (mesh.element_markers[t] == 2)
+			mu_p_t_zerofield = mu_p_2;
+		else
+		{	std::cout << "marker of element " << t << " is " << mesh.element_markers[t] << ". It has to be 1 or 2.\n";
+			exit(1);
+		}
+
+		mu_p_elementwise(t) = mu_p_t_zerofield *
+					  ( exp(gamma_p * sqrt(E(v0))) 
+					   +exp(gamma_p * sqrt(E(v1)))
+					   +exp(gamma_p * sqrt(E(v2)))
+					  )/3.0;
+	}
+
+	return 0;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

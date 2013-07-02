@@ -10,13 +10,25 @@
 #include "../triangle/mesh.hpp"
 #include "../my_fem/my_fem.hpp"
 #include "parameters.hpp"
-//#include "main.hpp"
+
 
 /*******************************************************************************************************************/
 // Compute magnitude of electrical field |E|
 int compute_ElectricFieldAmplitude(	const my_mesh::MeshData &mesh,
 					const arma::vec &psi,
 					arma::vec &E);
+
+/*******************************************************************************************************************/
+// mobility of electrons and holes
+// 1. element-wise mobility
+int compute_MobilityN_elementwise(	const my_mesh::MeshData &mesh,
+					const arma::vec &E,				// electric field intensity
+					arma::vec &mu_n_elementwise);
+
+int compute_MobilityP_elementwise (	const my_mesh::MeshData &mesh, 
+					const arma::vec &E, 				// electric field intensity
+					arma::vec &mu_p_elementwise);
+
 
 /*******************************************************************************************************************/
 // Compute "outward" normal derivative of given vector "u" on interface w.r.t. either left region (marked "1") or right region (marked "2")
