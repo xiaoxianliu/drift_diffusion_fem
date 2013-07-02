@@ -52,7 +52,7 @@ using namespace std;
 	// 2. Solve for solution
 	// 2.1 solve
 	arma::vec psi, n, p, u;
-	double applied_psi = 0.0;
+	double applied_psi = 26.0;
 	solve_GummelIteration(mesh, psi, n, p, u, applied_psi);
 
 	// 2.2 Plot solution
@@ -62,7 +62,7 @@ using namespace std;
 		my_gnuplot::plot_ArmaVec(mesh, psi, filename+"_psi", "wxt");
 		my_gnuplot::plot_ArmaVec(mesh, n, filename+"_n", "wxt");
 		my_gnuplot::plot_ArmaVec(mesh, p, filename+"_p", "wxt");
-		my_gnuplot::plot_ArmaVec(mesh, u, filename+"_u", "png");
+		my_gnuplot::plot_ArmaVec(mesh, u, filename+"_u", "wxt");
 //		my_gnuplot::plot_ArmaVec(mesh, p-n, filename+"_p-n", "wxt");
 	}
 
@@ -110,12 +110,12 @@ int compute_Flux_p(	const my_mesh::MeshData &mesh,
 	my_gnuplot::plot_ArmaVec(mesh, Fp_y, filename+"_Fp_y", "png");
 
 	// Current = Fp - Fn
-	my_gnuplot::plot_ArmaVec(mesh, Fp_x - Fn_x, filename+"_F_total_x", "wxt");
+	my_gnuplot::plot_ArmaVec(mesh, Fp_x - Fn_x, filename+"_J_total_x", "wxt");
 
 	// Flux of exciton
 	arma::vec Fx_x, Fx_y;
 	compute_Flux_x(mesh, u, Fx_x, Fx_y);
-	my_gnuplot::plot_ArmaVec(mesh, Fx_x, filename+"_F_exciton", "wxt");
+	my_gnuplot::plot_ArmaVec(mesh, Fx_x, filename+"_Fx_x", "png");
 
 	return 0;
 }
