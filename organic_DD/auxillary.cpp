@@ -122,8 +122,21 @@ int compute_MobilityP_elementwise (	const my_mesh::MeshData &mesh,
 	return 0;
 }
 
+// 1.3 Exciton mobility
+int compute_MobilityX_elementwise (	const my_mesh::MeshData &mesh,
+					arma::vec &mu_x_elementwise)
+{
+	double mu_x_1 = parameters::mu_x_donor;
+	double mu_x_2 = parameters::mu_x_acceptor;
 
-
+	for (int t=0; t<mesh.num_elements; t++)
+	{	if (mesh.element_markers[t]==1)
+			mu_x_elementwise(t) = mu_x_1;
+		else if (mesh.element_markers[t] == 2)
+			mu_x_elementwise(t) = mu_x_2;
+	}
+return 0;
+}
 
 
 

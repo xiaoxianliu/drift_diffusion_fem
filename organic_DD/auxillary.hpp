@@ -21,13 +21,15 @@ int compute_ElectricFieldAmplitude(	const my_mesh::MeshData &mesh,
 /*******************************************************************************************************************/
 // mobility of electrons and holes
 // 1. element-wise mobility
-int compute_MobilityN_elementwise(	const my_mesh::MeshData &mesh,
+int compute_MobilityN_elementwise (	const my_mesh::MeshData &mesh,
 					const arma::vec &E,				// electric field intensity
 					arma::vec &mu_n_elementwise);
 
 int compute_MobilityP_elementwise (	const my_mesh::MeshData &mesh, 
 					const arma::vec &E, 				// electric field intensity
 					arma::vec &mu_p_elementwise);
+int compute_MobilityX_elementwise (	const my_mesh::MeshData &mesh,
+					arma::vec &mu_x_elementwise);
 
 
 /*******************************************************************************************************************/
