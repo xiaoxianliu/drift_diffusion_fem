@@ -84,11 +84,6 @@ using namespace std;
 
 
 
-int compute_Flux_p(	const my_mesh::MeshData &mesh,
-			const arma::vec &p,
-			const arma::vec &psi,
-			arma::vec &Fp_x,
-			arma::vec &Fp_y);
 
 	// 4. Compute derived quantities and plot
 	// 4.1 Electric field
