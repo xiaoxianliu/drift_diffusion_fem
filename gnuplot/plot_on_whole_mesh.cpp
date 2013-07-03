@@ -17,7 +17,8 @@ int plot_ArmaVec(const my_mesh::MeshData& mesh, const arma::vec u, const std::st
 
 	/* Write dat file for solution */
 	ofstream output;
-	string output_name = filename + "_solution.dat";
+	string name_appended = "_whole_domain";
+	string output_name = filename + name_appended + ".dat";
 	output.open(output_name.c_str());
 	if (!output.is_open())
 		{cout << "Failed to open file " << output_name << "\n"; exit(1);}
@@ -36,7 +37,7 @@ int plot_ArmaVec(const my_mesh::MeshData& mesh, const arma::vec u, const std::st
 	output.close();
 
 	/* Write GNUplot file */
-	string gnuplot_filename = filename + "_solution.gnuplot";
+	string gnuplot_filename = filename + name_appended + ".gnuplot";
 	ofstream gnuplot_fstream;
 	gnuplot_fstream.open(gnuplot_filename.c_str());
 	if (!gnuplot_fstream.is_open())
@@ -48,7 +49,7 @@ int plot_ArmaVec(const my_mesh::MeshData& mesh, const arma::vec u, const std::st
 	}
 	else if (terminal == "png")
 	{	gnuplot_fstream	<< "set terminal png\n"
-				<< "set output \"" << filename << "_solution.png\"\n"
+				<< "set output \"" << filename + name_appended + ".png" << "\"\n"
 				<< "splot \"" << output_name << "\" with lines\n";
 	}
 	gnuplot_fstream.close();
