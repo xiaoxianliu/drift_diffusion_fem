@@ -7,8 +7,9 @@
 
 #include "../../triangle/mesh.hpp"
 #include "../../my_fem/my_fem.hpp"
-#include "../parameters.hpp"
-#include "../auxillary.hpp"
+
+#include "parameters.hpp"
+#include "auxillary.hpp"
 
 
 // Solving for solution of nonlinear Poisson's equation

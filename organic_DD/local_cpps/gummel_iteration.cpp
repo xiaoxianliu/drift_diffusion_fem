@@ -4,8 +4,9 @@
 #include <armadillo>
 
 #include "../../triangle/mesh.hpp"
-#include "../parameters.hpp"
-#include "../gummel_iteration.hpp"
+
+#include "parameters.hpp"
+#include "gummel_iteration.hpp"
 
 
 

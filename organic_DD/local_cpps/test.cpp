@@ -8,7 +8,7 @@
 #include "../../my_fem/my_fem.hpp"
 #include "../../gnuplot/my_gnuplot.hpp"
 
-#include "../parameters.hpp"
+#include "parameters.hpp"
 
 /*******************************************************************************************************************/
 // Test function that solves "-lambda_squared * grad( epsilon_r*grad(psi) ) = p - n" for given "p" and "n"
