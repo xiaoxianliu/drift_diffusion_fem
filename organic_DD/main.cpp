@@ -7,10 +7,10 @@
 #include "../gnuplot/my_gnuplot.hpp"
 
 
-#include "./local_cpps/gummel_iteration.hpp"
-#include "./local_cpps/auxillary.hpp"
-#include "./local_cpps/test.hpp"
-#include "./local_cpps/flux_and_gradient.hpp"
+#include "gummel_iteration.hpp"
+#include "auxillary.hpp"
+#include "test.hpp"
+#include "flux_and_gradient.hpp"
 
 
 int main (int argc, char* argv[])

@@ -2,7 +2,7 @@
 #define GUMMEL_HPP
 
 #include <armadillo>
-#include "../../triangle/mesh.hpp"
+#include "../triangle/mesh.hpp"
 
 
 // 1. Declaration of individual solvers for each equation

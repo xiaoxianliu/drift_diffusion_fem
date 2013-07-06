@@ -6,18 +6,13 @@ CFLAGS = -lm -larmadillo
 ##### Linking everything
 all: main.exe
 
-main.exe: 	mesh_lib.a fem_lib.a gnuplot_lib.a local_objs.a\
-		main.cpp
-	g++ main.cpp -c
-	g++ main.o *.a -o $@ $(CFLAGS)
+main.exe: 	mesh_lib.a fem_lib.a gnuplot_lib.a \
+		*.cpp
+	g++ *.cpp -c
+	g++ *.o *.a -o $@ $(CFLAGS)
 #	make clean_objs
 
 
-##### Files from local folder
-local_objs.a: local_cpps/*.cpp
-	g++ -c $^
-	ar cr $@ *.o
-	make clean_objs
 
 ##### Files from other folder
 gnuplot_lib.a: ../gnuplot/*.cpp

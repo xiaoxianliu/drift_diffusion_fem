@@ -4,9 +4,9 @@
 #include <armadillo>
 
 
-#include "../../triangle/mesh.hpp"
-#include "../../my_fem/my_fem.hpp"
-#include "../../gnuplot/my_gnuplot.hpp"
+#include "../triangle/mesh.hpp"
+#include "../my_fem/my_fem.hpp"
+#include "../gnuplot/my_gnuplot.hpp"
 
 #include "parameters.hpp"
 

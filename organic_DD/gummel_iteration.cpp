@@ -3,7 +3,7 @@
 
 #include <armadillo>
 
-#include "../../triangle/mesh.hpp"
+#include "../triangle/mesh.hpp"
 
 #include "parameters.hpp"
 #include "gummel_iteration.hpp"
