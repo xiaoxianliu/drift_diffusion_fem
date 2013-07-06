@@ -3,9 +3,9 @@
 
 #include <armadillo>
 
-#include "../triangle/mesh.hpp"
-#include "../my_fem/my_fem.hpp"
-#include "auxillary.hpp"
+#include "../../triangle/mesh.hpp"
+#include "../../my_fem/my_fem.hpp"
+#include "../auxillary.hpp"
 
 /************************************************************************************************************************************/
 // Electric field: 	dE/dnu = -dpsi/dnu

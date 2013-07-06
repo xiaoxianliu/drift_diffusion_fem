@@ -64,6 +64,11 @@ using namespace std;
 		my_gnuplot::plot_ArmaVec(mesh, p, filename+"_p", "wxt");
 		my_gnuplot::plot_ArmaVec(mesh, u, filename+"_u", "wxt");
 //		my_gnuplot::plot_ArmaVec(mesh, p-n, filename+"_p-n", "wxt");
+
+		my_gnuplot::plot_ArmaVec_on_DirichletBoundary(mesh, 1, psi, filename+"_psi(on_anode)");
+		my_gnuplot::plot_ArmaVec_on_DirichletBoundary(mesh, 1, n, filename+"_n(on_anode)");
+		my_gnuplot::plot_ArmaVec_on_DirichletBoundary(mesh, 1, p, filename+"_p(on_anode)");
+		my_gnuplot::plot_ArmaVec_on_DirichletBoundary(mesh, 1, u, filename+"_u(on_anode)");
 	}
 
 
@@ -73,14 +78,14 @@ using namespace std;
 
 
 	// 3. test
-	bool is_to_test=false;
+/*	bool is_to_test=false;
 	if (is_to_test)
 	{	arma::vec psi_test;
 		test_Compute_psi(mesh, n, p, psi_test, applied_psi);
 		std::cout << "difference between \"psi\" and \"psi_test\" is " << arma::norm(psi - psi_test, "inf") << "\n";
 		my_gnuplot::plot_ArmaVec(mesh, psi_test, filename+"_psi_test", "wxt");
 	}
-
+*/
 
 
 
@@ -124,8 +129,8 @@ using namespace std;
 	{	arma::vec Fn_nu1_anode, Fp_nu1_anode;
 		compute_Boundary1Flux_n(mesh, n, psi, Fn_nu1_anode);
 		compute_Boundary1Flux_p(mesh, p, psi, Fp_nu1_anode);
-		std::cout << "Fn on anode is " << Fn_nu1_anode << "\n\n";
-		std::cout << "Fp on anode is " << Fp_nu1_anode << "\n\n";
+		my_gnuplot::plot_BoundaryArmaVec_on_DirichletBoundary(mesh, 1, Fn_nu1_anode, filename+"_Fn_nu1_anode", "png");
+		my_gnuplot::plot_BoundaryArmaVec_on_DirichletBoundary(mesh, 1, Fp_nu1_anode, filename+"_Fp_nu1_anode", "png");
 	}
 
 	// 4.4 Boundary current density
@@ -134,9 +139,8 @@ using namespace std;
 	{	double Jp_anode, Jn_anode;
 		Jn_anode = compute_Boundary1CurrentDensity_n(mesh, n, psi);
 		Jp_anode = compute_Boundary1CurrentDensity_p(mesh, p, psi);
-		std::cout << "Jn = " << Jn_anode << "\n";
-		std::cout << "Jp = " << Jp_anode << "\n";
-		std::cout << "Total current J = " << Jp_anode + Jn_anode << "\n";
+
+		std::cout << "Total current density on anode is J = " << Jp_anode + Jn_anode << "\n";
 	}
 
 

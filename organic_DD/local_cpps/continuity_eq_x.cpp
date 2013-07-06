@@ -5,10 +5,10 @@
 
 #include <armadillo>
 
-#include "../triangle/mesh.hpp"
-#include "../my_fem/my_fem.hpp"
-#include "parameters.hpp"
-#include "auxillary.hpp"
+#include "../../triangle/mesh.hpp"
+#include "../../my_fem/my_fem.hpp"
+#include "../parameters.hpp"
+#include "../auxillary.hpp"
 
 // Solving for exciton density "u" for given {input_psi, input_n, input_p, input_u} in Gummel's iteration
 
