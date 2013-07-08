@@ -3,8 +3,8 @@
 
 #include <armadillo>
 
-#include "../triangle/mesh.hpp"
-#include "../my_fem/my_fem.hpp"
+#include "../../triangle/mesh.hpp"
+#include "../../my_fem/my_fem.hpp"
 
 #include "auxillary.hpp"
 

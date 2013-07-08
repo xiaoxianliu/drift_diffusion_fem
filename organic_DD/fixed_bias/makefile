@@ -15,17 +15,17 @@ main.exe: 	mesh_lib.a fem_lib.a gnuplot_lib.a \
 
 
 ##### Files from other folder
-gnuplot_lib.a: ../gnuplot/*.cpp
+gnuplot_lib.a: ../../gnuplot/*.cpp
 	g++ -c $^
 	ar cr $@ *.o
 	make clean_objs
 
-fem_lib.a: ../my_fem/*.cpp
+fem_lib.a: ../../my_fem/*.cpp
 	g++ -c $^
 	ar cr $@ *.o
 	make clean_objs
 
-mesh_lib.a: ../triangle/*.cpp
+mesh_lib.a: ../../triangle/*.cpp
 	g++ -c $^
 	ar cr $@ *.o
 	make clean_objs

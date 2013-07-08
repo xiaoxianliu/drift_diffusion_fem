@@ -3,8 +3,8 @@
 #include <string>
 #include <armadillo>
 
-#include "../triangle/mesh.hpp"
-#include "../gnuplot/my_gnuplot.hpp"
+#include "../../triangle/mesh.hpp"
+#include "../../gnuplot/my_gnuplot.hpp"
 
 
 #include "gummel_iteration.hpp"
