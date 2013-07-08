@@ -59,10 +59,10 @@ using namespace std;
 	bool is_to_plot=true;
 	if (is_to_plot)
 	{
-		my_gnuplot::plot_ArmaVec(mesh, psi, filename+"_psi", "wxt");
-		my_gnuplot::plot_ArmaVec(mesh, n, filename+"_n", "wxt");
-		my_gnuplot::plot_ArmaVec(mesh, p, filename+"_p", "wxt");
-		my_gnuplot::plot_ArmaVec(mesh, u, filename+"_u", "wxt");
+		my_gnuplot::plot_ArmaVec(mesh, psi, filename+"_psi", "png");
+		my_gnuplot::plot_ArmaVec(mesh, n, filename+"_n", "png");
+		my_gnuplot::plot_ArmaVec(mesh, p, filename+"_p", "png");
+		my_gnuplot::plot_ArmaVec(mesh, u, filename+"_u", "png");
 //		my_gnuplot::plot_ArmaVec(mesh, p-n, filename+"_p-n", "wxt");
 
 		my_gnuplot::plot_ArmaVec_on_DirichletBoundary(mesh, 1, psi, filename+"_psi(on_anode)");
@@ -105,22 +105,22 @@ using namespace std;
 	{	// Flux of electrons
 		arma::vec Fn_x, Fn_y;
 		compute_Flux_n(mesh, n, psi, Fn_x, Fn_y);
-		my_gnuplot::plot_ArmaVec(mesh, Fn_x, filename+"_Fn_x", "wxt");
+		my_gnuplot::plot_ArmaVec(mesh, Fn_x, filename+"_Fn_x", "png");
 		my_gnuplot::plot_ArmaVec(mesh, Fn_y, filename+"_Fn_y", "png");
 
 		// Flux of holes
 		arma::vec Fp_x, Fp_y;
 		compute_Flux_p (mesh, p, psi, Fp_x, Fp_y);
-		my_gnuplot::plot_ArmaVec(mesh, Fp_x, filename+"_Fp_x", "wxt");
+		my_gnuplot::plot_ArmaVec(mesh, Fp_x, filename+"_Fp_x", "png");
 		my_gnuplot::plot_ArmaVec(mesh, Fp_y, filename+"_Fp_y", "png");
 
 		// Current = Fp - Fn
-		my_gnuplot::plot_ArmaVec(mesh, Fp_x - Fn_x, filename+"_F_total_x", "wxt");
+		my_gnuplot::plot_ArmaVec(mesh, Fp_x - Fn_x, filename+"_F_total_x", "png");
 
 		// Flux of exciton
 		arma::vec Fx_x, Fx_y;
 		compute_Flux_x(mesh, u, Fx_x, Fx_y);
-		my_gnuplot::plot_ArmaVec(mesh, Fx_x, filename+"_F_exciton", "wxt");
+		my_gnuplot::plot_ArmaVec(mesh, Fx_x, filename+"_F_exciton", "png");
 	}
 
 	// 4.3 Boundary flux
