@@ -75,7 +75,28 @@ int extractInterface( MeshData& mesh );
 /* Compute barry points for each element */
 int computeBarryPoints( MeshData &mesh);
 
+
+
+
+
+/********************************************************************************************************************************/
+// Example meshes
+MeshData generateMesh_cosine_interface (	std::string filename,
+						double x_offset = 0.0,
+						double x_amplitude = 0.5,
+						int num_periods = 1);
+
+MeshData generateMesh_great_wall (	std::string filename,
+					double x_offset = 0.0,
+					double x_amplitude = 0.5,
+					int num_bumps = 1);
+
+
+
+
 }
+
+
 
 
 
