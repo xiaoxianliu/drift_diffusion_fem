@@ -14,12 +14,13 @@ namespace MeshNamespace{
 MeshNamespace::MeshData generateMesh_cosine_interface (	std::string filename,
 							double x_offset,
 							double x_amplitude,
-							int num_periods){
+							int num_periods,
+							int num_interface_nodes,
+							double max_area){
 	// 1. Mesh file name
 	std::string mesh_filename = filename + "_cos_interface";
 
 	// 2. Interface nodes
-	int num_interface_nodes = 201;
 	std::vector< std::vector<double> > interface_nodes;
 	std::vector<double> node(2);		// coordinate information of each added node
 
@@ -40,10 +41,7 @@ MeshNamespace::MeshData generateMesh_cosine_interface (	std::string filename,
 	node[0] = x_offset;	node[1] = 1.0;
 	interface_nodes.push_back(node);
 
-	// 3. Maximum area
-	double max_area = 1e-2;
-
-	// 4. Finally, generate mesh
+	// 3. Finally, generate mesh
 	MeshNamespace::MeshData mesh = MeshNamespace::generateMesh(mesh_filename, interface_nodes, max_area, true);
 
 return mesh;
@@ -56,7 +54,8 @@ return mesh;
 MeshNamespace::MeshData generateMesh_great_wall (	std::string filename,
 							double x_offset,
 							double x_amplitude,
-							int num_bumps){
+							int num_bumps,
+							double max_area){
 
 	// 1. Mesh file name
 	std::string mesh_filename = filename + "_great_wall";
@@ -86,10 +85,7 @@ MeshNamespace::MeshData generateMesh_great_wall (	std::string filename,
 	node[0] = x_offset;	node[1] = 1.0;
 	interface_nodes.push_back(node);
 
-	// 3. Maximum area
-	double max_area = 1e-2;
-
-	// 4. Finally, generate mesh
+	// 3. Finally, generate mesh
 	MeshNamespace::MeshData mesh = MeshNamespace::generateMesh(mesh_filename, interface_nodes, max_area, true);
 
 return mesh;

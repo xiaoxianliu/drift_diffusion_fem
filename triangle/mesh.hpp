@@ -84,12 +84,15 @@ int computeBarryPoints( MeshData &mesh);
 MeshData generateMesh_cosine_interface (	std::string filename,
 						double x_offset = 0.0,
 						double x_amplitude = 0.5,
-						int num_periods = 1);
+						int num_periods = 1,
+						int num_interface_nodes = 101,
+						double max_area = 1e-2);
 
 MeshData generateMesh_great_wall (	std::string filename,
 					double x_offset = 0.0,
 					double x_amplitude = 0.5,
-					int num_bumps = 1);
+					int num_bumps = 1,
+					double max_area = 1e-2);
 
 
 
