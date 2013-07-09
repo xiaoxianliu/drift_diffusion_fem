@@ -18,7 +18,7 @@ int main (int argc, char* argv[])
 using namespace std;
 
 	// 0. Output some parameters
-	std::cout << "\n\n";
+/*	std::cout << "\n\n";
 	std::cout << "lambda_squared is " << parameters::lambda_squared << "\n";
 	std::cout << "epsilon_r = " << parameters::epsilon_rel << "\n";
 	std::cout << "mu_n(donor) = " << parameters::mu_n_donor<<";\tmu_n(acceptor) = " << parameters::mu_n_acceptor 
@@ -27,22 +27,23 @@ using namespace std;
 		<< ";\tfield dependence parameter = " << parameters::gamma_p << "\n";
 	std::cout << "mu_x = " << parameters::mu_x << "\n";
 
+
+*/
+
+
+
 	string filename = "organic_DD";
 
-
-
-
-
-
 	// 1. Mesh
-	vector< vector<double> > interface_nodes;
-	vector<double> node(2);
-	node[0] = 0.0;	node[1] = 1.0;	interface_nodes.push_back(node);
-	node[1] = 0.0;	interface_nodes.push_back(node);
-
-	double max_area = 2e-3;
-	my_mesh::MeshData mesh = my_mesh::generateMesh (filename, interface_nodes, max_area);
-
+	double x_offset = 0.0;
+	double x_amplitude = -0.2;	// negative value means the interface varies in the "-x" direction
+	int num_bumps = 4;
+	double max_area = 1e-3;
+	my_mesh::MeshData mesh = my_mesh::generateMesh_great_wall (	filename,
+									x_offset,
+									x_amplitude,
+									num_bumps,
+									max_area);
 
 
 
@@ -59,10 +60,10 @@ using namespace std;
 	bool is_to_plot=true;
 	if (is_to_plot)
 	{
-		my_gnuplot::plot_ArmaVec(mesh, psi, filename+"_psi", "png");
-		my_gnuplot::plot_ArmaVec(mesh, n, filename+"_n", "png");
-		my_gnuplot::plot_ArmaVec(mesh, p, filename+"_p", "png");
-		my_gnuplot::plot_ArmaVec(mesh, u, filename+"_u", "png");
+		my_gnuplot::plot_ArmaVec(mesh, psi, filename+"_psi", "wxt");
+		my_gnuplot::plot_ArmaVec(mesh, n, filename+"_n", "wxt");
+		my_gnuplot::plot_ArmaVec(mesh, p, filename+"_p", "wxt");
+		my_gnuplot::plot_ArmaVec(mesh, u, filename+"_u", "wxt");
 //		my_gnuplot::plot_ArmaVec(mesh, p-n, filename+"_p-n", "wxt");
 
 		my_gnuplot::plot_ArmaVec_on_DirichletBoundary(mesh, 1, psi, filename+"_psi(on_anode)");
