@@ -27,7 +27,7 @@ using namespace std;
 	double x_offset = 0.0;
 	double x_amplitude = -0.4;	// negative value means the interface varies in the "-x" direction
 	int num_interface_periods;
-	int init_num_interface_nodes = 401;
+	int init_num_interface_nodes = 501;
 	double max_area = 5e-3;
 
 	my_mesh::MeshData mesh0, mesh1, mesh2;

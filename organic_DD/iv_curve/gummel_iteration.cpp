@@ -46,7 +46,7 @@ int solve_GummelIteration(	const my_mesh::MeshData &mesh,
 	arma::vec new_psi = psi, new_n = n, new_p = p, new_u = u;
 
 	double gummel_err = 1.0, gummel_tol = 3e-3;
-	int max_iter = 50;
+	int max_iter = 100;
 
 	// 2.2 gummel's iteration
 	for (int iter=0; iter<max_iter; iter++)
