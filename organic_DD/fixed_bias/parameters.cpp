@@ -69,13 +69,13 @@ double exciton_mobility = exciton_diffusivity / U_T;
 double exciton_diffusion_length = sqrt(exciton_diffusivity * exciton_lifetime);		// about 10nm
 							// around 10nm = 1e-8m
 // 1.2 Electron
-double electron_mobility_donor = 1e-9;			// Zero-field mobilities, in "m^2_V^(-1)_s^(-1)"
+double electron_mobility_donor = 1e-8;			// Zero-field mobilities, in "m^2_V^(-1)_s^(-1)"
 double electron_mobility_acceptor = 1e-8;	
 double electron_mobility_field_dependent_coefficient = 1.55e-3;		// m^(1/2)_V^(-1/2); "mu_n = mu0_n exp(gamma_n * sqrt(|E|))"
 
 // 1.3 Hole
 double hole_mobility_donor = 2e-8;
-double hole_mobility_acceptor = 2e-9;
+double hole_mobility_acceptor = 2e-8;
 double hole_mobility_field_dependent_coefficient = 3e-4;		// m^(1/2)_V^(-1/2); "mu_p = mu0_p exp(gamma_p * sqrt(|E|))"
 
 

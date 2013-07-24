@@ -37,8 +37,8 @@ using namespace std;
 	// 1. Mesh
 	double x_offset = 0.0;
 	double x_amplitude = -0.05;	// negative value means the interface varies in the "-x" direction
-	int num_bumps = 100;
-	double max_area = 5e-4;
+	int num_bumps = 0;
+	double max_area = 2e-3;
 	my_mesh::MeshData mesh = my_mesh::generateMesh_great_wall (	filename,
 									x_offset,
 									x_amplitude,
@@ -57,7 +57,7 @@ using namespace std;
 	solve_GummelIteration(mesh, psi, n, p, u, applied_psi);
 
 	// 2.2 Plot solution
-	bool is_to_plot=false;
+	bool is_to_plot=true;
 	if (is_to_plot)
 	{
 		my_gnuplot::plot_ArmaVec(mesh, psi, filename+"_psi", "wxt");
