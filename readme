@@ -18,7 +18,7 @@ Brief description of folders in this directory
 	* a "test" subfolder is included to test the source files in "./fem_assemble/"
 	* a "convergence_test" subfolder is included to test the convergence of solver as mesh size decreases
 
-2. Examples
+2. Examples on simplified toy model with only 1 diffusion equation of exciton
 ./exciton_smart_geometry/
 	* Designed a special "smart" interface with 1 hump
 	* it's really just a rectangular zigzag interface, and its called "smart" because the organic solar cell community used it.
@@ -32,3 +32,10 @@ Brief description of folders in this directory
 	* Compute and plot state and adjoint solutions
 	* Compute shape gradient on interface
 
+3. Solvers
+./inorganic_DD/
+	* Stationary state solver of drift-diffusion equations in crystalline inorganic PN junction
+	* 3 unknowns: electric potential "psi", electron density "n", and hole density "p"
+./organic_DD/
+	* Stationary state solver of drift-diffusion model in organic PN junction
+	* 4 unknowns: electric potential "psi", electron density "n", hole density "p", and exciton density "u"
